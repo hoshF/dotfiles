@@ -143,25 +143,38 @@ unset key
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-alias ge='ranger'
-alias tm='tmux'
 
-export EDITOR='vim'
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
 # [[ -f /home/nore/.dart-cli-completion/zsh-config.zsh ]] && . /home/nore/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
+
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+# exec .zshrc replease source .zshrc
+
+# ------------------------------
+# 	    export
+# ------------------------------
+export EDITOR='vim'
+
+
+# ------------------------------
+# 	    alias
+# ------------------------------
+alias sp='sudo pacman'
+alias ge='ranger'
+alias tm='tmux'
+alias ll='ls -alF'
+
 alias vrs='vim src/main.rs'
 alias vtm='vim Cargo.toml'
 alias crun='cargo run'
-alias ll='ls -alF'
 
 alias gs='git status'
 alias ga='git add .'
 alias gc='git commit -m'
 alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
