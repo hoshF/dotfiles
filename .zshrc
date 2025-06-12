@@ -1,111 +1,23 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+# Clean & Simple .zshrc
+
+# Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-# exec zsh replease source .zshrc
+# Basic zsh settings
+setopt HIST_IGNORE_ALL_DUPS    # No duplicate commands in history
+bindkey -e                     # Use emacs shortcuts (Ctrl+A, Ctrl+E, etc.)
+WORDCHARS=${WORDCHARS//[\/]}   # Better word navigation
 
-
-# Start configuration added by Zim install {{{
-#
-# User configuration sourced by interactive shells
-#
-
-# -----------------
-# Zsh configuration
-# -----------------
-
-#
-# History
-#
-
-# Remove older command from the history if a duplicate is to be added.
-setopt HIST_IGNORE_ALL_DUPS
-
-#
-# Input/output
-#
-
-# Set editor default keymap to emacs (-e) or vi (-v)
-bindkey -e
-
-# Prompt for spelling correction of commands.
-#setopt CORRECT
-
-# Customize spelling correction prompt.
-#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
-
-# Remove path separator from WORDCHARS.
-WORDCHARS=${WORDCHARS//[\/]}
-
-# -----------------
-# Zim configuration
-# -----------------
-
-# Use degit instead of git as the default tool to install and update modules.
-#zstyle ':zim:zmodule' use 'degit'
-
-# --------------------
-# Module configuration
-# --------------------
-
-#
-# git
-#
-
-# Set a custom prefix for the generated aliases. The default prefix is 'G'.
-# zstyle ':zim:git' aliases-prefix 'g'
-
-#
-# input
-#
-
-# Append ../ to your input for each . you type after an initial ..
-#zstyle ':zim:input' double-dot-expand yes
-
-#
-# termtitle
-#
-
-# Set a custom terminal title format using prompt expansion escape sequences.
-# See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
-# If none is provided, the default '%n@%m: %~' is used.
-#zstyle ':zim:termtitle' format '%1~'
-
-#
-# zsh-autosuggestions
-#
-
-# Disable automatic widget re-binding on each precmd. This can be set when
-# zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
+# Zim plugin settings
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
-
-# Customize the style that the suggestions are shown with.
-# See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
-#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
-
-#
-# zsh-syntax-highlighting
-#
-
-# Set what highlighters will be used.
-# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
-# Customize the main highlighter styles.
-# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
-#typeset -A ZSH_HIGHLIGHT_STYLES
-#ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
-
-# ------------------
-# Initialize modules
-# ------------------
-
+# Zim framework setup
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
-# Download zimfw plugin manager if missing.
+
+# Auto-install zim if missing
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   if (( ${+commands[curl]} )); then
     curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
@@ -115,55 +27,52 @@ if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
         https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
   fi
 fi
-# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+
+# Update and load zim
 if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
   source ${ZIM_HOME}/zimfw.zsh init
 fi
-# Initialize modules.
 source ${ZIM_HOME}/init.zsh
 
-# ------------------------------
-# Post-init module configuration
-# ------------------------------
-
-#
-# zsh-history-substring-search
-#
-
+# History search with arrow keys
 zmodload -F zsh/terminfo +p:terminfo
-# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
 for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
 for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
 for key ('k') bindkey -M vicmd ${key} history-substring-search-up
 for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
-# }}} End configuration added by Zim install
 
-# Created by newuser for 5.9
-
-# To customize prompt, run p10k configure or edit ~/.p10k.zsh.
+# Load powerlevel10k theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
-# ------------------------------
-# 	    export
-# ------------------------------
+# Environment
 export EDITOR='nvim'
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$PATH:/home/nore/.local/bin"
 
-# FNM 环境初始化 + 自动切换 + 节点版本策略支持
+# Node.js version manager
 eval "$(fnm env --shell zsh --use-on-cd --version-file-strategy=recursive --corepack-enabled --resolve-engines)"
 
-# ------------------------------
-# 	    alias
-# ------------------------------
+# Yazi file manager with cd support
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
+# Aliases
+# System
 alias pac='sudo pacman'
-alias ge='ranger'
 alias tm='tmux'
 alias ll='ls -alF'
+
+# Editor
 alias vi='nvim'
 alias vim='nvim'
 
+# Rust development
 alias vrs='nvim src/main.rs'
 alias vtm='nvim Cargo.toml'
 alias cdd='cargo add'
@@ -172,22 +81,13 @@ alias cud='cargo build'
 alias cew='cargo new'
 alias can='cargo clean'
 
+# Git
 alias gs='git status'
 alias ga='git add .'
 alias gc='git commit -m'
 alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
 
-alias vrc='nvim ~/.vimrc'
+# Config files
 alias zrc='nvim ~/.zshrc'
 alias tx='nvim ~/.config/tmux/tmux.conf'
-
-# Created by `pipx` on 2025-06-08 04:32:05
-export PATH="$PATH:/home/nore/.local/bin"
-
-
-## [Completion]
-## Completion scripts setup. Remove the following line to uninstall
-[[ -f /home/nore/.dart-cli-completion/zsh-config.zsh ]] && . /home/nore/.dart-cli-completion/zsh-config.zsh || true
-## [/Completion]
-
