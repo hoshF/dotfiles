@@ -1,10 +1,3 @@
-# Clean & Simple .zshrc
-
-# Powerlevel10k instant prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # Basic zsh settings
 setopt HIST_IGNORE_ALL_DUPS    # No duplicate commands in history
 bindkey -e                     # Use emacs shortcuts (Ctrl+A, Ctrl+E, etc.)
@@ -41,9 +34,6 @@ for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search
 for key ('k') bindkey -M vicmd ${key} history-substring-search-up
 for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
-
-# Load powerlevel10k theme
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Environment
 export EDITOR='nvim'
