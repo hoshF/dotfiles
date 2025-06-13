@@ -26,4 +26,4 @@ zmodule Aloxaf/fzf-tab     # Better tab completion
 zmodule pacman             # Pacman shortcuts
 
 # FZF integration
-source ~/.zim/fzf.zsh
+source fzf.zsh
