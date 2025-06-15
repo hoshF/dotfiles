@@ -20,7 +20,8 @@ zmodule zsh-users/zsh-history-substring-search       # Arrow key history search
 zmodule zsh-users/zsh-autosuggestions               # Gray text suggestions
 
 # Extra tools
-zmodule Ansimorph/oblong    # Theme/styling
+zmodule prompt-pwd
+zmodule minimal    # Theme/styling
 zmodule pabloariasal/zfm    # File manager helper
 zmodule Aloxaf/fzf-tab     # Better tab completion
 zmodule pacman             # Pacman shortcuts

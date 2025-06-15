@@ -81,3 +81,14 @@ alias gl='git log --oneline --graph --decorate'
 # Config files
 alias zrc='nvim ~/.zshrc'
 alias tx='nvim ~/.config/tmux/tmux.conf'
+
+# zfm toggle 
+zfm_cd() {
+    local target=$(zfm select --dirs 2>/dev/null)
+    [[ -n "$target" ]] && cd "$target" 2>/dev/null
+    zle reset-prompt
+}
+if command -v zfm >/dev/null 2>&1 && [[ -o interactive ]]; then
+    zle -N zfm_cd
+    bindkey '^P' zfm_cd
+fi
