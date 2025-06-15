@@ -10,6 +10,8 @@ return {
             ensure_installed = {
                 "pylsp", 
                 "rust_analyzer", 
+                "clangd",
+                "lua_ls",
             },
         },
     },
