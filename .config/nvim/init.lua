@@ -11,8 +11,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("option")
-require("remap")
 require("lazy").setup({
     { import = "plugins" },
     { import = "plugins.lsp" },
@@ -35,3 +33,11 @@ require("lazy").setup({
         },
     },
 })
+require("option")
+require("remap")
+-- Somewhere in your Neovim startup, e.g. init.lua
+require("luasnip").config.set_config({ -- Setting LuaSnip config
+  -- Use <Tab> (or some other key if you prefer) to trigger visual selection
+  store_selection_keys = "<Tab>",
+})
+

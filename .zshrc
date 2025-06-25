@@ -36,9 +36,20 @@ for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 
 # Environment
+export LIBVA_DRIVER_NAME=nvidia
+export GBM_BACKEND=nvidia-drm
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export WLR_NO_HARDWARE_CURSORS=1
+export QT_OPENGL=egl
+export EGL_PLATFORM=wayland
+
 export EDITOR='nvim'
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$PATH:/home/nore/.local/bin"
+
+export http_proxy="http://127.0.0.1:10808"
+export https_proxy="http://127.0.0.1:10808"
+export all_proxy="socks5h://127.0.0.1:10808"
 
 # Node.js version manager
 eval "$(fnm env --shell zsh --use-on-cd --version-file-strategy=recursive --corepack-enabled --resolve-engines)"
@@ -57,6 +68,7 @@ function y() {
 alias pac='sudo pacman'
 alias tm='tmux'
 alias ll='ls -alF'
+alias jl='journalctl'
 
 # Editor
 alias vi='nvim'
