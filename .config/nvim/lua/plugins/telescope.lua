@@ -1,28 +1,55 @@
 return {
-  {
-    'nvim-telescope/telescope.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      local actions = require("telescope.actions")
-
-      require("telescope").setup({
-        defaults = {
-          mappings = {
-            i = {
-              ["<CR>"] = actions.select_tab,
-            },
-            n = {
-              ["<CR>"] = actions.select_tab,
-            },
-          },
-          layout_strategy = "vertical",
-          layout_config = {
-            vertical = { width = 0.8 },
-          },
-          sorting_strategy = "ascending",
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && "
+                .. "cmake --build build --config Release && "
+                .. "cmake --install build --prefix build",
         },
-      })
-    end,
-  },
-}
+    },
+    cmd = "Telescope",
+    opts = {
+        defaults = {
+            layout_strategy = "center",
+            layout_config = {
+                center = {
+                    width = 0.7,
+                    height = 0.4,
+                },
+            },
+            preview = false,
+            sorting_strategy = "ascending",
+            prompt_prefix = "> ",
+            selection_caret = "- ",
+            path_display = { "smart" },
+            color_devicons = false,
+            borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+            results_title = false,
+            prompt_title = false,
 
+            mappings = {
+                i = {
+                    ["<CR>"] = require("telescope.actions").select_tab,
+                },
+                n = {
+                    ["<CR>"] = require("telescope.actions").select_tab,
+                },
+            },
+        },
+        extensions = {
+            fzf = {
+                fuzzy = true,
+                override_generic_sorter = true,
+                override_file_sorter = true,
+                case_mode = "smart_case",
+            },
+        },
+    },
+    config = function(_, opts)
+        local telescope = require "telescope"
+        telescope.setup(opts)
+        telescope.load_extension("fzf")
+    end,
+}

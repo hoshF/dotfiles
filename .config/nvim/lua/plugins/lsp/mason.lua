@@ -1,14 +1,15 @@
 return {
 
-    	{ "mason-org/mason.nvim", opts = {} },
+    {
+        "mason-org/mason.nvim",
+        cmd = "Mason",
+        opts = {}
+    },
     {
         "mason-org/mason-lspconfig.nvim",
-        dependencies = {
-            "mason-org/mason.nvim",
-            "neovim/nvim-lspconfig",
-        },
+        event = "VeryLazy",
         opts = {
-            ensure_installed = { 
+            ensure_installed = {
                 "pylsp",
                 "rust_analyzer",
                 "clangd",

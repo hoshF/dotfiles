@@ -1,7 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master",
+    branch = "main",
     lazy = false,
     build = ":TSUpdate",
     opts = {
@@ -19,9 +19,6 @@ return {
         enable = true,
         keymaps = {
           init_selection = "<CR>",
-          -- node_incremental = "<TAB>",
-          -- scope_incremental = "<S-CR>",
-          -- node_decremental = "<S-TAB>",
         },
       },
     },

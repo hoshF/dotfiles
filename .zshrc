@@ -82,6 +82,7 @@ alias cun='cargo run'
 alias cud='cargo build'
 alias cew='cargo new'
 alias can='cargo clean'
+alias cst='cargo test'
 
 # Git
 alias gs='git status'

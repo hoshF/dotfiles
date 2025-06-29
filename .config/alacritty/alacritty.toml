@@ -6,22 +6,22 @@ x = 10
 y = 10
 
 [font]
-size = 11
+size = 12
 
 [font.normal]
-family = "CaskaydiaMono Nerd Font Mono"
+family = "BlexMonoNerdFontMono"
 style = "Regular"
 
 [font.bold]
-family = "CaskaydiaMono Nerd Font Mono"
+family = "BlexMonoNerdFontMono"
 style = "Bold"
 
 [font.italic]
-family = "CaskaydiaMono Nerd Font Mono"
+family = "BlexMonoNerdFontMono"
 style = "Italic"
 
 [font.bold_italic]
-family = "CaskaydiaMono Nerd Font Mono"
+family = "BlexMonoNerdFontMono"
 style = "Bold Italic"
 
 [general]

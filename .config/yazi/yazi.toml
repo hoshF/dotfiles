@@ -21,6 +21,7 @@ edit = [
 ]
 open = [
 	{ run = 'xdg-open "$@"', desc = "Open" },
+	{ run = 'epr "$@"', desc = "Open" },
 ]
 
 [open]
@@ -40,10 +41,9 @@ prepend_rules = [
 	{ name = "*.lua", use = "edit" },
 	{ name = "*.xml", use = "edit" },
 	{ name = "*.log", use = "edit" },
-# open with normal / gnome / kde
 	{ name = "*.ods", use = "open" },
 	{ name = "*.pdf", use = "open" },
-# open with multimedia player
+	{ name = "*.epub", use = "open" },
 	{ name = "*.mp3", use = "play" },
 
 ]

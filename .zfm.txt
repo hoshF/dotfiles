@@ -1,0 +1,4 @@
+/home/nore/Rust/Lab
+/home/nore/.config/hypr
+/home/nore/.config/nvim/lua
+/etc/xray
