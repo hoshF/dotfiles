@@ -73,6 +73,7 @@ alias jl='journalctl'
 # Editor
 alias vi='nvim'
 alias vim='nvim'
+alias za='zathura'
 
 # Rust development
 alias vrs='nvim src/main.rs'
@@ -105,3 +106,18 @@ if command -v zfm >/dev/null 2>&1 && [[ -o interactive ]]; then
     zle -N zfm_cd
     bindkey '^P' zfm_cd
 fi
+
+#log setting
+log() {
+    local logdir="$HOME/Notes/logs"
+    local today="$(date +%F).md"
+    mkdir -p "$logdir"
+    local logfile="$logdir/$today"
+
+    if [ ! -f "$logfile" ]; then
+        echo -e "# $today\n" > "$logfile"
+    fi
+
+    nvim "$logfile"
+}
+

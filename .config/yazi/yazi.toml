@@ -13,6 +13,9 @@ ueberzug_scale = 0.1
 
 
 [opener]
+epr = [
+    { run = 'epr "$@"', block = true, desc = "Read with epr" },
+]
 play = [
 	{ run = 'mpv "$@"', orphan = true, for = "unix" },
 ]
@@ -21,7 +24,6 @@ edit = [
 ]
 open = [
 	{ run = 'xdg-open "$@"', desc = "Open" },
-	{ run = 'epr "$@"', desc = "Open" },
 ]
 
 [open]
@@ -43,7 +45,7 @@ prepend_rules = [
 	{ name = "*.log", use = "edit" },
 	{ name = "*.ods", use = "open" },
 	{ name = "*.pdf", use = "open" },
-	{ name = "*.epub", use = "open" },
+	{ name = "*.epub", use = "epr" },
 	{ name = "*.mp3", use = "play" },
 
 ]
