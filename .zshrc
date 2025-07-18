@@ -47,9 +47,9 @@ export EDITOR='nvim'
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$PATH:/home/nore/.local/bin"
 
-export http_proxy="http://127.0.0.1:10808"
-export https_proxy="http://127.0.0.1:10808"
-export all_proxy="socks5h://127.0.0.1:10808"
+# export http_proxy="http://127.0.0.1:10808"
+# export https_proxy="http://127.0.0.1:10808"
+# export all_proxy="socks5h://127.0.0.1:10808"
 
 # Node.js version manager
 eval "$(fnm env --shell zsh --use-on-cd --version-file-strategy=recursive --corepack-enabled --resolve-engines)"

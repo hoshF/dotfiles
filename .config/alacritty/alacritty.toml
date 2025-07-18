@@ -26,7 +26,7 @@ style = "Bold Italic"
 
 [general]
 import = [
-    "~/.config/alacritty/themes/challenger_deep.toml"
+    "~/.config/alacritty/themes/tokyo_night.toml"
 ]
 # TokyoNight Alacritty Colors
 # Default colors

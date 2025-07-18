@@ -1,39 +1,81 @@
-window {
-margin: 0px;
-border: 1px solid #88c0d0;
-background-color: #2e3440;
+@define-color color-base #fafbfc;
+@define-color transparent rgba(0, 0, 0, 0);
+@define-color color-success #28a745;
+@define-color color-border #e1e4e8;
+@define-color color-danger #d74a49;
+@define-color color-accent #0366d6;
+@define-color color-text #24292e;
+
+* {
+  font-family: 'BlexMonoNerdFontMono', monospace;
+  font-size: 14px;
 }
 
-#input {
-margin: 5px;
-border: none;
-color: #d8dee9;
-background-color: #3b4252;
+window {
+  margin: 0px;
+  padding: 6px;
+  border: 1px solid @color-border;
+  border-radius: 6px;
+  background-color: @color-base;
 }
 
 #inner-box {
-margin: 5px;
-border: none;
-background-color: #2e3440;
+  margin: 3px;
+  padding: 6px;
+  border: none;
 }
 
 #outer-box {
-margin: 5px;
-border: none;
-background-color: #2e3440;
+  margin: 3px;
+  padding: 6px;
+  border: none;
 }
 
 #scroll {
-margin: 0px;
-border: none;
+  margin: 0px;
+  padding: 6px;
+  border: none;
+}
+
+#input {
+  margin: 3px 12px;
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+  color: @color-text;
+  background-color: rgba(241, 243, 244, 0.6);
+}
+
+#input:focus {
+  background-color: rgba(241, 243, 244, 0.8);
+  box-shadow: 0 0 0 2px rgba(3, 102, 214, 0.2); 
+}
+
+#input image {
+  order: none;
+  color: @color-accent
+  -gtk-icon-source: -gtk-icontheme("system-search"); 
 }
 
 #text {
-margin: 5px;
-border: none;
-color: #d8dee9;
+  margin: 3px;
+  border: none;
+  color: @color-text;
+}
+
+#entry {
+  background-color: @transparent;
 }
 
 #entry:selected {
-background-color: #3b4252;
+    background-color: rgba(3, 102, 214, 0.1);
 }
+
+#entry:selected #text {
+  color: @color-accent;
+}
+
+#entry:drop(active) {
+  background-color: @color-accent !important;
+}
+
