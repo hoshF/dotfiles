@@ -26,7 +26,7 @@ map('v', '>', '>gv', opts)
 -----------------
 -- Insert mode --
 -----------------
-map('i', 'jj', '<Esc>', opts)
+-- map('i', 'jj', '<Esc>', opts)
 
 -----------------
 -- LSP keymap --

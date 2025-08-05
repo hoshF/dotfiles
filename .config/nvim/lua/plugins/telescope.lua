@@ -31,11 +31,18 @@ return {
 
             mappings = {
                 i = {
-                    ["<CR>"] = require("telescope.actions").select_tab,
+                    ["<CR>"] = function(prompt_bufnr)
+                        local actions = require("telescope.actions")
+                        actions.select_tab(prompt_bufnr)
+                    end,
                 },
                 n = {
-                    ["<CR>"] = require("telescope.actions").select_tab,
+                    ["<CR>"] = function(prompt_bufnr)
+                        local actions = require("telescope.actions")
+                        actions.select_tab(prompt_bufnr)
+                    end,
                 },
+
             },
         },
         extensions = {

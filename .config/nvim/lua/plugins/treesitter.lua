@@ -2,8 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
-    lazy = false,
-    build = ":TSUpdate",
+    lazy = true,
     opts = {
       ensure_installed = {
         "c", "lua", "rust", "json", "bash", "markdown", "markdown_inline", "latex"
@@ -18,7 +17,7 @@ return {
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = "<CR>",
+          -- init_selection = "<CR>",
         },
       },
     },
