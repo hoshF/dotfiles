@@ -47,6 +47,19 @@ export EDITOR='nvim'
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$PATH:/home/nore/.local/bin"
 
+# proxy toggle
+proxy_on() {
+    export http_proxy="http://127.0.0.1:10808"
+    export https_proxy="http://127.0.0.1:10808"
+    export all_proxy="socks5://127.0.0.1:10808"
+}
+
+proxy_off() {
+    unset http_proxy https_proxy all_proxy
+}
+
+proxy_on
+
 # Node.js version manager
 eval "$(fnm env --shell zsh --use-on-cd --version-file-strategy=recursive --corepack-enabled --resolve-engines)"
 
@@ -89,6 +102,7 @@ alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
 
 # Config files
+alias hcj='nvim ~/.config/hypr/hyprland.conf'
 alias zrc='nvim ~/.zshrc'
 alias tx='nvim ~/.config/tmux/tmux.conf'
 

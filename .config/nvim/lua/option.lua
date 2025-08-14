@@ -1,7 +1,7 @@
-vim.opt.clipboard = 'unnamedplus'
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.opt.clipboard = "unnamedplus"
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.nrformats = { "bin", "hex", "alpha" }
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 
 -- Tab
 vim.opt.tabstop = 4

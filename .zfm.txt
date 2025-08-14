@@ -1,5 +1,5 @@
 /home/nore/Rust/Lab
 /home/nore/exercism/rust
+/etc/xray
 /home/nore/.config/hypr
 /home/nore/.config/nvim/lua
-/etc/xray
