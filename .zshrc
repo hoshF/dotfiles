@@ -36,6 +36,10 @@ for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 
 # Environment
+export all_proxy="socks5://127.0.0.1:10800"
+export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+export PIP_TRUSTED_HOST=pypi.tuna.tsinghua.edu.cn
+
 export LIBVA_DRIVER_NAME=nvidia
 export GBM_BACKEND=nvidia-drm
 export __GLX_VENDOR_LIBRARY_NAME=nvidia
@@ -46,19 +50,6 @@ export EGL_PLATFORM=wayland
 export EDITOR='nvim'
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$PATH:/home/nore/.local/bin"
-
-# proxy toggle
-proxy_on() {
-    export http_proxy="http://127.0.0.1:10808"
-    export https_proxy="http://127.0.0.1:10808"
-    export all_proxy="socks5://127.0.0.1:10808"
-}
-
-proxy_off() {
-    unset http_proxy https_proxy all_proxy
-}
-
-proxy_on
 
 # Node.js version manager
 eval "$(fnm env --shell zsh --use-on-cd --version-file-strategy=recursive --corepack-enabled --resolve-engines)"
@@ -131,3 +122,12 @@ log() {
     nvim "$logfile"
 }
 
+exercism () {
+    local out
+    local IFS=$'\n'
+    out=($(command exercism "$@"))
+    printf '%s\n' "${out[@]}"
+    if [[ $1 == "download" && -d "${out[-1]}" ]]; then
+        cd "${out[-1]}" || return 1
+    fi
+}

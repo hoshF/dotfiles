@@ -14,8 +14,8 @@
      "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": " ",
+            "deactivated": " "
         }
     }, 
 
@@ -25,32 +25,32 @@
     "exec": "checkupdates | wc -l"
     },
 
-    "pulseaudio": {
-        "format": "{icon}  {volume}%",
-        "format-bluetooth": "{icon} {volume}%  {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": "",
+    "bluetooth": {
+        "format": "{icon}",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
+            "enabled": "",
+            "disabled": ""
+        },
+        "on-click": "blueman-manager"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "  {volume}%",
+        "format-icons": {
+            "headphone": " ",
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
     },
+
     "network": {
         "format-wifi": "   {essid} ({signalStrength}%)",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ",
-	    "on-click": "sh ~/.config/waybar/network.sh"
-	    //"on-click": "alacritty -e nmtui"
+	    "on-click": "alacritty -e nmtui"
 	 
     },
 

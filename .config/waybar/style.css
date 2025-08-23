@@ -18,49 +18,29 @@ window#waybar {
     padding: 0;
 }
 
+#bluetooth {
+    font-size: 16px;
+    padding: 0 4px;
+}
+#custom-updates,
+#idle_inhibitor,
 #clock,
 #battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
 #network,
-#pulseaudio,
-#wireplumber,
-#custom-media,
-#custom-update,
-#tray,
-#mode,
-#idle_inhibitor,
-#scratchpad,
-#power-profiles-daemon,
-#language,
-#mpd {
-    padding: 0 8px;
+#pulseaudio {
+    padding: 0 4px;
     background: transparent;
     border-radius: 0;
 }
 
+#custom-updates:hover,
+#bluetooth:hover,
+#custom_updates:hover,
+#idle_inhibitor:hover,
 #clock:hover,
 #battery:hover,
-#cpu:hover,
-#memory:hover,
-#disk:hover,
-#temperature:hover,
-#backlight:hover,
 #network:hover,
-#pulseaudio:hover,
-#wireplumber:hover,
-#custom-media:hover,
-#custom-update:hover,
-#tray:hover,
-#mode:hover,
-#idle_inhibitor:hover,
-#scratchpad:hover,
-#power-profiles-daemon:hover,
-#language:hover,
-#mpd:hover {
+#pulseaudio:hover {
     background-color: rgba(255, 255, 255, 0.05);
 }
 

@@ -11,6 +11,7 @@ PACMAN_PKGS=(
     git curl cmake yazi tmux mako hypridle hyprpaper waybar wofi alacritty fzf wl-clipboard yay
     fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-rime obsidian paru imv zathura
     noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra adobe-source-han-serif-cn-fonts wqy-zenhei
+    pavucontrol bluez bluez-utils blueman
 )
 
 # AUR package list (installed via yay)

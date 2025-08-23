@@ -11,6 +11,7 @@ return {
 			"rust_analyzer",
 			"clangd",
 			"lua_ls",
+			"gopls",
 		},
 	},
 }

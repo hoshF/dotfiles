@@ -3,3 +3,4 @@
 /etc/xray
 /home/nore/.config/hypr
 /home/nore/.config/nvim/lua
+/home/nore/Rust/100-exercises-to-learn-rust/exercises

@@ -1,9 +1,8 @@
 {
-    "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 32, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
+    "layer": "top",
+    "position": "top",
+    "height": 32,
+    "spacing": 4,
 
     "modules-left": [
         "hyprland/workspaces"
@@ -14,12 +13,12 @@
     "modules-right": [
         "custom/updates",
         "idle_inhibitor",
+        "bluetooth",
         "pulseaudio",
         "network",
         "battery",
         "clock"
     ],
-    //Modules configuration
 
     "include": [
 		"~/.config/waybar/modules.json"
