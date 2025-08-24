@@ -15,6 +15,7 @@ require("lazy").setup({
 	{ import = "plugins" },
 	{ import = "plugins.lsp" },
 	{ import = "plugins.dap" },
+	{ import = "plugins.cmp" },
 }, {
 	ui = {
 		border = "rounded",

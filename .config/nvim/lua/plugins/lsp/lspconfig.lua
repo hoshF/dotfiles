@@ -1,6 +1,9 @@
 return {
 	"neovim/nvim-lspconfig",
-	event = "VeryLazy",
+	dependecies = {
+		"mason-org/mason-lspconfig.nvim",
+		"saghen/blink.cmp",
+	},
 	config = function()
 		local lspconfig = require("lspconfig")
 		local capabilities = require("blink.cmp").get_lsp_capabilities()

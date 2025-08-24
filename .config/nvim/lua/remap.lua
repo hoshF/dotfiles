@@ -1,12 +1,11 @@
-local opts = {
-	noremap = true,
-	silent = true,
-}
+local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 
 -----------------
 -- Normal mode --
 -----------------
+map("n", "<CR>", "O<Esc>j", ops)
+
 map("n", "<C-h>", "<C-w>h", opts)
 map("n", "<C-j>", "<C-w>j", opts)
 map("n", "<C-k>", "<C-w>k", opts)
@@ -109,18 +108,34 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 -----------------
--- LaTex map -----
+-- LuaSnip opts--
 -----------------
-local keymap = vim.api.nvim_set_keymap
-local laopts = { expr = true, silent = true }
-keymap("i", "<Tab>", 'v:lua.luasnip.expandable() and "<Plug>luasnip-expand-snippet" or "<Tab>"', laopts)
-keymap("i", "jk", 'v:lua.luasnip.jumpable(1) and "<Plug>luasnip-jump-next" or "jk"', laopts)
-keymap("s", "jk", 'v:lua.luasnip.jumpable(1) and "<Plug>luasnip-jump-next" or "jk"', laopts)
-keymap("i", "<C-b>", 'v:lua.luasnip.jumpable(-1) and "<Plug>luasnip-jump-prev" or "<S-Tab>"', laopts)
-keymap("s", "<C-b>", 'v:lua.luasnip.jumpable(-1) and "<Plug>luasnip-jump-prev" or "<S-Tab>"', laopts)
-keymap("i", "<C-f>", 'v:lua.luasnip.choice_active() and "<Plug>luasnip-next-choice" or "<C-f>"', laopts)
-keymap("s", "<C-f>", 'v:lua.luasnip.choice_active() and "<Plug>luasnip-next-choice" or "<C-f>"', laopts)
+local luasnip = require("luasnip")
+map({ "i", "s" }, "jk", function()
+	if luasnip.jumpable(1) then
+		luasnip.jump(1)
+	end
+end)
 
-map("n", "<Leader>L", function()
+map({ "i", "s" }, "ap", function()
+	if luasnip.jumpable(-1) then
+		luasnip.jump(-1)
+	end
+end)
+
+map({ "i", "s" }, "<C-j>", function()
+	if luasnip.choice_active() then
+		luasnip.change_choice(1)
+	end
+end)
+
+map({ "i", "s" }, "<C-k>", function()
+	if luasnip.choice_active() then
+		luasnip.change_choice(-1)
+	end
+end)
+
+map("n", "<leader>ls", function()
 	require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/LuaSnip/" })
-end, { desc = "Load LuaSnip snippets" })
+	vim.notify("LuaSnip snippets reloaded!")
+end, { desc = "Reload LuaSnip snippets" })
