@@ -43,7 +43,7 @@ return {
             mappings = {
                 i = {
                     ["<CR>"] = "select_tab",
-                    ["<C-t>"] = "select_default",
+                    ["<leader>"] = "select_default",
                     ["<C-v>"] = "select_vertical",
                     ["<C-x>"] = "select_horizontal",
                     ["<Tab>"] = "move_selection_next",
