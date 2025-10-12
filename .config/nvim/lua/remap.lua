@@ -4,7 +4,7 @@ local map = vim.keymap.set
 -----------------
 -- Normal mode --
 -----------------
-map("n", "<CR>", "O<Esc>j", ops)
+map("n", "<CR>", "o<Esc>k", opts)
 
 map("n", "<C-h>", "<C-w>h", opts)
 map("n", "<C-j>", "<C-w>j", opts)
@@ -117,7 +117,7 @@ map({ "i", "s" }, "jk", function()
 	end
 end)
 
-map({ "i", "s" }, "ap", function()
+map({ "i", "s" }, "kj", function()
 	if luasnip.jumpable(-1) then
 		luasnip.jump(-1)
 	end
@@ -129,7 +129,7 @@ map({ "i", "s" }, "<C-j>", function()
 	end
 end)
 
-map({ "i", "s" }, "<C-k>", function()
+map({ "i", "s" }, "<C-n>", function()
 	if luasnip.choice_active() then
 		luasnip.change_choice(-1)
 	end

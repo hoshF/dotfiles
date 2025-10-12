@@ -1,6 +1,6 @@
+/home/nore/Downloads
 /home/nore/Rust/Lab
-/home/nore/exercism/rust
-/etc/xray
+
 /home/nore/.config/hypr
 /home/nore/.config/nvim/lua
-/home/nore/Rust/100-exercises-to-learn-rust/exercises
+/home/nore/Documents/Programing/

@@ -8,7 +8,7 @@ return {
 	},
 	lazy = false,
 	opts = {
-		vim.keymap.set("n", "<leader>e", "<Cmd>Neotree<CR>"),
+		vim.keymap.set("n", "<space>e", "<Cmd>Neotree<CR>"),
 		close_if_last_window = false,
 		popup_border_style = "NC",
 		enable_git_status = true,
@@ -61,7 +61,7 @@ return {
 			git_status = {
 				symbols = {
 					added = "",--"✚",
-					modified = "",
+					modified = "", --""",
 					deleted = "✖",
 					renamed = "󰁕",
 					untracked = "",
@@ -98,7 +98,7 @@ return {
 		commands = {},
 		window = {
 			position = "left",
-			width = 40,
+			width = 25,
 			mapping_options = {
 				noremap = true,
 				nowait = true,

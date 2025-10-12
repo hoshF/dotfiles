@@ -10,6 +10,8 @@ return {
 			"clangd",
 			"lua_ls",
 			"gopls",
+            "ts_ls",
+            "texlab",
 		},
 	},
 }

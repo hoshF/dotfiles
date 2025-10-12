@@ -1,11 +1,11 @@
 return {
 	"neovim/nvim-lspconfig",
-	dependecies = {
+	dependencies = {
 		"mason-org/mason-lspconfig.nvim",
 		"saghen/blink.cmp",
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
+		-- local lspconfig = require("lspconfig")
 		local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 		local on_attach = function(client, _)
@@ -13,7 +13,8 @@ return {
 			client.server_capabilities.documentRangeFormattingProvider = false
 		end
 
-		lspconfig.lua_ls.setup({
+		-- lspconfig.lua_ls.setup({
+		vim.lsp.config("lua_ls", {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = {
@@ -33,6 +34,7 @@ return {
 				},
 			},
 		})
+		vim.lsp.enable("lua_ls")
 
 		vim.diagnostic.config({
 			virtual_text = true,

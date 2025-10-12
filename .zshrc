@@ -36,7 +36,7 @@ for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 
 # Environment
-export all_proxy="socks5://127.0.0.1:10800"
+export all_proxy="socks5://127.0.0.1:7890"
 export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 export PIP_TRUSTED_HOST=pypi.tuna.tsinghua.edu.cn
 
@@ -48,11 +48,16 @@ export QT_OPENGL=egl
 export EGL_PLATFORM=wayland
 
 export EDITOR='nvim'
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$PATH:/home/nore/.local/bin"
+path=(
+    "$HOME/.cargo/bin"
+    "$HOME/.local/bin"
+    "$HOME/go/bin"
+    $path
+)
+export PATH
 
 # Node.js version manager
-eval "$(fnm env --shell zsh --use-on-cd --version-file-strategy=recursive --corepack-enabled --resolve-engines)"
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd)"
 
 # Yazi file manager with cd support
 function y() {
@@ -69,11 +74,14 @@ alias pac='sudo pacman'
 alias tm='tmux'
 alias ll='ls -alF'
 alias jl='journalctl'
+alias dirt='all_proxy=""'
 
 # Editor
 alias vi='nvim'
 alias vim='nvim'
 alias za='zathura'
+alias mc='ncmpcpp'
+
 
 # Rust development
 alias vrs='nvim src/main.rs'
@@ -84,10 +92,11 @@ alias cud='cargo build'
 alias cew='cargo new'
 alias can='cargo clean'
 alias cst='cargo test'
+alias cbd='cargo build'
 
 # Git
 alias gs='git status'
-alias ga='git add .'
+alias ga='git add'
 alias gc='git commit -m'
 alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
@@ -96,6 +105,12 @@ alias gl='git log --oneline --graph --decorate'
 alias hcj='nvim ~/.config/hypr/hyprland.conf'
 alias zrc='nvim ~/.zshrc'
 alias tx='nvim ~/.config/tmux/tmux.conf'
+
+# tools
+alias f3='flask-session-cookie-manager3'
+
+#others
+alias esub='exercism submit'
 
 # zfm toggle 
 zfm_cd() {
