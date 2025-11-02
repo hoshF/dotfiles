@@ -13,6 +13,7 @@ return {
 				functions = {},
 				variables = {},
 			},
+			cache = true,
 		})
 
 		vim.cmd.colorscheme("tokyonight")

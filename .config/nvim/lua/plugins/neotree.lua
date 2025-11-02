@@ -6,9 +6,11 @@ return {
 		"MunifTanjim/nui.nvim",
 		"nvim-tree/nvim-web-devicons",
 	},
-	lazy = false,
+	cmd = "Neotree",
+	keys = {
+		{ "<space>e", "<cmd>Neotree toggle<cr>", desc = "Toggle Neo-tree" },
+	},
 	opts = {
-		vim.keymap.set("n", "<space>e", "<Cmd>Neotree<CR>"),
 		close_if_last_window = false,
 		popup_border_style = "NC",
 		enable_git_status = true,
@@ -29,13 +31,13 @@ return {
 				last_indent_marker = "└",
 				highlight = "NeoTreeIndentMarker",
 				with_expanders = nil,
-				expander_collapsed = "",
-				expander_expanded = "",
+				expander_collapsed = "",
+				expander_expanded = "",
 				expander_highlight = "NeoTreeExpander",
 			},
 			icon = {
-				folder_closed = "",
-				folder_open = "",
+				folder_closed = "",
+				folder_open = "",
 				folder_empty = "󰜌",
 				provider = function(icon, node, state)
 					if node.type == "file" or node.type == "terminal" then
@@ -60,15 +62,15 @@ return {
 			},
 			git_status = {
 				symbols = {
-					added = "",--"✚",
-					modified = "", --""",
+					added = "", --"✚",
+					modified = "", --""",
 					deleted = "✖",
 					renamed = "󰁕",
-					untracked = "",
-					ignored = "",
+					untracked = "",
+					ignored = "",
 					unstaged = "󰄱",
-					staged = "",
-					conflict = "",
+					staged = "",
+					conflict = "",
 				},
 			},
 			file_size = {
@@ -104,49 +106,59 @@ return {
 				nowait = true,
 			},
 			mappings = {
-				["<space>"] = {
-					"toggle_node",
-					nowait = false,
-				},
-				["<2-LeftMouse>"] = "open",
-				["<cr>"] = "open",
-				["<esc>"] = "cancel",
+				-- Basic Navigation
+				["<space>"] = { "toggle_node", nowait = false }, -- Expand/collapse folder
+				["<2-LeftMouse>"] = "open", -- Double click to open
+				["<cr>"] = "open", -- Enter: open file/folder
+				["<esc>"] = "cancel", -- Escape: cancel operation
+				["q"] = "close_window", -- q: close Neo-tree window
+
+				-- Preview
 				["P"] = {
-					"toggle_preview",
+					"toggle_preview", -- P: toggle preview window
 					config = {
 						use_float = true,
 						use_snacks_image = true,
 						use_image_nvim = true,
 					},
 				},
-				["l"] = "focus_preview",
-				["S"] = "open_split",
-				["s"] = "open_vsplit",
-				["t"] = "open_tabnew",
-				["w"] = "open_with_window_picker",
-				["C"] = "close_all_nodes",
-				["v"] = "expand_all_subnodes",
+				["l"] = "focus_preview", -- l: focus on preview window
+
+				-- Split Windows
+				["S"] = "open_split", -- S: open in horizontal split
+				["s"] = "open_vsplit", -- s: open in vertical split
+				["t"] = "open_tabnew", -- t: open in new tab
+				["w"] = "open_with_window_picker", -- w: pick window to open file
+
+				-- Folder Operations
+				["C"] = "close_all_nodes", -- C: close all folders
+				["v"] = "expand_all_subnodes", -- v: expand all subfolders
+
+				-- File Operations
 				["a"] = {
-					"add",
+					"add", -- a: add new file
 					config = {
 						show_path = "none",
 					},
 				},
-				["A"] = "add_directory",
-				["d"] = "delete",
-				["r"] = "rename",
-				["b"] = "rename_basename",
-				["y"] = "copy_to_clipboard",
-				["x"] = "cut_to_clipboard",
-				["p"] = "paste_from_clipboard",
-				["c"] = "copy",
-				["m"] = "move",
-				["q"] = "close_window",
-				["R"] = "refresh",
-				["?"] = "show_help",
-				["<"] = "prev_source",
-				[">"] = "next_source",
-				["i"] = "show_file_details",
+				["A"] = "add_directory", -- A: add new directory
+				["d"] = "delete", -- d: delete file/folder
+				["r"] = "rename", -- r: rename file/folder
+				["b"] = "rename_basename", -- b: rename only basename (keep extension)
+
+				-- Copy/Paste
+				["y"] = "copy_to_clipboard", -- y: copy (yank) to clipboard
+				["x"] = "cut_to_clipboard", -- x: cut to clipboard
+				["p"] = "paste_from_clipboard", -- p: paste from clipboard
+				["c"] = "copy", -- c: copy file/folder
+				["m"] = "move", -- m: move file/folder
+
+				-- Utility
+				["R"] = "refresh", -- R: refresh tree
+				["?"] = "show_help", -- ?: show help
+				["<"] = "prev_source", -- <: previous source (filesystem/buffers/git)
+				[">"] = "next_source", -- >: next source
+				["i"] = "show_file_details", -- i: show file info
 			},
 		},
 		nesting_rules = {},
@@ -173,28 +185,35 @@ return {
 			use_libuv_file_watcher = false,
 			window = {
 				mappings = {
-					["<bs>"] = "navigate_up",
-					["."] = "set_root",
-					["H"] = "toggle_hidden",
-					["/"] = "fuzzy_finder",
-					["D"] = "fuzzy_finder_directory",
-					["#"] = "fuzzy_sorter",
-					["f"] = "filter_on_submit",
-					["<c-x>"] = "clear_filter",
-					["[g"] = "prev_git_modified",
-					["]g"] = "next_git_modified",
+					-- Filesystem Navigation
+					["<bs>"] = "navigate_up", -- Backspace: go to parent directory
+					["."] = "set_root", -- .: set current folder as root
+					["H"] = "toggle_hidden", -- H: toggle hidden files visibility
+
+					-- Search & Filter
+					["/"] = "fuzzy_finder", -- /: fuzzy search files
+					["D"] = "fuzzy_finder_directory", -- D: fuzzy search directories
+					["#"] = "fuzzy_sorter", -- #: fuzzy sort
+					["f"] = "filter_on_submit", -- f: filter files
+					["<c-x>"] = "clear_filter", -- Ctrl+x: clear filter
+
+					-- Git Navigation
+					["[g"] = "prev_git_modified", -- [g: previous git modified file
+					["]g"] = "next_git_modified", -- ]g: next git modified file
+
+					-- Sorting Options (press 'o' first, then press another key)
 					["o"] = {
-						"show_help",
+						"show_help", -- o: show ordering menu
 						nowait = false,
 						config = { title = "Order by", prefix_key = "o" },
 					},
-					["oc"] = { "order_by_created", nowait = false },
-					["od"] = { "order_by_diagnostics", nowait = false },
-					["og"] = { "order_by_git_status", nowait = false },
-					["om"] = { "order_by_modified", nowait = false },
-					["on"] = { "order_by_name", nowait = false },
-					["os"] = { "order_by_size", nowait = false },
-					["ot"] = { "order_by_type", nowait = false },
+					["oc"] = { "order_by_created", nowait = false }, -- oc: sort by created time
+					["od"] = { "order_by_diagnostics", nowait = false }, -- od: sort by diagnostics
+					["og"] = { "order_by_git_status", nowait = false }, -- og: sort by git status
+					["om"] = { "order_by_modified", nowait = false }, -- om: sort by modified time
+					["on"] = { "order_by_name", nowait = false }, -- on: sort by name
+					["os"] = { "order_by_size", nowait = false }, -- os: sort by size
+					["ot"] = { "order_by_type", nowait = false }, -- ot: sort by type
 				},
 				fuzzy_finder_mappings = {
 					["<down>"] = "move_cursor_down",
@@ -228,10 +247,13 @@ return {
 			show_unloaded = true,
 			window = {
 				mappings = {
-					["d"] = "buffer_delete",
-					["bd"] = "buffer_delete",
-					["<bs>"] = "navigate_up",
-					["."] = "set_root",
+					-- Buffer Operations
+					["d"] = "buffer_delete", -- d: delete buffer
+					["bd"] = "buffer_delete", -- bd: delete buffer (alternative)
+					["<bs>"] = "navigate_up", -- Backspace: navigate up
+					["."] = "set_root", -- .: set root
+
+					-- Sorting Options
 					["o"] = {
 						"show_help",
 						nowait = false,
@@ -250,14 +272,17 @@ return {
 			window = {
 				position = "float",
 				mappings = {
-					["A"] = "git_add_all",
-					["gu"] = "git_unstage_file",
-					["gU"] = "git_undo_last_commit",
-					["ga"] = "git_add_file",
-					["gr"] = "git_revert_file",
-					["gc"] = "git_commit",
-					["gp"] = "git_push",
-					["gg"] = "git_commit_and_push",
+					-- Git Operations
+					["A"] = "git_add_all", -- A: git add all
+					["gu"] = "git_unstage_file", -- gu: git unstage file
+					["gU"] = "git_undo_last_commit", -- gU: git undo last commit
+					["ga"] = "git_add_file", -- ga: git add file
+					["gr"] = "git_revert_file", -- gr: git revert file
+					["gc"] = "git_commit", -- gc: git commit
+					["gp"] = "git_push", -- gp: git push
+					["gg"] = "git_commit_and_push", -- gg: git commit and push
+
+					-- Sorting Options
 					["o"] = {
 						"show_help",
 						nowait = false,

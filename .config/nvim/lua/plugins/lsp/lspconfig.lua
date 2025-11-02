@@ -1,5 +1,6 @@
 return {
 	"neovim/nvim-lspconfig",
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"mason-org/mason-lspconfig.nvim",
 		"saghen/blink.cmp",
@@ -12,6 +13,7 @@ return {
 			client.server_capabilities.documentRangeFormattingProvider = false
 		end
 
+		-- lua
 		vim.lsp.config("lua_ls", {
 			capabilities = capabilities,
 			on_attach = on_attach,
@@ -34,7 +36,7 @@ return {
 		})
 		vim.lsp.enable("lua_ls")
 
-		-- -- Rust
+		-- Rust
 		vim.lsp.config("rust_analyzer", {
 			capabilities = capabilities,
 			on_attach = on_attach,
@@ -58,20 +60,21 @@ return {
 		})
 		vim.lsp.enable("rust_analyzer")
 
-		-- vim.lsp.config("asm_lsp", {
-		-- 	on_attach = on_attach,
-		-- 	capabilities = capabilities,
-		-- 	-- settings = {
-		-- 	-- 	assemblers = {
-		-- 	-- 		nasm = { "nasm", "-f", "elf64", "-g" },
-		-- 	-- 		gas = { "as", "--gstabs" },
-		-- 	-- 	},
-		-- 	-- 	diagnostics = {
-		-- 	-- 		enabled = true,
-		-- 	-- 	},
-		-- 	-- },
-		-- })
-		-- vim.lsp.enable("asm_lsp")
+		local other_servers = {
+			"pylsp",
+			"clangd",
+			"gopls",
+			"ts_ls",
+			"texlab",
+		}
+
+		for _, server in ipairs(other_servers) do
+			vim.lsp.config(server, {
+				capabilities = capabilities,
+				on_attach = on_attach,
+			})
+			vim.lsp.enable(server)
+		end
 
 		vim.diagnostic.config({
 			virtual_text = false,

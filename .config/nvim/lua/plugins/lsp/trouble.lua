@@ -1,7 +1,7 @@
 return {
 	"folke/trouble.nvim",
 	dependencies = { "neovim/nvim-lspconfig" },
-    cmd = "Trouble",
+	cmd = "Trouble",
 	opts = {
 		focus = true,
 		follow = true,

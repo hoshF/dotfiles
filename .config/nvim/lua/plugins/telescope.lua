@@ -10,6 +10,12 @@ return {
         },
     },
     cmd = "Telescope",
+    keys = {
+		{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
+		{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
+		{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+		{ "<leader>fc", "<cmd>Telescope commands<cr>", desc = "Commands" },
+	},
     config = function(_, opts)
         vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "FloatBorder" })
         vim.api.nvim_set_hl(0, "TelescopePromptBorder", { link = "FloatBorder" })

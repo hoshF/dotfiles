@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	vim.fn.system({
@@ -20,7 +22,12 @@ require("lazy").setup({
 		border = "rounded",
 	},
 	performance = {
+		cache = {
+			enabled = true,
+		},
+		reset_packpath = true,
 		rtp = {
+			reset = true,
 			disabled_plugins = {
 				"gzip",
 				"matchit",
@@ -33,6 +40,8 @@ require("lazy").setup({
 			},
 		},
 	},
+	checker = { enabled = false },
+	change_detection = { enabled = false },
 })
 require("option")
 require("remap")

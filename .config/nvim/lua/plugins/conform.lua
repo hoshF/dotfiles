@@ -1,8 +1,18 @@
 return {
 	"stevearc/conform.nvim",
-	event = "VeryLazy",
-	opts = {
-		async = true,
+	event = { "BufReadPre", "BufNewFile" },
+	cmd = "ConformInfo",
+	keys = {
+		{
+			"<space>f",
+			function()
+				require("conform").format({ async = true, lsp_fallback = true })
+			end,
+			mode = { "n", "v" },
+			desc = "Format buffer",
+		},
+	},  -- ← keys 在这里结束
+	opts = {  -- ← opts 应该和 keys 平级
 		formatters_by_ft = {
 			lua = { "stylua" },
 			python = { "isort", "black" },
@@ -28,7 +38,9 @@ return {
 				},
 			},
 		},
-		fallback_lsp_format = true,
+		default_format_opts = {
+			lsp_fallback = true,
+		},
 		notify_on_error = true,
 	},
 }
