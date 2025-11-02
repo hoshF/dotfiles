@@ -9,6 +9,7 @@ return {
 			rust = { "rustfmt" },
 			go = { "gofmt" },
 			c = { "clang-format" },
+			asm = { "asmfmt" },
 			tex = { "latexindent" },
 			html = { "prettierd" },
 			htmldjango = { "prettierd" },
@@ -20,7 +21,14 @@ return {
 			json = { "prettierd" },
 			css = { "prettierd" },
 		},
+		formatters = {
+			["clang-format"] = {
+				prepend_args = {
+					"--style={IndentWidth: 4, TabWidth: 4, UseTab: Never}",
+				},
+			},
+		},
 		fallback_lsp_format = true,
-        notify_on_error = true,
+		notify_on_error = true,
 	},
 }

@@ -20,7 +20,7 @@
     }, 
 
     "custom/updates": {
-    "format": "  {}",
+    "format": " {}",
     "interval": 3600,
     "exec": "checkupdates | wc -l"
     },
@@ -39,13 +39,13 @@
         "format-muted": "  {volume}%",
         "format-icons": {
             "headphone": " ",
-            "default": [" ", " ", " "]
+            "default": ["", "", " "]
         },
         "on-click": "pavucontrol"
     },
 
     "network": {
-        "format-wifi": "   {essid} ({signalStrength}%)",
+        "format-wifi": "  {essid} ({signalStrength}%)",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",

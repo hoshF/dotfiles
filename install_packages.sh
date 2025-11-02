@@ -13,6 +13,7 @@ PACMAN_PKGS=(
     noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra adobe-source-han-serif-cn-fonts wqy-zenhei
     pavucontrol bluez bluez-utils blueman
     perl-yaml-tiny perl-file-homedir perl-unicode-string
+    wf-recorder
 )
 
 # AUR package list (installed via yay)

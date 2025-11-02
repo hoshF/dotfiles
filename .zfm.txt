@@ -1,6 +1,7 @@
+/home/nore/Documents/
 /home/nore/Downloads
 /home/nore/Rust/Lab
 
 /home/nore/.config/hypr
 /home/nore/.config/nvim/lua
-/home/nore/Documents/Programing/
+/home/nore/Documents/rCore-Tutorial-v3-main

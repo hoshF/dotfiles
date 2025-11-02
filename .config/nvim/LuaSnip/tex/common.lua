@@ -38,8 +38,15 @@ return {
 		t("}"),
 		t({ "", "\\author{" }),
 		i(2, "Nore"),
-		t({ "}",  "\\date{" }),
+		t({ "}", "\\date{" }),
 		i(3, "\\today"),
-		t({ "}",  "\\maketitle", "" }),
+		t({ "}", "\\maketitle", "" }),
 	}),
+	s(
+		{ trig = "hr", dscr = "The hyperref package's href{}{} command (for url links)" },
+		fmta([[\href{<>}{<>}]], {
+			i(1, "url"),
+			i(2, "display name"),
+		})
+	),
 }

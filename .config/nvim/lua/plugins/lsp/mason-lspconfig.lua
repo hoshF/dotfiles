@@ -12,6 +12,7 @@ return {
 			"gopls",
             "ts_ls",
             "texlab",
+            "asm_lsp",
 		},
 	},
 }

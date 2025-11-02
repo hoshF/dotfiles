@@ -1,4 +1,4 @@
-# Basic zsh settings
+#https://github.com/bee-san/RustScan.git Basic zsh settings
 setopt HIST_IGNORE_ALL_DUPS    # No duplicate commands in history
 bindkey -e                     # Use emacs shortcuts (Ctrl+A, Ctrl+E, etc.)
 WORDCHARS=${WORDCHARS//[\/]}   # Better word navigation
@@ -36,6 +36,7 @@ for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 
 # Environment
+export ALL_PROXY="$all_proxy"
 export all_proxy="socks5://127.0.0.1:7890"
 export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 export PIP_TRUSTED_HOST=pypi.tuna.tsinghua.edu.cn
@@ -46,6 +47,9 @@ export __GLX_VENDOR_LIBRARY_NAME=nvidia
 export WLR_NO_HARDWARE_CURSORS=1
 export QT_OPENGL=egl
 export EGL_PLATFORM=wayland
+
+export CARGO_HOME="$HOME/.cargo"
+export RUSTUP_HOME="$HOME/.rustup"
 
 export EDITOR='nvim'
 path=(
@@ -84,6 +88,7 @@ alias mc='ncmpcpp'
 
 
 # Rust development
+alias rlib='cd $(rustc --print sysroot)/lib/rustlib/src/rust/library/'
 alias vrs='nvim src/main.rs'
 alias vtm='nvim Cargo.toml'
 alias cdd='cargo add'
@@ -146,3 +151,12 @@ exercism () {
         cd "${out[-1]}" || return 1
     fi
 }
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/home/nore/.opam/opam-init/init.zsh' ]] || source '/home/nore/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration

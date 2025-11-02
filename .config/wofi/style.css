@@ -1,74 +1,66 @@
-@define-color color-base #fafbfc;
+@define-color color-base #1a1b26;
 @define-color transparent rgba(0, 0, 0, 0);
-@define-color color-success #28a745;
-@define-color color-border #e1e4e8;
-@define-color color-danger #d74a49;
-@define-color color-accent #0366d6;
-@define-color color-text #24292e;
+@define-color color-success #9ece6a;
+@define-color color-border #414868;
+@define-color color-danger #f7768e;
+@define-color color-accent #7aa2f7;
+@define-color color-text #c0caf5;
 
 * {
-  font-family: 'BlexMonoNerdFontMono', monospace;
-  font-size: 14px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
 }
 
 window {
   margin: 0px;
-  padding: 6px;
+  padding: 4px;
   border: 1px solid @color-border;
-  border-radius: 6px;
   background-color: @color-base;
 }
 
-#inner-box {
-  margin: 3px;
-  padding: 6px;
-  border: none;
-}
-
-#outer-box {
-  margin: 3px;
-  padding: 6px;
+#inner-box, #outer-box {
+  margin: 2px;
+  padding: 4px;
   border: none;
 }
 
 #scroll {
-  margin: 0px;
-  padding: 6px;
-  border: none;
+  display: none;
 }
 
 #input {
-  margin: 3px 12px;
-  padding: 6px;
+  margin: 8px 14px;
+  padding: 4px;
   border: none;
-  border-radius: 4px;
+  font-size: 16px;
   color: @color-text;
-  background-color: rgba(241, 243, 244, 0.6);
+  background-color: rgba(70, 75, 90, 0.6);
 }
 
 #input:focus {
-  background-color: rgba(241, 243, 244, 0.8);
-  box-shadow: 0 0 0 2px rgba(3, 102, 214, 0.2); 
+  background-color: rgba(70, 75, 90, 0.8);
+  box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.2);
 }
 
 #input image {
   order: none;
-  color: @color-accent
-  -gtk-icon-source: -gtk-icontheme("system-search"); 
+  color: @color-accent;
+  -gtk-icon-source: -gtk-icontheme("system-search");
 }
 
 #text {
-  margin: 3px;
+  margin: 2px 4px;
   border: none;
   color: @color-text;
 }
 
 #entry {
   background-color: @transparent;
+  padding: 2px 4px;
 }
 
 #entry:selected {
-    background-color: rgba(3, 102, 214, 0.1);
+  background-color: rgba(122, 162, 247, 0.15);
 }
 
 #entry:selected #text {

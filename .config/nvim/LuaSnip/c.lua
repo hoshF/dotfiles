@@ -12,14 +12,40 @@ local get_visual = require("luasnip-helper-funcs").get_visual
 
 return {
 	s(
-		"iman",
+		"std",
 		fmt(
 			[[
-int main(void) {{
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+{}
+
+int main(int argc, char *argv[]) {{
     {}
     return 0;
 }}
 ]],
+			{
+				i(1, ""),
+				i(2, ""),
+			}
+		)
+	),
+
+	s(
+		{
+			trig = "gcc",
+			snippetType = "autosnippet",
+		},
+		fmt(
+			[[
+/*
+
+{} 
+
+*/
+            ]],
 			{
 				i(1, ""),
 			}
