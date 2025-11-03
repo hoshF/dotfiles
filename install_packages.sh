@@ -9,11 +9,12 @@ fi
 # Official pacman package list
 PACMAN_PKGS=(
     git curl cmake yazi tmux mako hypridle hyprpaper waybar wofi alacritty fzf wl-clipboard yay
-    fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-rime obsidian paru imv zathura
+    fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-rime paru imv zathura
     noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra adobe-source-han-serif-cn-fonts wqy-zenhei
     pavucontrol bluez bluez-utils blueman
     perl-yaml-tiny perl-file-homedir perl-unicode-string
     wf-recorder
+    sof-firmware alsa-firmware alsa-ucm-conf firefox
 )
 
 # AUR package list (installed via yay)
@@ -67,13 +68,13 @@ fi
 
 echo "Installation complete! Please log out and log back in to apply the input method and set your theme."
 
-# Install the Rust
-if command -v curl &> /dev/null; then
-    echo "Installing Rust"
-    sudo -u "$SUDO_USER" curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-else
-    echo "curl is not installed. Please install it and try again."
-    exit 1
-fi
-
-echo "Rust installed!!!"
+# # Install the Rust
+# if command -v curl &> /dev/null; then
+#     echo "Installing Rust"
+#     sudo -u "$SUDO_USER" curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# else
+#     echo "curl is not installed. Please install it and try again."
+#     exit 1
+# fi
+#
+# echo "Rust installed!!!"
