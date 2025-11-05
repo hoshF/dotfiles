@@ -36,9 +36,3 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end, bufopts)
 	end,
 })
-
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-	callback = function()
-		vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
-	end,
-})

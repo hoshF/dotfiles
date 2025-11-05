@@ -1,15 +1,16 @@
 return {
 	"folke/trouble.nvim",
 	dependencies = { "neovim/nvim-lspconfig" },
-	cmd = "Trouble",
+	cmd = { "Trouble", "TroubleToggle" },
 	opts = {
+		mode = "diagnostics",
+		auto_close = true,
+		auto_refresh = false,
 		focus = true,
 		follow = true,
 		indent_guides = true,
 		max_items = 200,
 		multiline = true,
-		auto_close = true,
-		auto_refresh = true,
 
 		win = {
 			position = "bottom",
@@ -22,7 +23,7 @@ return {
 
 		keys = {
 			["q"] = "close",
-			["<esc>"] = "cancel",
+			["<esc>"] = "close",
 			["<cr>"] = "jump_close",
 			["o"] = "jump",
 			["p"] = "preview",
@@ -33,4 +34,17 @@ return {
 			["<C-x>"] = "jump_split",
 		},
 	},
+
+	config = function(_, opts)
+		require("trouble").setup(opts)
+
+		vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Toggle Trouble diagnostics" })
+		vim.keymap.set("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", { desc = "Toggle Trouble quickfix" })
+
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "TroubleOpen",
+			callback = function() vim.cmd("wincmd J") end,
+		})
+	end,
 }
+

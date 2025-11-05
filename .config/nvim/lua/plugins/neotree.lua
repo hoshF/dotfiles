@@ -38,7 +38,7 @@ return {
 			icon = {
 				folder_closed = "",
 				folder_open = "",
-				folder_empty = "󰜌",
+				folder_empty = "",
 				provider = function(icon, node, state)
 					if node.type == "file" or node.type == "terminal" then
 						local success, web_devicons = pcall(require, "nvim-web-devicons")
@@ -68,7 +68,7 @@ return {
 					renamed = "󰁕",
 					untracked = "",
 					ignored = "",
-					unstaged = "󰄱",
+					unstaged = "",
 					staged = "",
 					conflict = "",
 				},
