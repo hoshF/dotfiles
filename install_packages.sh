@@ -8,8 +8,8 @@ fi
 
 # Official pacman package list
 PACMAN_PKGS=(
-    git curl cmake yazi tmux mako hypridle hyprpaper waybar wofi alacritty fzf wl-clipboard yay
-    fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-rime paru imv zathura
+    openssh ly git curl cmake yazi tmux mako hyprland hypridle hyprpaper waybar wofi alacritty fzf wl-clipboard yay
+    fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-rime paru imv zathura zathura-pdf-mupdf texlive texlive-langchinese texlive-latexextra
     noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra adobe-source-han-serif-cn-fonts wqy-zenhei
     pavucontrol bluez bluez-utils blueman
     perl-yaml-tiny perl-file-homedir perl-unicode-string

@@ -1,26 +1,26 @@
 * {
-    font-family: "BlexMonoNerdFont", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    transition: background-color .3s ease-out; 
+  font-family:
+    "BlexMonoNerdFont", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  transition: background-color 0.3s ease-out;
 }
-
 window#waybar {
-    background: rgba(20, 20, 28, 0.95);
-    color: #c0caf5;
-    font-family: SpaceMono Nerd Font, feather;
+  background: rgba(20, 20, 28, 0.95);
+  color: #c0caf5;
+  font-family:
+    SpaceMono Nerd Font,
+    feather;
 }
-
 .modules-left,
 .modules-center,
 .modules-right {
-    background: transparent;
-    margin: 0;
-    padding: 0;
+  background: transparent;
+  margin: 0;
+  padding: 0;
 }
-
 #bluetooth {
-    font-size: 16px;
-    padding: 0 4px;
+  font-size: 16px;
+  padding: 0 4px;
 }
 #custom-updates,
 #idle_inhibitor,
@@ -28,11 +28,10 @@ window#waybar {
 #battery,
 #network,
 #pulseaudio {
-    padding: 0 4px;
-    background: transparent;
-    border-radius: 0;
+  padding: 0 4px;
+  background: transparent;
+  border-radius: 0;
 }
-
 #custom-updates:hover,
 #bluetooth:hover,
 #custom_updates:hover,
@@ -41,30 +40,25 @@ window#waybar {
 #battery:hover,
 #network:hover,
 #pulseaudio:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.05);
 }
-
 #workspaces {
-    padding: 0 4px;
+  padding: 0 4px;
 }
-
 #workspaces button {
-    background: transparent;
-    font-family: SpaceMono Nerd Font;
-    font-weight: normal;
-    font-size: 14px;
-    color: #c0caf5;
-    border: none;
-    border-radius: 0;
-    padding: 0 8px;
+  background: transparent;
+  font-family: SpaceMono Nerd Font;
+  font-weight: normal;
+  font-size: 14px;
+  color: #c0caf5;
+  border: none;
+  border-radius: 0;
+  padding: 0 8px;
 }
-
 #workspaces button.active {
-    color: #7aa2f7;
-    border-bottom: 2px solid #7aa2f7;
+  color: #7aa2f7;
+  border-bottom: 2px solid #7aa2f7;
 }
-
 #workspaces button:hover {
-    color: #cdd6f4;
+  color: #cdd6f4;
 }
-
