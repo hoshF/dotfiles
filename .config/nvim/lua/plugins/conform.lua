@@ -11,8 +11,8 @@ return {
 			mode = { "n", "v" },
 			desc = "Format buffer",
 		},
-	},  -- ← keys 在这里结束
-	opts = {  -- ← opts 应该和 keys 平级
+	},
+	opts = {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			python = { "isort", "black" },
@@ -30,11 +30,23 @@ return {
 			typescriptreact = { "prettierd", "eslint_d" },
 			json = { "prettierd" },
 			css = { "prettierd" },
+			sh = { "shfmt" },
+			bash = { "shfmt" },
+			zsh = { "shfmt" },
 		},
 		formatters = {
 			["clang-format"] = {
 				prepend_args = {
 					"--style={IndentWidth: 4, TabWidth: 4, UseTab: Never}",
+				},
+				["shfmt"] = {
+					prepend_args = {
+						"-i",
+						"4",
+						"-bn",
+						"-ci",
+						"-sr",
+					},
 				},
 			},
 		},

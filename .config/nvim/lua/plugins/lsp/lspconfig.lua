@@ -66,6 +66,7 @@ return {
 			"gopls",
 			"ts_ls",
 			"texlab",
+            "asm_lsp" -- asm-lsp gen-config
 		}
 
 		for _, server in ipairs(other_servers) do

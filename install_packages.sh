@@ -1,80 +1,251 @@
 #!/bin/bash
 
-# Check if the script is run as root
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# Check root
 if [ "$(id -u)" -ne 0 ]; then
-    echo "Please run this script with sudo!"
+    echo -e "${RED}Run with sudo${NC}"
     exit 1
 fi
 
-# Official pacman package list
+# Get real user
+REAL_USER="${SUDO_USER:-$USER}"
+REAL_HOME=$(eval echo ~"$REAL_USER")
+
+echo -e "${GREEN}=== Arch Setup ===${NC}"
+echo "User: $REAL_USER"
+
+# Detect proxy
+PROXY_AVAILABLE=false
+if [ -n "$http_proxy" ] || [ -n "$https_proxy" ] || [ -n "$all_proxy" ] || [ -n "$ALL_PROXY" ]; then
+    PROXY_AVAILABLE=true
+    echo -e "${GREEN}✓ Proxy detected${NC}"
+else
+    echo -e "${YELLOW}✗ No proxy${NC}"
+fi
+echo ""
+
+# Official packages
 PACMAN_PKGS=(
-    openssh ly git curl cmake yazi tmux mako hyprland hypridle hyprpaper waybar wofi alacritty fzf wl-clipboard yay
-    fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-rime paru imv zathura zathura-pdf-mupdf texlive texlive-langchinese texlive-latexextra
-    noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra adobe-source-han-serif-cn-fonts wqy-zenhei
+    # Core tools
+    unzip openssh git curl wget cmake
+
+    # Terminal & dev
+    tmux yazi fzf wl-clipboard alacritty
+
+    # Hyprland
+    hyprland hypridle hyprpaper waybar wofi mako ly
+
+    # Input method
+    fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-rime
+
+    # Viewers
+    imv zathura zathura-pdf-poppler
+
+    # LaTeX
+    texlive texlive-langchinese texlive-latexextra texlive-fontsextra
+    perl-yaml-tiny perl-file-homedir perl-unicode-string perl
+
+    # Fonts
+    noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+    adobe-source-han-serif-cn-fonts wqy-zenhei
+
+    # Audio & Bluetooth
     pavucontrol bluez bluez-utils blueman
-    perl-yaml-tiny perl-file-homedir perl-unicode-string
-    wf-recorder
-    sof-firmware alsa-firmware alsa-ucm-conf firefox
+    sof-firmware alsa-firmware alsa-ucm-conf
+
+    # Misc
+    wf-recorder firefox yay paru
+
+    # Neovim formatters
+    stylua python-black python-isort clang go npm shfmt
 )
 
-# AUR package list (installed via yay)
+# AUR packages
 AUR_PKGS=(
-    xray ttf-ibmplex-mono-nerd rime-ice epr
+    otf-latin-modern
+    ttf-ibmplex-mono-nerd
+    rime-ice
+    epr
+    xray
+    fcitx5-skin-fluentlight-git
+    fnm
+)
+
+# Go packages
+GO_PKGS=(
+    github.com/asmfmt/asmfmt@latest
 )
 
 # Install pacman packages
-echo "Installing official pacman packages..."
-pacman -S --noconfirm --needed "${PACMAN_PKGS[@]}" || {
-    echo "Some pacman packages failed to install. Trying to sync the database and retrying..."
-    pacman -Sy --noconfirm && pacman -S --noconfirm --needed "${PACMAN_PKGS[@]}" || exit 1
+install_pacman() {
+    echo -e "${GREEN}[1/7] Installing packages...${NC}"
+    pacman -Syu --noconfirm || exit 1
+    pacman -S --noconfirm --needed "${PACMAN_PKGS[@]}" || {
+        pacman -Sy --noconfirm && pacman -S --noconfirm --needed "${PACMAN_PKGS[@]}" || exit 1
+    }
 }
 
-# Install AUR packages via yay
-if command -v yay &> /dev/null; then
-    echo "Installing AUR packages via yay..."
-    sudo -u "$SUDO_USER" yay -S --noconfirm --needed "${AUR_PKGS[@]}" || exit 1
-else
-    echo "yay is not installed. Please install the AUR packages manually: ${AUR_PKGS[*]}"
-    exit 1
-fi
+# Configure npm registry
+configure_npm() {
+    echo -e "${GREEN}[2/7] Configuring npm...${NC}"
+    if [ "$PROXY_AVAILABLE" = true ]; then
+        npm config set registry https://registry.npmjs.org
+    else
+        npm config set registry https://registry.npmmirror.com
+    fi
+}
 
-# Install fnm and latest Node.js
-if command -v fnm &> /dev/null; then
-    echo "Installing/updating the latest stable Node.js..."
-    fnm install --lts || exit 1
-else
-    echo "fnm is not installed. Skipping Node.js installation."
-fi
+# Install npm packages
+install_npm() {
+    echo -e "${GREEN}[3/7] Installing npm tools...${NC}"
+    NPM_PKGS=(prettier "@fsouza/prettierd" eslint_d eslint)
+    for pkg in "${NPM_PKGS[@]}"; do
+        npm install -g "$pkg" 2>/dev/null || echo -e "${YELLOW}Skip: $pkg${NC}"
+    done
+}
 
-# Configure Rime to use rime-ice
-echo "Configuring Rime input method..."
-mkdir -p ~/.local/share/fcitx5/rime
-cat > ~/.local/share/fcitx5/rime/default.custom.yaml << "EOF"
+# Install Go packages
+install_go_pkgs() {
+    echo -e "${GREEN}[4/7] Installing Go tools...${NC}"
+    
+    # Check if Go is installed
+    if ! command -v go &>/dev/null; then
+        echo -e "${YELLOW}Go not installed, skipping Go tools${NC}"
+        return
+    fi
+    
+    # Set GOPATH if not set
+    if [ -z "$GOPATH" ]; then
+        export GOPATH="$REAL_HOME/go"
+        export PATH="$PATH:$GOPATH/bin"
+    fi
+    
+    # Install each Go package
+    for pkg in "${GO_PKGS[@]}"; do
+        echo -e "${BLUE}Installing: $pkg${NC}"
+        sudo -u "$REAL_USER" go install "$pkg" 2>/dev/null || echo -e "${YELLOW}Skip: $pkg${NC}"
+    done
+    
+    # Verify installation
+    if command -v asmfmt &>/dev/null; then
+        echo -e "${GREEN}✓ asmfmt installed successfully${NC}"
+    else
+        echo -e "${YELLOW}⚠ asmfmt may not be in PATH${NC}"
+    fi
+}
+
+# Install Rust
+install_rust() {
+    echo -e "${GREEN}[5/7] Installing Rust...${NC}"
+
+    # Check if rustup exists
+    if sudo -u "$REAL_USER" command -v rustup &>/dev/null; then
+        echo "Rust already installed (rustup)"
+        return
+    fi
+
+    # Check if rustc exists but not rustup
+    if sudo -u "$REAL_USER" command -v rustc &>/dev/null; then
+        echo "Rust installed via pacman, skipping rustup"
+        return
+    fi
+
+    # Set mirrors if no proxy
+    if [ "$PROXY_AVAILABLE" = false ]; then
+        export RUSTUP_DIST_SERVER="https://mirrors.ustc.edu.cn/rust-static"
+        export RUSTUP_UPDATE_ROOT="https://mirrors.ustc.edu.cn/rust-static/rustup"
+    fi
+
+    # Install
+    sudo -u "$REAL_USER" bash -c 'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path' || {
+        echo -e "${RED}Rust install failed${NC}"
+        return 1
+    }
+
+    # Configure cargo mirror if no proxy
+    if [ "$PROXY_AVAILABLE" = false ]; then
+        CARGO_CONFIG_DIR="$REAL_HOME/.cargo"
+        mkdir -p "$CARGO_CONFIG_DIR"
+        cat >"$CARGO_CONFIG_DIR/config.toml" <<'EOF'
+[source.crates-io]
+replace-with = 'ustc'
+
+[source.ustc]
+registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+EOF
+        chown -R "$REAL_USER:$REAL_USER" "$CARGO_CONFIG_DIR"
+    fi
+}
+
+# Install AUR packages
+install_aur() {
+    echo -e "${GREEN}[6/7] Installing AUR packages...${NC}"
+    if ! command -v yay &>/dev/null; then
+        echo -e "${RED}yay not found${NC}"
+        exit 1
+    fi
+    for pkg in "${AUR_PKGS[@]}"; do
+        sudo -u "$REAL_USER" yay -S --noconfirm --needed "$pkg" 2>/dev/null || echo -e "${YELLOW}Skip: $pkg${NC}"
+    done
+
+    # Update font cache
+    echo -e "${BLUE}Updating font cache...${NC}"
+    fc-cache -fv
+}
+
+# Configure Rime
+configure_rime() {
+    echo -e "${GREEN}[7/7] Configuring Rime...${NC}"
+    RIME_DIR="$REAL_HOME/.local/share/fcitx5/rime"
+    mkdir -p "$RIME_DIR"
+    cat >"$RIME_DIR/default.custom.yaml" <<'EOF'
 patch:
   __include: rime_ice_suggestion:/
-
   __patch::
     menu/page_size: 8
 EOF
+    chown -R "$REAL_USER:$REAL_USER" "$RIME_DIR"
+}
 
-# Install the Rime skin using paru
-if command -v paru &> /dev/null; then
-    echo "Installing fcitx5-skin-fluentlight-git via paru..."
-    sudo -u "$SUDO_USER" paru -S --noconfirm fcitx5-skin-fluentlight-git || exit 1
-else
-    echo "paru is not installed. Please install it and try again."
-    exit 1
-fi
+# Summary
+summary() {
+    echo ""
+    echo -e "${GREEN}=== Done ===${NC}"
+    echo "Installed:"
+    echo "  - Formatters: stylua, black, isort, clang-format, gofmt, shfmt, asmfmt"
+    echo "  - Node.js: prettier, prettierd, eslint_d, eslint"
+    echo "  - LaTeX: texlive"
+    echo "  - IME: fcitx5 + rime-ice"
+    if sudo -u "$REAL_USER" command -v rustc &>/dev/null; then
+        echo "  - Rust: $(sudo -u "$REAL_USER" rustc --version 2>/dev/null | cut -d' ' -f2)"
+    fi
+    if command -v asmfmt &>/dev/null; then
+        echo "  - Go tools: asmfmt"
+    fi
+    echo ""
+    echo "Next:"
+    echo "  1. Re-login to apply IME settings"
+    echo "  2. Run :checkhealth in Neovim"
+    [ -f "$REAL_HOME/.cargo/env" ] && echo "  3. source ~/.cargo/env (for Rust)"
+    [ -d "$REAL_HOME/go/bin" ] && echo "  4. Add ~/go/bin to PATH (for Go tools)"
+}
 
-echo "Installation complete! Please log out and log back in to apply the input method and set your theme."
+# Main
+main() {
+    install_pacman
+    configure_npm
+    install_npm
+    install_go_pkgs
+    install_rust
+    install_aur
+    configure_rime
+    summary
+}
 
-# # Install the Rust
-# if command -v curl &> /dev/null; then
-#     echo "Installing Rust"
-#     sudo -u "$SUDO_USER" curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-# else
-#     echo "curl is not installed. Please install it and try again."
-#     exit 1
-# fi
-#
-# echo "Rust installed!!!"
+main
