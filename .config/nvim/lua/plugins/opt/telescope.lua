@@ -1,107 +1,103 @@
 return {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && "
-                .. "cmake --build build --config Release && "
-                .. "cmake --install build --prefix build",
-        },
-    },
-    cmd = "Telescope",
-    keys = {
-		{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
-		{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
-		{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-		{ "<leader>fc", "<cmd>Telescope commands<cr>", desc = "Commands" },
-	},
-    config = function(_, opts)
-        vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "FloatBorder" })
-        vim.api.nvim_set_hl(0, "TelescopePromptBorder", { link = "FloatBorder" })
+  "nvim-telescope/telescope.nvim",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    "nvim-telescope/telescope-ui-select.nvim",
+    "nvim-telescope/telescope-frecency.nvim",
+    "tami5/sqlite.lua",
+  },
+  keys = {
+    { "<leader>ff", function()
+        local ok = pcall(require("telescope.builtin").git_files)
+        if not ok then require("telescope.builtin").find_files() end
+      end, desc = "Find Files (git-aware)" },
+    { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
+    { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+    { "<leader>fc", "<cmd>Telescope commands<cr>", desc = "Commands" },
+    { "<leader>fr", "<cmd>Telescope frecency<cr>", desc = "Frequent Files" },
+    { "<leader>fn", "<cmd>Telescope frecency workspace=nvim<cr>", desc = "Neovim config history" },
+    { "<leader>fp", "<cmd>Telescope frecency workspace=project<cr>", desc = "Project history" },
+    { "<leader>fcf", "<cmd>Telescope frecency workspace=conf<cr>", desc = "Config files history" },
+  },
 
-        local telescope = require("telescope")
-        telescope.setup(opts)
-        telescope.load_extension("fzf")
-    end,
-    opts = {
-        defaults = {
-            layout_strategy = "horizontal",
-            layout_config = {
-                horizontal = {
-                    width = 0.9,
-                    height = 0.8,
-                    preview_cutoff = 0,
-                },
-            },
-            preview = true,
-            sorting_strategy = "ascending",
-            prompt_prefix = " λ ",
-            selection_caret = "> ",
-            entry_prefix = "  ",
-            path_display = { "truncate" },
-            color_devicons = true,
-            borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-            results_title = false,
-            prompt_title = false,
-            selection_highlight = "NONE",
-            multi_icon = "",
-            mappings = {
-                i = {
-                    ["<CR>"] = "select_default",
-                    ["<leader>"] = "select_tab",
-                    ["<C-v>"] = "select_vertical",
-                    ["<C-x>"] = "select_horizontal",
-                    ["<Tab>"] = "move_selection_next",
-                    ["<S-Tab>"] = "move_selection_previous",
-                    ["<C-u>"] = false,
-                    ["<C-d>"] = false,
-                },
-                n = {
-                    ["<CR>"] = "select_default",
-                    ["<C-t>"] = "select_tab",
-                    ["<C-v>"] = "select_vertical",
-                    ["<C-x>"] = "select_horizontal",
-                    ["j"] = "move_selection_next",
-                    ["k"] = "move_selection_previous",
-                },
-            },
-            file_ignore_patterns = {
-                "node_modules/",
-                "%.git/",
-                "%.DS_Store",
-                "target/",
-                "build/",
-                "dist/",
-            },
+  config = function()
+    local telescope = require("telescope")
+
+    telescope.setup({
+      defaults = {
+        layout_strategy = "flex",
+        scroll_strategy = "cycle",
+        selection_strategy = "reset",
+        winblend = 0,
+        layout_config = {
+          vertical = { mirror = true },
+          center = { mirror = true },
         },
-        pickers = {
-            find_files = {
-                hidden = false,
-                no_ignore = false,
-                search_dirs = { ".", "../", "../../" },
-            },
-            buffers = {
-                show_all_buffers = true,
-                sort_lastused = true,
-                mappings = {
-                    i = {
-                        ["<C-d>"] = "delete_buffer",
-                    },
-                    n = {
-                        ["dd"] = "delete_buffer",
-                    },
-                },
-            },
+        sorting_strategy = "ascending",
+        prompt_prefix = " λ ",
+        selection_caret = "> ",
+        path_display = { "smart" },
+        dynamic_preview_title = true,
+        file_ignore_patterns = {
+          "target/", "build/", "%.o", "%.a", "%.out",
         },
-        extensions = {
-            fzf = {
-                fuzzy = true,
-                override_generic_sorter = true,
-                override_file_sorter = true,
-                case_mode = "smart_case",
-            },
+        mappings = {
+          i = {
+            ["<CR>"] = require("telescope.actions").select_default,
+            ["<C-v>"] = require("telescope.actions").select_vertical,
+            ["<C-x>"] = require("telescope.actions").select_horizontal,
+            ["<Tab>"] = require("telescope.actions").move_selection_next,
+            ["<S-Tab>"] = require("telescope.actions").move_selection_previous,
+            ["<C-h>"] = require("telescope.actions.layout").toggle_preview,
+          },
+          n = {
+            ["<CR>"] = require("telescope.actions").select_default,
+            ["<C-v>"] = require("telescope.actions").select_vertical,
+            ["<C-x>"] = require("telescope.actions").select_horizontal,
+            ["j"] = require("telescope.actions").move_selection_next,
+            ["k"] = require("telescope.actions").move_selection_previous,
+          },
         },
-    },
+      },
+
+      pickers = {
+        find_files = {
+          theme = "dropdown",
+          previewer = false,
+          layout_config = { width = 0.7 },
+        },
+        buffers = {
+          sort_mru = true,
+          theme = "dropdown",
+          previewer = false,
+          mappings = {
+            i = { ["<C-d>"] = require("telescope.actions").delete_buffer },
+          },
+        },
+      },
+
+      extensions = {
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown({}),
+        },
+        frecency = {
+          persistent_filter = false,
+          show_scores = true,
+          show_unindexed = true,
+          ignore_patterns = { "*.git/*", "*/tmp/*", "*.foo" },
+          workspaces = {
+            conf = "/home/nore/.config",
+            nvim = "/home/nore/.config/nvim",
+            project = "/home/nore/Documents/Programing",
+          },
+        },
+      },
+    })
+
+    pcall(telescope.load_extension, "fzf")
+    pcall(telescope.load_extension, "ui-select")
+    pcall(telescope.load_extension, "frecency")
+  end,
 }
 

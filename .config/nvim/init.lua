@@ -1,4 +1,6 @@
 vim.loader.enable()
+vim.opt.laststatus = 3
+vim.opt.cmdheight = 0
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -32,13 +34,24 @@ require("lazy").setup({
 			reset = true,
 			disabled_plugins = {
 				"gzip",
+				"zip",
+				"zipPlugin",
+				"tar",
+				"tarPlugin",
+				"getscript",
+				"getscriptPlugin",
+				"vimball",
+				"vimballPlugin",
+				"2html_plugin",
+				"logipat",
+				"rrhelper",
+				"spellfile_plugin",
 				"matchit",
 				"matchparen",
+				"netrw",
 				"netrwPlugin",
-				"tarPlugin",
-				"tohtml",
-				"tutor",
-				"zipPlugin",
+				"netrwSettings",
+				"netrwFileHandlers",
 			},
 		},
 	},

@@ -16,7 +16,7 @@ return {
 			"markdown_inline",
 		},
 		sync_install = false,
-		auto_install = true,
+		auto_install = false,
 		highlight = {
 			enable = true,
 		},

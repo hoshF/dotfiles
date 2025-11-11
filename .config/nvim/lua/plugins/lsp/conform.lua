@@ -36,18 +36,10 @@ return {
 		},
 		formatters = {
 			["clang-format"] = {
-				prepend_args = {
-					"--style={IndentWidth: 4, TabWidth: 4, UseTab: Never}",
-				},
-				["shfmt"] = {
-					prepend_args = {
-						"-i",
-						"4",
-						"-bn",
-						"-ci",
-						"-sr",
-					},
-				},
+				prepend_args = { "--style={IndentWidth: 4, TabWidth: 4, UseTab: Never}" },
+			},
+			["shfmt"] = {
+				prepend_args = { "-i", "4", "-bn", "-ci", "-sr" },
 			},
 		},
 		default_format_opts = {

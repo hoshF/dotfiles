@@ -37,7 +37,6 @@ return {
 		},
 		prompt = {
 			enabled = true,
-			prefix = { { "⚡", "FlashPromptIcon" } },
 		},
 	},
 	keys = {
@@ -50,7 +49,7 @@ return {
 			desc = "Flash Jump",
 		},
 		{
-			"S",
+			"T",
 			mode = { "n", "x", "o" },
 			function()
 				require("flash").treesitter()
