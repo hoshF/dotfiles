@@ -48,8 +48,8 @@ return {
             multi_icon = "",
             mappings = {
                 i = {
-                    ["<CR>"] = "select_tab",
-                    ["<leader>"] = "select_default",
+                    ["<CR>"] = "select_default",
+                    ["<leader>"] = "select_tab",
                     ["<C-v>"] = "select_vertical",
                     ["<C-x>"] = "select_horizontal",
                     ["<Tab>"] = "move_selection_next",
