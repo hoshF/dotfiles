@@ -4,16 +4,11 @@
     "all-outputs": true,
     "warp-on-scroll": false,
     "format": "{name}",
-    "format-icons": { "urgent": "", "active": "", "default": "" }
+    "format-icons": { "urgent": " ", "active": " ", "default": " " }
   },
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": { "activated": " ", "deactivated": " " }
-  },
-  "custom/updates": {
-    "format": " {}",
-    "interval": 3600,
-    "exec": "checkupdates | wc -l"
   },
   "bluetooth": {
     "format": "{icon}",
@@ -21,31 +16,50 @@
     "on-click": "blueman-manager"
   },
   "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-muted": " {volume}%",
-    "format-icons": { "headphone": " ", "default": ["", "", " "] },
+    "format": "{icon}",
+    "rotate": 0,
+    "format-muted": " ",
+    "tooltip-format": "{icon} {desc} {volume}%",
+    "scroll-step": 5,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", " "]
+    },
     "on-click": "pavucontrol"
   },
   "network": {
-    "format-wifi": " {essid} ({signalStrength}%)",
-    "format-ethernet": "{ipaddr}/{cidr} ",
-    "tooltip-format": "{ifname} via {gwaddr} ",
-    "format-linked": "{ifname} (No IP) ",
-    "format-disconnected": "Disconnected ",
-    "on-click": "alacritty -e nmtui"
+    "tooltip": true,
+    "format-wifi": "{icon} ",
+    "format-icons": ["󰤟", "󰤢", "󰤥"],
+    "rotate": 0,
+    "format-ethernet": "󰈀 ",
+    "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+    "format-linked": "󰈀 {ifname} (No IP)",
+    "format-disconnected": " ",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click": "alacritty -e nmtui",
+    "interval": 2
   },
   "battery": {
-    "states": { "warning": 30, "critical": 15 },
-    "format": "{icon} {capacity}%",
-    "format-full": "{icon} {capacity}%",
-    "format-charging": " {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-alt": "{time} {icon}",
-    "format-icons": ["", "", "", "", ""]
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 20
+    },
+    "format": "{icon}",
+    "rotate": 0,
+    "format-charging": "<span color='#a6d189'>󱐋</span>",
+    "format-plugged": "󰂄",
+    "format-icons": [" ", " ", " ", " ", "l", " ", " ", " "]
   },
   "clock": {
-    "format": "{:%H:%M | %e %B} ",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "{:%I:%M %p }",
+    "rotate": 0,
     "format-alt": "{:%Y-%m-%d}"
   }
 }

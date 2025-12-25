@@ -22,6 +22,7 @@ return {
 			asm = { "asmfmt" },
 			tex = { "latexindent" },
 			html = { "prettierd" },
+			markdown = { "prettierd" },
 			htmldjango = { "prettierd" },
 			handlebars = { "prettierd" },
 			javascript = { "prettierd" },

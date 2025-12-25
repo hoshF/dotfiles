@@ -1,3 +1,4 @@
+## family = "BlexMonoNerdFontMono"
 [window]
 dimensions = { columns = 100, lines = 30 }
 
@@ -9,19 +10,19 @@ y = 10
 size = 12
 
 [font.normal]
-family = "BlexMonoNerdFontMono"
+family = "InconsolataLGCNerdFont"
 style = "Regular"
 
 [font.bold]
-family = "BlexMonoNerdFontMono"
+family = "InconsolataLGCNerdFont"
 style = "Bold"
 
 [font.italic]
-family = "BlexMonoNerdFontMono"
+family = "InconsolataLGCNerdFont"
 style = "Italic"
 
 [font.bold_italic]
-family = "BlexMonoNerdFontMono"
+family = "InconsolataLGCNerdFont"
 style = "Bold Italic"
 
 [general]

@@ -249,3 +249,4 @@ main() {
 }
 
 main
+ln -sf /usr/bin/nvim /usr/bin/vi

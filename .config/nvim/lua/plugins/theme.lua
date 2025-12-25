@@ -5,6 +5,10 @@ return {
 		config = function()
 			local themes = {
 				{
+					name = "nordic",
+					colorscheme = "nordic",
+				},
+				{
 					name = "gruvbox dark",
 					colorscheme = "gruvbox",
 					before = [[
@@ -18,24 +22,6 @@ return {
       vim.opt.background = "light"
     ]],
 				},
-				{
-					name = "oxocarbon dark",
-					colorscheme = "oxocarbon",
-					before = [[
-      vim.opt.background = "dark"
-    ]],
-				},
-				{
-					name = "oxocarbon light",
-					colorscheme = "oxocarbon",
-					before = [[
-      vim.opt.background = "light"
-    ]],
-				},
-				{
-					name = "nordic",
-					colorscheme = "nordic",
-				},
 			}
 
 			vim.api.nvim_create_autocmd("User", {
@@ -47,6 +33,5 @@ return {
 		end,
 	},
 	{ "ellisonleao/gruvbox.nvim", lazy = false },
-	{ "nyoom-engineering/oxocarbon.nvim", lazy = false },
 	{ "AlexvZyl/nordic.nvim", lazy = false },
 }

@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "gd", lsp.buf.definition, bufopts)
 		map("n", "<space>r", lsp.buf.rename, bufopts)
 		map("n", "K", lsp.buf.hover, bufopts)
-			map("n", "<space>i", function()
+		map("n", "<space>i", function()
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 		end, bufopts)
 	end,

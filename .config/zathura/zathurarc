@@ -1,3 +1,67 @@
-set synctex true
-set selection-clipboard clipboard
+set selection-clipboard   clipboard
+set selection-notification false
+set window-title-basename true
+set statusbar-home-tilde  true
+set statusbar-page-percent true
+set database              'sqlite'
+set statusbar-basename
+set adjust-open          width
+
+set font                 'BlexMonoNerdFontMono 12'
+set guioptions           'sv'
+set statusbar-h-padding  0
+set statusbar-v-padding  0
+set page-v-padding       1
+set page-h-padding       1
+
+set scroll-step          30
+set scroll-hstep         10
+
+set recolor               true
+set recolor-keephue       true
+set recolor-reverse-video true
+
+set default-bg                 "#2e3440"
+set default-fg                 "#d8dee9"
+
+set statusbar-bg               "#2e3440"
+set statusbar-fg               "#d8dee9"
+
+set inputbar-bg                "#2e3440"
+set inputbar-fg                "#a3be8c"
+
+set completion-bg              "#2e3440"
+set completion-fg              "#d8dee9"
+set completion-group-bg        "#2e3440"
+set completion-group-fg        "#d8dee9"
+set completion-highlight-bg    "#434c5e"
+set completion-highlight-fg    "#d8dee9"
+
+set notification-bg            "#3b4252"
+set notification-fg            "#eceff4"
+set notification-error-bg      "#bf616a"
+set notification-error-fg      "#eceff4"
+set notification-warning-bg    "#ebcb8b"
+set notification-warning-fg    "#2e3440"
+
+set highlight-color            "rgba(136, 192, 208, 0.5)"
+set highlight-active-color     "rgba(136, 192, 208, 0.5)"
+
+set index-bg                   "#2e3440"
+set index-fg                   "#d8dee9"
+set index-active-bg            "#434c5e"
+set index-active-fg            "#d8dee9"
+
+set recolor-darkcolor          "#d8dee9"
+set recolor-lightcolor         "#2e3440"
+
+set render-loading-bg          "#2e3440"
+set render-loading-fg          "#d8dee9"
+
+set highlight-transparency 0.8
+
+map I recolor
+map n scroll half-down
+map p scroll half-up
+map b toggle_statusbar
 

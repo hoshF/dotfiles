@@ -4,4 +4,4 @@
 
 /home/nore/.config/hypr
 /home/nore/.config/nvim/lua
-/home/nore/Documents/rCore-Tutorial-v3-main
+/home/nore/Documents/project/RustScan

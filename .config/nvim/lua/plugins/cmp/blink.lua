@@ -1,7 +1,8 @@
 return {
 	{
 		"saghen/blink.cmp",
-        lazy = false,
+		lazy = false,
+		build = "cargo build --release",
 		opts = {
 			appearance = {
 				nerd_font_variant = "mono",

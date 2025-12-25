@@ -36,10 +36,10 @@ for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 
 # Environment
-export ALL_PROXY="$all_proxy"
-export HTTP_PROXY="$all_proxy"
-export HTTPS_PROXY="$all_proxy"
-export all_proxy="socks5://127.0.0.1:7890"
+# export ALL_PROXY="$all_proxy"
+export HTTP_PROXY="http://127.0.0.1:7890"
+export HTTPS_PROXY="http://127.0.0.1:7890"
+# export all_proxy="socks5://127.0.0.1:7890"
 export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 export PIP_TRUSTED_HOST=pypi.tuna.tsinghua.edu.cn
 
@@ -115,6 +115,7 @@ alias tx='nvim ~/.config/tmux/tmux.conf'
 
 # tools
 alias f3='flask-session-cookie-manager3'
+alias rec='wf-recorder' # mpv
 
 #others
 alias esub='exercism submit'
@@ -157,3 +158,9 @@ exercism () {
 
 # opam
 [[ ! -r '/home/nore/.opam/opam-init/init.zsh' ]] || source '/home/nore/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+alias msfconsole="pushd $HOME/git/metasploit-framework && ./msfconsole && popd"
+

@@ -63,7 +63,7 @@ return {
 			git_status = {
 				symbols = {
 					added = "", --"✚",
-					modified = "", --""",
+					modified = "", --"",
 					deleted = "✖",
 					renamed = "󰁕",
 					untracked = "",
@@ -164,7 +164,7 @@ return {
 		nesting_rules = {},
 		filesystem = {
 			filtered_items = {
-				visible = false,
+				visible =  false,
 				hide_dotfiles = true,
 				hide_gitignored = true,
 				hide_by_name = {},
@@ -177,7 +177,7 @@ return {
 				never_show_by_pattern = {},
 			},
 			follow_current_file = {
-				enabled = false,
+				enabled = true,
 				leave_dirs_open = false,
 			},
 			group_empty_dirs = false,
