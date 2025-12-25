@@ -9,6 +9,18 @@
 	includefoot
 }
 
+\usepackage{fontspec}
+\usepackage{xeCJK}
+% \usepackage[english]{babel}
+
+\setCJKmainfont{Source Han Serif SC}[
+	BoldFont = Source Han Serif SC,
+	ItalicFont = LXGW WenKai,
+	SlantedFont = LXGW WenKai
+]
+\setCJKsansfont{Source Han Sans SC}
+\setCJKmonofont{WenQuanYi Zen Hei Mono}
+
 \usepackage{url}
 \usepackage{graphicx}
 \usepackage{float}
@@ -54,14 +66,34 @@
 \theoremstyle{definition}
 
 \newmdtheoremenv[nobreak=true]{definition}{Definition}
+\newmdtheoremenv[nobreak=true]{property}{Property}
+\newmdtheoremenv[nobreak=true]{corollary}{Corollary}
 \newmdtheoremenv[nobreak=true]{lemma}{Lemma}
 \newmdtheoremenv[nobreak=true]{prop}{Proposition}
 \newmdtheoremenv[nobreak=true]{theorem}{Theorem}
-\newmdtheoremenv[nobreak=true]{corollary}{Corollary}
+\newmdtheoremenv[nobreak=true]{law}{Law}
 \newmdtheoremenv[nobreak=true]{axiom}{Axiom}
+\newmdtheoremenv{conclusion}{Conclusion}
+\newmdtheoremenv{addendum}{Addendum}
+\newmdtheoremenv{conjecture}{Conjecture}
 
+\newtheorem*{review}{Review}
+\newtheorem*{intermezzo}{Intermezzo}
+\newtheorem*{notation}{Notation}
+\newtheorem*{observation}{Observation}
+\newtheorem*{exercise}{Exercise}
 \newtheorem*{remark}{Remark}
+\newtheorem*{practical}{Practical}
+\newtheorem*{problem}{Problem}
+\newtheorem*{terminology}{Terminology}
+\newtheorem*{application}{Application}
+\newtheorem*{uovt}{Existence and Uniqueness}
 \newtheorem*{eg}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{note}{Note}
+\newtheorem*{previouslyseen}{As previously seen}
+\newtheorem*{observe}{Observe}
+\newtheorem*{intuition}{Intuition}
 
 \usepackage{etoolbox}
 \AtEndEnvironment{eg}{\null\hfill$\square$}
@@ -106,6 +138,12 @@
 \fancyfoot[C]{\leftmark}
 \fancyfoot[R]{\thepage}
 
+% % \fancyhead[RO,LE]{\@lecture}
+% \fancyhead[RE,LO]{}
+% \fancyfoot[RO,LE]{\thepage}
+% \fancyfoot[RE,LO]{}
+% \fancyfoot[C]{\leftmark}
+
 \usepackage{todonotes}
 \usepackage{tcolorbox}
 \tcbuselibrary{breakable}
@@ -136,4 +174,3 @@
 }
 
 \author{hoshF}
-
