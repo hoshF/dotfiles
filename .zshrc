@@ -54,6 +54,8 @@ export CARGO_HOME="$HOME/.cargo"
 export RUSTUP_HOME="$HOME/.rustup"
 
 export EDITOR='nvim'
+
+export TEXINPUTS="$HOME/.config/LaTeX//:"
 path=(
     "$HOME/.cargo/bin"
     "$HOME/.local/bin"
@@ -116,6 +118,9 @@ alias tx='nvim ~/.config/tmux/tmux.conf'
 # tools
 alias f3='flask-session-cookie-manager3'
 alias rec='wf-recorder' # mpv
+
+#LaTeX
+alias main='nvim main.tex'
 
 #others
 alias esub='exercism submit'

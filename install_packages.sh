@@ -84,7 +84,7 @@ GO_PKGS=(
 
 # Install pacman packages
 install_pacman() {
-    echo -e "${GREEN}[1/7] Installing packages...${NC}"
+    echo -e "${GREEN}[1/6] Installing packages...${NC}"
     pacman -Syu --noconfirm || exit 1
     pacman -S --noconfirm --needed "${PACMAN_PKGS[@]}" || {
         pacman -Sy --noconfirm && pacman -S --noconfirm --needed "${PACMAN_PKGS[@]}" || exit 1
@@ -93,7 +93,7 @@ install_pacman() {
 
 # Configure npm registry
 configure_npm() {
-    echo -e "${GREEN}[2/7] Configuring npm...${NC}"
+    echo -e "${GREEN}[2/6] Configuring npm...${NC}"
     if [ "$PROXY_AVAILABLE" = true ]; then
         npm config set registry https://registry.npmjs.org
     else
@@ -103,7 +103,7 @@ configure_npm() {
 
 # Install npm packages
 install_npm() {
-    echo -e "${GREEN}[3/7] Installing npm tools...${NC}"
+    echo -e "${GREEN}[3/6] Installing npm tools...${NC}"
     NPM_PKGS=(prettier "@fsouza/prettierd" eslint_d eslint)
     for pkg in "${NPM_PKGS[@]}"; do
         npm install -g "$pkg" 2>/dev/null || echo -e "${YELLOW}Skip: $pkg${NC}"
@@ -112,7 +112,7 @@ install_npm() {
 
 # Install Go packages
 install_go_pkgs() {
-    echo -e "${GREEN}[4/7] Installing Go tools...${NC}"
+    echo -e "${GREEN}[4/6] Installing Go tools...${NC}"
     
     # Check if Go is installed
     if ! command -v go &>/dev/null; then
@@ -142,7 +142,7 @@ install_go_pkgs() {
 
 # Install Rust
 install_rust() {
-    echo -e "${GREEN}[5/7] Installing Rust...${NC}"
+    echo -e "${GREEN}[5/6] Installing Rust...${NC}"
 
     # Check if rustup exists
     if sudo -u "$REAL_USER" command -v rustup &>/dev/null; then
@@ -185,7 +185,7 @@ EOF
 
 # Install AUR packages
 install_aur() {
-    echo -e "${GREEN}[6/7] Installing AUR packages...${NC}"
+    echo -e "${GREEN}[6/6] Installing AUR packages...${NC}"
     if ! command -v yay &>/dev/null; then
         echo -e "${RED}yay not found${NC}"
         exit 1
@@ -199,19 +199,6 @@ install_aur() {
     fc-cache -fv
 }
 
-# Configure Rime
-configure_rime() {
-    echo -e "${GREEN}[7/7] Configuring Rime...${NC}"
-    RIME_DIR="$REAL_HOME/.local/share/fcitx5/rime"
-    mkdir -p "$RIME_DIR"
-    cat >"$RIME_DIR/default.custom.yaml" <<'EOF'
-patch:
-  __include: rime_ice_suggestion:/
-  __patch::
-    menu/page_size: 8
-EOF
-    chown -R "$REAL_USER:$REAL_USER" "$RIME_DIR"
-}
 
 # Summary
 summary() {
@@ -244,7 +231,6 @@ main() {
     install_go_pkgs
     install_rust
     install_aur
-    configure_rime
     summary
 }
 

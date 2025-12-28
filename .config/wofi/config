@@ -1,1 +1,16 @@
+show=drun
+
+width=600
+height=400
+
+prompt=>
+allow_images=true
+image_size=32
+
+insensitive=true
+matching=fuzzy
 no_actions=true
+
+sort_order=alphabetical
+
+layer=overlay

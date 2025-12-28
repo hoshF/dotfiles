@@ -1,7 +1,9 @@
 /home/nore/Documents/
 /home/nore/Downloads
+/home/nore/.config/
 /home/nore/Rust/Lab
 
 /home/nore/.config/hypr
 /home/nore/.config/nvim/lua
-/home/nore/Documents/project/RustScan
+/home/nore/Documents/LaTeX
+/home/nore/.config/LaTeX

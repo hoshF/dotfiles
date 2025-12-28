@@ -17,48 +17,43 @@ set page-h-padding       1
 set scroll-step          30
 set scroll-hstep         10
 
-set recolor               true
-set recolor-keephue       true
-set recolor-reverse-video true
+set default-bg "#242933"
+set default-fg "#BBBDAF"
 
-set default-bg                 "#2e3440"
-set default-fg                 "#d8dee9"
+set statusbar-bg "#242933"
+set statusbar-fg "#BBBDAF"
 
-set statusbar-bg               "#2e3440"
-set statusbar-fg               "#d8dee9"
+set inputbar-bg "#242933"
+set inputbar-fg "#A3D6A9"
 
-set inputbar-bg                "#2e3440"
-set inputbar-fg                "#a3be8c"
+set completion-bg "#242933"
+set completion-fg "#BBBDAF"
+set completion-group-bg "#242933"
+set completion-group-fg "#BBBDAF"
+set completion-highlight-bg "#8FB4D8"
+set completion-highlight-fg "#242933"
 
-set completion-bg              "#2e3440"
-set completion-fg              "#d8dee9"
-set completion-group-bg        "#2e3440"
-set completion-group-fg        "#d8dee9"
-set completion-highlight-bg    "#434c5e"
-set completion-highlight-fg    "#d8dee9"
+set notification-bg "#191C1D"
+set notification-fg "#BDC5BD"
+set notification-error-bg "#BD6062"
+set notification-error-fg "#191C1D"
+set notification-warning-bg "#F0DFAF"
+set notification-warning-fg "#191C1D"
 
-set notification-bg            "#3b4252"
-set notification-fg            "#eceff4"
-set notification-error-bg      "#bf616a"
-set notification-error-fg      "#eceff4"
-set notification-warning-bg    "#ebcb8b"
-set notification-warning-fg    "#2e3440"
-
-set highlight-color            "rgba(136, 192, 208, 0.5)"
-set highlight-active-color     "rgba(136, 192, 208, 0.5)"
-
-set index-bg                   "#2e3440"
-set index-fg                   "#d8dee9"
-set index-active-bg            "#434c5e"
-set index-active-fg            "#d8dee9"
-
-set recolor-darkcolor          "#d8dee9"
-set recolor-lightcolor         "#2e3440"
-
-set render-loading-bg          "#2e3440"
-set render-loading-fg          "#d8dee9"
-
+set highlight-color "rgba(240, 223, 175, 0.5)"
+set highlight-active-color "rgba(240, 223, 175, 0.5)"
 set highlight-transparency 0.8
+
+set index-bg "#242933"
+set index-fg "#BBBDAF"
+set index-active-bg "#8FB4D8"
+set index-active-fg "#242933"
+
+set recolor-darkcolor "#BBBDAF"
+set recolor-lightcolor "#242933"
+
+set render-loading-bg "#242933"
+set render-loading-fg "#BBBDAF"
 
 map I recolor
 map n scroll half-down

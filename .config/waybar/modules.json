@@ -55,7 +55,7 @@
     "rotate": 0,
     "format-charging": "<span color='#a6d189'>󱐋</span>",
     "format-plugged": "󰂄",
-    "format-icons": [" ", " ", " ", " ", "l", " ", " ", " "]
+    "format-icons": [" ", " ", " ", " ", " ", " ", " ", " "]
   },
   "clock": {
     "format": "{:%I:%M %p }",

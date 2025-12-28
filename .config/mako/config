@@ -1,23 +1,47 @@
-# Font settings
-font=BlexMonoNerdFontMono 12
+max-history=5
 
-# Colors
-background-color=#1e1e2e
-text-color=#cdd6f4
-border-color=#89b4fa
+sort=+time
 
-# Layout
-border-size=2
-padding=10
-margin=10
-
-# Notification behavior
-default-timeout=5000         
-max-visible=5               
-anchor=top-right           
-
-# Mouse and touch interactions
-on-touch=none
 on-button-left=invoke-default-action
-on-button-right=dismiss 
+on-button-middle=dismiss-group
+on-button-right=dismiss
+on-touch=invoke-default-action
+on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
+
+font= JetBrains Mono Nerd Font 12
+
+# background-color=#14141c80
+
+text-color=#c0caf5
+
+width=299
+height=99
+
+outer-margin=1
+margin=0
+padding=10
+
+border-size=2
+# border-color= #c0caf580
+border-radius=0
+progress-color=over #0b1c1c
+
+icons=1
+max-icon-size=34
+icon-location=left
+
+# enable pango - format notification( value 0|1 )
+markup=1
+
+actions=1
+history=1
+format= <b>%s</b>\n%b
+
+text-alignment=center
+default-timeout=10000
+ignore-timeout=0
+max-visible=5
+
+layer=top
+anchor=top-right
 
