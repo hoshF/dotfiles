@@ -42,12 +42,6 @@ set notification-warning-fg "#191C1D"
 
 set highlight-color "rgba(240, 223, 175, 0.5)"
 set highlight-active-color "rgba(240, 223, 175, 0.5)"
-set highlight-transparency 0.8
-
-set index-bg "#242933"
-set index-fg "#BBBDAF"
-set index-active-bg "#8FB4D8"
-set index-active-fg "#242933"
 
 set recolor-darkcolor "#BBBDAF"
 set recolor-lightcolor "#242933"

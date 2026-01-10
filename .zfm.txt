@@ -7,3 +7,4 @@
 /home/nore/.config/nvim/lua
 /home/nore/Documents/LaTeX
 /home/nore/.config/LaTeX
+/home/nore/.local

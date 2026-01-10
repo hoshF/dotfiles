@@ -22,12 +22,12 @@
     "tooltip-format": "{icon} {desc} {volume}%",
     "scroll-step": 5,
     "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
+      "headphone": " ",
+      "hands-free": " ",
+      "headset": " ",
+      "phone": " ",
+      "portable": " ",
+      "car": " ",
       "default": ["", " "]
     },
     "on-click": "pavucontrol"

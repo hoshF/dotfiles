@@ -3,6 +3,7 @@ vim.opt.clipboard = "unnamedplus" -- use system clipboard
 vim.opt.mouse = "a" -- enable mouse support
 vim.opt.lazyredraw = true -- do not redraw while executing macros
 vim.opt.updatetime = 300 -- faster completion (ms)
+vim.opt.textwidth = 73
 -- vim.opt.timeoutlen = 300                      -- keymap timeout (ms)
 vim.opt.swapfile = false -- disable swapfile
 vim.opt.backup = false -- disable backup

@@ -203,4 +203,12 @@ return
         }
       )
     ),
+    s({trig="par", snippetType="autosnippet"},
+      fmta(
+        [[\paragraph{<>}]],
+        {
+          d(1, get_visual),
+        }
+      )
+    ),
   }

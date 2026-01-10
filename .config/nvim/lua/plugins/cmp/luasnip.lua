@@ -4,60 +4,6 @@ return {
 	dependencies = { "rafamadriz/friendly-snippets" },
 	build = "make install_jsregexp",
 	event = "InsertEnter",
-	keys = {
-		{
-			"jk",
-			function()
-				local luasnip = require("luasnip")
-				if luasnip.jumpable(1) then
-					luasnip.jump(1)
-				end
-			end,
-			mode = { "i", "s" },
-			desc = "LuaSnip: Jump forward",
-		},
-		{
-			"kj",
-			function()
-				local luasnip = require("luasnip")
-				if luasnip.jumpable(-1) then
-					luasnip.jump(-1)
-				end
-			end,
-			mode = { "i", "s" },
-			desc = "LuaSnip: Jump backward",
-		},
-		{
-			"<C-j>",
-			function()
-				local luasnip = require("luasnip")
-				if luasnip.choice_active() then
-					luasnip.change_choice(1)
-				end
-			end,
-			mode = { "i", "s" },
-			desc = "LuaSnip: Next choice",
-		},
-		{
-			"<C-n>",
-			function()
-				local luasnip = require("luasnip")
-				if luasnip.choice_active() then
-					luasnip.change_choice(-1)
-				end
-			end,
-			mode = { "i", "s" },
-			desc = "LuaSnip: Previous choice",
-		},
-		{
-			"<leader>ls",
-			function()
-				require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/LuaSnip/" })
-				vim.notify("LuaSnip snippets reloaded!")
-			end,
-			desc = "Reload LuaSnip snippets",
-		},
-	},
 	config = function()
 		local luasnip = require("luasnip")
 

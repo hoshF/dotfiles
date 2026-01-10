@@ -398,7 +398,7 @@ return
   -- DIFFERENTIAL, i.e. \diff
   s({trig = "df", snippetType="autosnippet", priority=2000, snippetType="autosnippet"},
     {
-      t("\\diff"),
+      t("\\mathrm{d}"),
     },
     {condition = tex.in_mathzone}
   ),

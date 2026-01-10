@@ -59,6 +59,7 @@ export TEXINPUTS="$HOME/.config/LaTeX//:"
 path=(
     "$HOME/.cargo/bin"
     "$HOME/.local/bin"
+    "$HOME/.local/bin/test/"
     "$HOME/go/bin"
     $path
 )
@@ -107,6 +108,7 @@ alias cbd='cargo build'
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit -m'
+alias gac="git commit -am"
 alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
 
