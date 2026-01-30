@@ -61,5 +61,10 @@
     "format": "{:%I:%M %p }",
     "rotate": 0,
     "format-alt": "{:%Y-%m-%d}"
+  },
+  "hyprland/window": {
+    "format": "{}",
+    "separator": false,
+    "max-length": 50
   }
 }

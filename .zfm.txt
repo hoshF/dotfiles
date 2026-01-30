@@ -1,10 +1,7 @@
 /home/nore/Documents/
-/home/nore/Downloads
 /home/nore/.config/
-/home/nore/Rust/Lab
+/home/nore/.local
 
 /home/nore/.config/hypr
 /home/nore/.config/nvim/lua
-/home/nore/Documents/LaTeX
-/home/nore/.config/LaTeX
-/home/nore/.local
+/home/nore/Documents/project/outer/

@@ -1,6 +1,7 @@
 ## family = "BlexMonoNerdFontMono"
 [window]
 dimensions = { columns = 100, lines = 30 }
+decorations = "None"
 
 [window.padding]
 x = 10
@@ -29,17 +30,3 @@ style = "Bold Italic"
 import = [
     "~/.config/alacritty/themes/nordic.toml"
 ]
-
-[selection]
-save_to_clipboard = true
-
-[cursor]
-unfocused_hollow = true
-
-[cursor.style]
-shape = 'Beam'
-
-[[keyboard.bindings]]
-key = "Enter"
-mods = "Alt"
-action = "ToggleFullscreen"

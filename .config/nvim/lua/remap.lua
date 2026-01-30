@@ -4,11 +4,6 @@ local map = vim.keymap.set
 -- Normal mode
 map("n", "<CR>", "o<Esc>k", opts)
 
--- map("n", "<C-h>", "<C-w>h", opts)
--- map("n", "<C-j>", "<C-w>j", opts)
--- map("n", "<C-k>", "<C-w>k", opts)
--- map("n", "<C-l>", "<C-w>l", opts)
-
 map("n", "<C-Up>", ":resize +2<CR>", opts)
 map("n", "<C-Down>", ":resize -2<CR>", opts)
 map("n", "<C-Left>", ":vertical resize -2<CR>", opts)
@@ -19,7 +14,15 @@ map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
 -- Insert mode
--- map('i', 'jj', '<Esc>', opts)
+
+-- Console mode
+vim.keymap.set("n", "<leader>T", function()
+	vim.cmd("split")
+	vim.cmd("term")
+	vim.cmd("startinsert")
+end, { desc = "Terminal" })
+
+vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
 
 -- LSP keymap
 vim.api.nvim_create_autocmd("LspAttach", {

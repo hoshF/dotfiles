@@ -36,10 +36,10 @@ for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 
 # Environment
-# export ALL_PROXY="$all_proxy"
+export ALL_PROXY="$all_proxy"
 export HTTP_PROXY="http://127.0.0.1:7890"
 export HTTPS_PROXY="http://127.0.0.1:7890"
-# export all_proxy="socks5://127.0.0.1:7890"
+export all_proxy="socks5://127.0.0.1:7890"
 export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 export PIP_TRUSTED_HOST=pypi.tuna.tsinghua.edu.cn
 

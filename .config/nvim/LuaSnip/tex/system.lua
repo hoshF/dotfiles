@@ -203,7 +203,7 @@ return
         }
       )
     ),
-    s({trig="par", snippetType="autosnippet"},
+    s({trig="parr", snippetType="autosnippet"},
       fmta(
         [[\paragraph{<>}]],
         {

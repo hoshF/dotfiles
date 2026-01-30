@@ -53,4 +53,4 @@ map I recolor
 map n scroll half-down
 map p scroll half-up
 map b toggle_statusbar
-
+map = zoom in
