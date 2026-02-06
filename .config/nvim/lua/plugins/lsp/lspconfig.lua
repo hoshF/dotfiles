@@ -70,6 +70,9 @@ return {
 				on_attach = on_attach,
 				settings = {
 					["rust-analyzer"] = {
+						files = {
+							watcher = "server",
+						},
 						cargo = {
 							allFeatures = true,
 							loadOutDirsFromCheck = true,

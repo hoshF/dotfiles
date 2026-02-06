@@ -1,4 +1,3 @@
-#https://github.com/bee-san/RustScan.git Basic zsh settings
 setopt HIST_IGNORE_ALL_DUPS    # No duplicate commands in history
 bindkey -e                     # Use emacs shortcuts (Ctrl+A, Ctrl+E, etc.)
 WORDCHARS=${WORDCHARS//[\/]}   # Better word navigation
@@ -35,27 +34,26 @@ for key ('k') bindkey -M vicmd ${key} history-substring-search-up
 for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 
+# Proxy
+proxy_on() {
+    export http_proxy="http://127.0.0.1:7890"
+    export https_proxy="http://127.0.0.1:7890"
+    export HTTP_PROXY="$http_proxy"
+    export HTTPS_PROXY="$https_proxy"
+}
+
+proxy_off() {
+    unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY
+}
+
+proxy_on
+
 # Environment
-export ALL_PROXY="$all_proxy"
-export HTTP_PROXY="http://127.0.0.1:7890"
-export HTTPS_PROXY="http://127.0.0.1:7890"
-export all_proxy="socks5://127.0.0.1:7890"
-export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
-export PIP_TRUSTED_HOST=pypi.tuna.tsinghua.edu.cn
-
-export LIBVA_DRIVER_NAME=nvidia
-export GBM_BACKEND=nvidia-drm
-export __GLX_VENDOR_LIBRARY_NAME=nvidia
-export WLR_NO_HARDWARE_CURSORS=1
-export QT_OPENGL=egl
-export EGL_PLATFORM=wayland
-
+export EDITOR='nvim'
 export CARGO_HOME="$HOME/.cargo"
 export RUSTUP_HOME="$HOME/.rustup"
-
-export EDITOR='nvim'
-
 export TEXINPUTS="$HOME/.config/LaTeX//:"
+typeset -U path
 path=(
     "$HOME/.cargo/bin"
     "$HOME/.local/bin"
@@ -66,7 +64,7 @@ path=(
 export PATH
 
 # Node.js version manager
-command -v fnm >/dev/null && eval "$(fnm env --use-on-cd)"
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 
 # Yazi file manager with cd support
 function y() {
@@ -80,10 +78,10 @@ function y() {
 # Aliases
 # System
 alias pac='sudo pacman'
+alias pQt='pacman -Qtdq | sudo pacman -Rns -'
 alias tm='tmux'
 alias ll='ls -alF'
 alias jl='journalctl'
-alias dirt='all_proxy=""'
 
 # Editor
 alias vi='nvim'
@@ -93,7 +91,6 @@ alias mc='ncmpcpp'
 
 
 # Rust development
-alias rlib='cd $(rustc --print sysroot)/lib/rustlib/src/rust/library/'
 alias vrs='nvim src/main.rs'
 alias vtm='nvim Cargo.toml'
 alias cdd='cargo add'
@@ -107,15 +104,15 @@ alias cbd='cargo build'
 # Git
 alias gs='git status'
 alias ga='git add'
-alias gc='git commit -m'
-alias gac="git commit -am"
 alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
+alias gd='git diff'
+alias gds='git diff --staged'
+gc() { git commit -m "$*"; }
+gac() { git add -A && git commit -m "$*"; }
 
 # Config files
-alias hcj='nvim ~/.config/hypr/hyprland.conf'
 alias zrc='nvim ~/.zshrc'
-alias tx='nvim ~/.config/tmux/tmux.conf'
 
 # tools
 alias f3='flask-session-cookie-manager3'
@@ -138,22 +135,19 @@ if command -v zfm >/dev/null 2>&1 && [[ -o interactive ]]; then
     bindkey '^P' zfm_cd
 fi
 
-#log setting
+# Log
 log() {
     local logdir="$HOME/Notes/logs"
     local today="$(date +%F).md"
-    mkdir -p "$logdir"
     local logfile="$logdir/$today"
-
-    if [ ! -f "$logfile" ]; then
-        echo -e "# $today\n" > "$logfile"
-    fi
-
-    nvim "$logfile"
+    
+    mkdir -p "$logdir"
+    [[ ! -f "$logfile" ]] && printf '# %s\n\n' "$today" > "$logfile"
+    nvim "$logfile" "+normal G"
 }
 
-# exercism setting
-exercism () {
+# Exercism
+exercism() {
     local out
     local IFS=$'\n'
     out=($(command exercism "$@"))
@@ -164,10 +158,11 @@ exercism () {
 }
 
 # opam
-[[ ! -r '/home/nore/.opam/opam-init/init.zsh' ]] || source '/home/nore/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+[[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2>&1
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# RVM
 export PATH="$PATH:$HOME/.rvm/bin"
 
+# Metasploit
 alias msfconsole="pushd $HOME/git/metasploit-framework && ./msfconsole && popd"
 
