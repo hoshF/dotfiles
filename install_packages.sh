@@ -52,6 +52,7 @@ PACMAN_CORE=(
     wget
     openssh
     unzip
+    libnotify
 
     # Terminal tools
     tmux
@@ -176,7 +177,7 @@ AUR_TOOLS=(
 
 # Go packages
 GO_PKGS=(
-    github.com/asmfmt/asmfmt@latest
+    github.com/klauspost/asmfmt/cmd/asmfmt@latest
 )
 
 # ========================
@@ -269,7 +270,7 @@ install_pacman_packages() {
     # Install all packages
     echo -e "${BLUE}Installing ${#all_pkgs[@]} packages...${NC}"
     local failed_pkgs=()
-    
+
     if ! pacman -S --noconfirm --needed "${all_pkgs[@]}"; then
         echo -e "${YELLOW}Some packages failed to install${NC}"
         # Try to identify which packages failed
@@ -278,24 +279,24 @@ install_pacman_packages() {
                 failed_pkgs+=("$pkg")
             fi
         done
-        
+
         if [ ${#failed_pkgs[@]} -gt 0 ]; then
             echo -e "${YELLOW}Failed packages: ${failed_pkgs[*]}${NC}"
         fi
     fi
 
     echo -e "${GREEN}✓ Pacman packages installed${NC}"
-    
+
     # Verify critical packages
     local critical_pkgs=(git curl base-devel)
     local missing_critical=()
-    
+
     for pkg in "${critical_pkgs[@]}"; do
         if ! pacman -Q "$pkg" &> /dev/null; then
             missing_critical+=("$pkg")
         fi
     done
-    
+
     if [ ${#missing_critical[@]} -gt 0 ]; then
         echo -e "${RED}Critical packages missing: ${missing_critical[*]}${NC}"
         echo -e "${RED}Cannot continue without these packages${NC}"
@@ -424,7 +425,6 @@ install_go_packages() {
 
     # Install Go packages
     for pkg in "${GO_PKGS[@]}"; do
-        # Fixed: Extract package name correctly
         local pkg_name=$(echo "$pkg" | awk -F'/' '{print $NF}' | cut -d'@' -f1)
 
         if [ -f "$gopath/bin/$pkg_name" ]; then
@@ -433,12 +433,9 @@ install_go_packages() {
         fi
 
         echo -e "${BLUE}Installing: $pkg${NC}"
-        if sudo -u "$REAL_USER" bash -c "
-            export GOPATH='$gopath'
-            export PATH='\$PATH:$gopath/bin'
-            export GOPROXY=https://goproxy.cn,direct
-            go install $pkg
-        "; then
+
+        if env GOPATH="$gopath" PATH="$PATH:$gopath/bin" GOPROXY="https://goproxy.cn,direct" \
+            go install "$pkg"; then
             installed+=("$pkg_name")
             echo -e "${GREEN}✓ Installed: $pkg_name${NC}"
         else
@@ -448,13 +445,9 @@ install_go_packages() {
     done
 
     # Summary
-    echo ""
-    echo -e "${CYAN}Go Package Summary:${NC}"
-    [ ${#installed[@]} -gt 0 ] && echo -e "${GREEN}Installed: ${installed[*]}${NC}"
-    [ ${#failed[@]} -gt 0 ] && echo -e "${YELLOW}Failed: ${failed[*]}${NC}"
-    echo ""
-
-    echo -e "${GREEN}✓ Go tools installation complete${NC}"
+    if [ ${#failed[@]} -ne 0 ]; then
+        echo -e "${YELLOW}Failed packages: ${failed[*]}${NC}"
+    fi
 }
 
 install_rust() {
@@ -485,7 +478,7 @@ install_rust() {
     # Check if rustc exists (system package)
     if sudo -u "$REAL_USER" command -v rustc &> /dev/null; then
         echo "Rust already installed (system package)"
-        local rust_version=$(rustc --version 2>/dev/null)
+        local rust_version=$(rustc --version 2> /dev/null)
         echo -e "${BLUE}Version: $rust_version${NC}"
         echo -e "${YELLOW}Note: System Rust is stable, not nightly${NC}"
         echo -e "${YELLOW}To use nightly, install rustup and run: rustup default nightly${NC}"
@@ -537,13 +530,13 @@ configure_ime() {
     echo -e "${GREEN}[Config] Configuring input method${NC}"
 
     local env_file="/etc/environment"
-    
+
     # Check if IME variables are already configured
     local ime_configured=false
     if [ -f "$env_file" ]; then
-        if grep -q "GTK_IM_MODULE.*fcitx" "$env_file" && \
-           grep -q "QT_IM_MODULE.*fcitx" "$env_file" && \
-           grep -q "XMODIFIERS.*fcitx" "$env_file"; then
+        if grep -q "GTK_IM_MODULE.*fcitx" "$env_file" \
+            && grep -q "QT_IM_MODULE.*fcitx" "$env_file" \
+            && grep -q "XMODIFIERS.*fcitx" "$env_file"; then
             ime_configured=true
         fi
     fi
@@ -557,8 +550,6 @@ configure_ime() {
     cat >> "$env_file" << 'EOF'
 
 # Fcitx5 Input Method
-GTK_IM_MODULE=fcitx
-QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 GLFW_IM_MODULE=fcitx
 EOF
@@ -580,7 +571,7 @@ setup_neovim() {
                 echo -e "${YELLOW}Updating to nvim...${NC}"
             fi
         fi
-        
+
         ln -sf /usr/bin/nvim /usr/bin/vi
         echo -e "${GREEN}✓ Created symlink: vi -> nvim${NC}"
     else
@@ -594,22 +585,22 @@ setup_neovim() {
 
 verify_installation() {
     echo -e "${GREEN}[Verify] Checking installation${NC}"
-    
+
     local critical_tools=(git curl tmux)
     local missing=()
-    
+
     for tool in "${critical_tools[@]}"; do
         if ! command -v "$tool" &> /dev/null; then
             missing+=("$tool")
         fi
     done
-    
+
     if [ ${#missing[@]} -gt 0 ]; then
         echo -e "${RED}Critical tools missing: ${missing[*]}${NC}"
         echo -e "${RED}Installation may be incomplete${NC}"
         return 1
     fi
-    
+
     echo -e "${GREEN}✓ Critical tools verified${NC}"
     return 0
 }

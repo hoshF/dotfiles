@@ -53,7 +53,7 @@ export EDITOR='nvim'
 export CARGO_HOME="$HOME/.cargo"
 export RUSTUP_HOME="$HOME/.rustup"
 export TEXINPUTS="$HOME/.config/LaTeX//:"
-typeset -U path
+typeset -U path PATH
 path=(
     "$HOME/.cargo/bin"
     "$HOME/.local/bin"
@@ -61,7 +61,6 @@ path=(
     "$HOME/go/bin"
     $path
 )
-export PATH
 
 # Node.js version manager
 command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
@@ -95,7 +94,6 @@ alias vrs='nvim src/main.rs'
 alias vtm='nvim Cargo.toml'
 alias cdd='cargo add'
 alias cun='cargo run'
-alias cud='cargo build'
 alias cew='cargo new'
 alias can='cargo clean'
 alias cst='cargo test'
@@ -132,7 +130,7 @@ zfm_cd() {
 }
 if command -v zfm >/dev/null 2>&1 && [[ -o interactive ]]; then
     zle -N zfm_cd
-    bindkey '^P' zfm_cd
+    bindkey '^O' zfm_cd
 fi
 
 # Log
