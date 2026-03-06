@@ -3,7 +3,7 @@ return {
 	version = "v2.*",
 	dependencies = { "rafamadriz/friendly-snippets" },
 	build = "make install_jsregexp",
-	event = "InsertEnter",
+	event = "BufReadpost",
 	config = function()
 		local luasnip = require("luasnip")
 
@@ -15,21 +15,44 @@ return {
 			ext_opts = nil,
 		})
 
-		vim.defer_fn(function()
-			local ok, _ = pcall(require, "luasnip.loaders.from_vscode")
-			if ok then
-				require("luasnip.loaders.from_vscode").lazy_load()
-			end
+		require("luasnip.loaders.from_vscode").lazy_load()
+		local snippet_path = vim.fn.expand("~/.config/nvim/LuaSnip/")
+		if vim.fn.isdirectory(snippet_path) == 1 then
+			require("luasnip.loaders.from_lua").load({ paths = { snippet_path } })
+		end
 
-			local snippet_path = vim.fn.expand("~/.config/nvim/LuaSnip/")
-			if vim.fn.isdirectory(snippet_path) == 1 then
-				local ok2, _ = pcall(require("luasnip.loaders.from_lua").lazy_load, {
-					paths = { snippet_path },
-				})
-				if not ok2 then
-					vim.notify("Failed to load custom snippets", vim.log.levels.WARN)
-				end
+		local map = vim.keymap.set
+		local opts = { noremap = true, silent = true }
+		map({ "i", "s" }, "jk", function()
+			if luasnip.jumpable(1) then
+				luasnip.jump(1)
+			else
+				local keys = vim.api.nvim_replace_termcodes("<Right>", true, false, true)
+				vim.api.nvim_feedkeys(keys, "n", true)
 			end
-		end, 100)
+		end, { desc = "LuaSnip: Jump forward" })
+
+		map({ "i", "s" }, "kj", function()
+			if luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			end
+		end, { desc = "LuaSnip: Jump backward" })
+
+		map({ "i", "s" }, "<C-j>", function()
+			if luasnip.choice_active() then
+				luasnip.change_choice(1)
+			end
+		end, { desc = "LuaSnip: Next choice" })
+
+		map({ "i", "s" }, "<C-n>", function()
+			if luasnip.choice_active() then
+				luasnip.change_choice(-1)
+			end
+		end, { desc = "LuaSnip: Previous choice" })
+
+		map("n", "<leader>ls", function()
+			require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/LuaSnip/" })
+			vim.notify("LuaSnip snippets reloaded!")
+		end, { desc = "Reload LuaSnip snippets" })
 	end,
 }

@@ -1,6 +1,7 @@
 return {
 	{
 		"mason-org/mason.nvim",
+		cmd = "Mason",
 		opts = {
 			ui = {
 				icons = {
@@ -13,6 +14,8 @@ return {
 	},
 	{
 		"mason-org/mason-lspconfig.nvim",
+        dependencies = "mason-org/mason.nvim",
+        cmd = "Mason",
 		opts = {
 			ensure_installed = {
 				"rust_analyzer",
@@ -24,12 +27,12 @@ return {
 				"pyright",
 				"ts_ls",
 			},
-			automatic_installation = true,
+			-- automatic_installation = true,
 		},
 	},
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPost", "BufNewFile" },
+        event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			local on_attach = function(client, _)

@@ -36,8 +36,8 @@ unset key
 
 # Proxy
 proxy_on() {
-    export http_proxy="http://127.0.0.1:7890"
-    export https_proxy="http://127.0.0.1:7890"
+    export http_proxy="http://127.0.0.1:10808"
+    export https_proxy="http://127.0.0.1:10808"
     export HTTP_PROXY="$http_proxy"
     export HTTPS_PROXY="$https_proxy"
 }
@@ -160,7 +160,4 @@ exercism() {
 
 # RVM
 export PATH="$PATH:$HOME/.rvm/bin"
-
-# Metasploit
-alias msfconsole="pushd $HOME/git/metasploit-framework && ./msfconsole && popd"
 

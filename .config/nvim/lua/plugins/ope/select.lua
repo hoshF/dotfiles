@@ -1,5 +1,6 @@
 return {
     "keaising/im-select.nvim",
+    event = "BufReadPost",
     config = function()
         require("im_select").setup({
             default_im_select = "keyboard-us",
