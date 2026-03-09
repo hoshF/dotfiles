@@ -81,6 +81,7 @@ alias pQt='pacman -Qtdq | sudo pacman -Rns -'
 alias tm='tmux'
 alias ll='ls -alF'
 alias jl='journalctl'
+alias ctl='systemctl'
 
 # Editor
 alias vi='nvim'
