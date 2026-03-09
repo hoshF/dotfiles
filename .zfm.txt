@@ -1,7 +1,0 @@
-/home/nore/Documents/
-/home/nore/.config/
-/home/nore/.local
-
-/home/nore/.config/hypr
-/home/nore/.config/nvim/lua
-/home/nore/Documents/project/outer/
