@@ -16,7 +16,7 @@ map("v", ">", ">gv", opts)
 -- Insert mode
 
 -- Console mode
-vim.keymap.set("n", "<leader>T", function()
+vim.keymap.set("n", "<space>t", function()
 	vim.cmd("split")
 	vim.cmd("term")
 	vim.cmd("startinsert")
@@ -39,4 +39,3 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end, bufopts)
 	end,
 })
-

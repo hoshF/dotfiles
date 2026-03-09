@@ -3,7 +3,7 @@ return {
 	version = "v2.*",
 	dependencies = { "rafamadriz/friendly-snippets" },
 	build = "make install_jsregexp",
-	event = "BufReadpost",
+	event = "InsertEnter",
 	config = function()
 		local luasnip = require("luasnip")
 

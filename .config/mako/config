@@ -8,7 +8,7 @@ on-button-right=dismiss
 on-touch=invoke-default-action
 on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
 
-font= JetBrains Mono Nerd Font 12
+font= JetBrains Mono Nerd Font 16
 
 # background-color=#14141c80
 

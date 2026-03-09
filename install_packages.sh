@@ -18,11 +18,11 @@ echo "Installation log: $LOG_FILE"
 set -E
 trap 'echo -e "${RED}Installation failed! Check log: $LOG_FILE${NC}"' ERR
 
-# Check root
-if [ "$(id -u)" -ne 0 ]; then
-    echo -e "${RED}Please run with sudo${NC}"
-    exit 1
-fi
+# # Check root
+# if [ "$(id -u)" -ne 0 ]; then
+#     echo -e "${RED}Please run with sudo${NC}"
+#     exit 1
+# fi
 
 # Get real user
 REAL_USER="${SUDO_USER:-$USER}"
@@ -81,10 +81,10 @@ PACMAN_VIEWERS=(
 )
 
 PACMAN_LATEX=(
-    texlive-basic
+    texlive-core
+    texlive-luatex
     texlive-latex
     texlive-latexrecommended
-    texlive-langchinese
     texlive-fontsrecommended
 )
 
@@ -103,8 +103,6 @@ PACMAN_AUDIO=(
     pipewire
     pipewire-alsa
     pipewire-pulse
-    pipewire-jack
-    pipewire-audio
     wireplumber
 
     bluez
@@ -123,8 +121,15 @@ PACMAN_FORMATTERS=(
 )
 
 PACMAN_COMMON=(
+    mako
+    grim
+    slurp
     wf-recorder
     firefox
+    xorg-xwayland
+    polkit-gnome
+    qt5-wayland
+    qt6-wayland
 )
 
 # Desktop Environment packages
@@ -133,29 +138,14 @@ PACMAN_SWAY=(
     swaylock
     swayidle
     swaybg
-    waybar
-    mako
-    xorg-xwayland
-    polkit-gnome
-    qt5-wayland
-    qt6-wayland
-    grim
-    slurp
 )
 
 PACMAN_HYPRLAND=(
-    alacritty
+    kitty
     hyprland
     waybar
     wofi
-    mako
-    xorg-xwayland
-    polkit-gnome
-    qt5-wayland
-    qt6-wayland
     hyprpaper
-    grim
-    slurp
 )
 
 # AUR packages
@@ -241,7 +231,7 @@ install_pacman_packages() {
 
     # Update system
     echo -e "${BLUE}Updating system...${NC}"
-    pacman -Syu --noconfirm || {
+    sudo pacman -Syu --noconfirm || {
         echo -e "${RED}System update failed${NC}"
         exit 1
     }
@@ -271,11 +261,11 @@ install_pacman_packages() {
     echo -e "${BLUE}Installing ${#all_pkgs[@]} packages...${NC}"
     local failed_pkgs=()
 
-    if ! pacman -S --noconfirm --needed "${all_pkgs[@]}"; then
+    if ! sudo pacman -S --noconfirm --needed "${all_pkgs[@]}"; then
         echo -e "${YELLOW}Some packages failed to install${NC}"
         # Try to identify which packages failed
         for pkg in "${all_pkgs[@]}"; do
-            if ! pacman -Q "$pkg" &> /dev/null; then
+            if ! sudo pacman -Q "$pkg" &> /dev/null; then
                 failed_pkgs+=("$pkg")
             fi
         done
@@ -547,7 +537,7 @@ configure_ime() {
     fi
 
     # Add IME environment variables
-    cat >> "$env_file" << 'EOF'
+    sudo cat >> "$env_file" << 'EOF'
 
 # Fcitx5 Input Method
 XMODIFIERS=@im=fcitx
@@ -557,27 +547,27 @@ EOF
     echo -e "${YELLOW}Note: Re-login required for changes to take effect${NC}"
 }
 
-setup_neovim() {
-    echo -e "${GREEN}[Config] Setting up Neovim symlink${NC}"
+# setup_neovim() {
+#     echo -e "${GREEN}[Config] Setting up Neovim symlink${NC}"
 
-    if command -v nvim &> /dev/null; then
-        if [ -L /usr/bin/vi ]; then
-            local current_target=$(readlink /usr/bin/vi)
-            if [ "$current_target" = "/usr/bin/nvim" ]; then
-                echo -e "${BLUE}Symlink already configured: vi -> nvim${NC}"
-                return
-            else
-                echo -e "${YELLOW}Symlink exists but points to: $current_target${NC}"
-                echo -e "${YELLOW}Updating to nvim...${NC}"
-            fi
-        fi
+#     if command -v nvim &> /dev/null; then
+#         if [ -L /usr/bin/vi ]; then
+#             local current_target=$(readlink /usr/bin/vi)
+#             if [ "$current_target" = "/usr/bin/nvim" ]; then
+#                 echo -e "${BLUE}Symlink already configured: vi -> nvim${NC}"
+#                 return
+#             else
+#                 echo -e "${YELLOW}Symlink exists but points to: $current_target${NC}"
+#                 echo -e "${YELLOW}Updating to nvim...${NC}"
+#             fi
+#         fi
 
-        ln -sf /usr/bin/nvim /usr/bin/vi
-        echo -e "${GREEN}✓ Created symlink: vi -> nvim${NC}"
-    else
-        echo -e "${YELLOW}nvim not installed, skipping symlink${NC}"
-    fi
-}
+#         ln -sf /usr/bin/nvim /usr/bin/vi
+#         echo -e "${GREEN}✓ Created symlink: vi -> nvim${NC}"
+#     else
+#         echo -e "${YELLOW}nvim not installed, skipping symlink${NC}"
+#     fi
+# }
 
 # ========================
 #      Verification
@@ -681,9 +671,9 @@ show_summary() {
         echo "  4. Enable Rust in current shell: source ~/.cargo/env"
     fi
 
-    if command -v nvim &> /dev/null; then
-        echo "  5. Check Neovim health: nvim and run :checkhealth"
-    fi
+    # if command -v nvim &> /dev/null; then
+    #     echo "  5. Check Neovim health: nvim and run :checkhealth"
+    # fi
 
     echo ""
     echo -e "${BLUE}Tips:${NC}"
@@ -710,7 +700,6 @@ main() {
     install_go_packages
     install_rust
     configure_ime
-    setup_neovim
     verify_installation
     show_summary
 }

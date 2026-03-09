@@ -1,11 +1,10 @@
 return {
 	{
 		"andrewferrier/wrapping.nvim",
-        event = "BufReadpost",
+        event = "BufReadPost",
 		opts = {
 			softener = {
 				markdown = false,
-
 				tex = false,
 			},
 		},

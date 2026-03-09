@@ -31,6 +31,7 @@ return {
 			typescriptreact = { "prettierd", "eslint_d" },
 			json = { "prettierd" },
 			css = { "prettierd" },
+            yaml = { "prettierd" },
 			sh = { "shfmt" },
 			bash = { "shfmt" },
 			zsh = { "shfmt" },
