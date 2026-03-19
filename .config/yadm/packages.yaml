@@ -1,0 +1,117 @@
+# .yadm/packages.yaml
+# Arch Linux packages for bootstrap installation
+
+pacman:
+  # Core packages
+  core:
+    - base-devel
+    - git
+    - curl
+    - wget
+    - openssh
+    - unzip
+    - libnotify
+    - tmux
+    - yazi
+    - fzf
+    - wl-clipboard
+    - cmake
+    - go
+
+  # Input method
+  ime:
+    - fcitx5
+    - fcitx5-configtool
+    - fcitx5-gtk
+    - fcitx5-qt
+    - fcitx5-rime
+
+  # Document viewers
+  viewers:
+    - imv
+    - zathura
+    - zathura-pdf-poppler
+
+  # LaTeX
+  latex:
+    - texlive-latexextra
+    - texlive-fontsextra
+    - texlive-lang
+    - texlive-core
+    - texlive-latex
+
+  # Fonts
+  fonts:
+    - noto-fonts
+    - noto-fonts-cjk
+    - noto-fonts-emoji
+    - noto-fonts-extra
+    - adobe-source-han-serif-cn-fonts
+    - wqy-zenhei
+    - ttf-dejavu
+    - ttf-liberation
+
+  # Audio and Bluetooth
+  audio:
+    - pipewire
+    - pipewire-alsa
+    - pipewire-pulse
+    - wireplumber
+    - bluez
+    - bluez-utils
+    - blueman
+    - sof-firmware
+
+  # Code formatters
+  formatters:
+    - stylua
+    - python-black
+    - python-isort
+    - clang
+    - shfmt
+
+  # Common utilities
+  common:
+    - mako
+    - grim
+    - slurp
+    - wf-recorder
+    - firefox
+    - xorg-xwayland
+    - polkit-gnome
+    - qt5-wayland
+    - qt6-wayland
+
+  # Desktop environments
+  desktop:
+    sway:
+      - sway
+      - swaylock
+      - swayidle
+      - swaybg
+
+    hyprland:
+      - kitty
+      - hyprland
+      - waybar
+      - wofi
+      - hyprpaper
+
+# AUR packages
+aur:
+  fonts:
+    - otf-latin-modern
+    - ttf-ibmplex-mono-nerd
+
+  ime:
+    - rime-ice
+    - fcitx5-skin-fluentlight-git
+
+  tools:
+    - epr
+    - xray
+    - fnm
+
+# Go packages
+go:
+  - github.com/klauspost/asmfmt/cmd/asmfmt@latest

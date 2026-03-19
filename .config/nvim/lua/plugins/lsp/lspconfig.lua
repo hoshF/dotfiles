@@ -14,7 +14,7 @@ return {
 	},
 	{
 		"mason-org/mason-lspconfig.nvim",
-        cmd = "Mason",
+		cmd = "Mason",
 		opts = {
 			ensure_installed = {
 				"rust_analyzer",
@@ -25,6 +25,8 @@ return {
 				"asm_lsp",
 				"pyright",
 				"ts_ls",
+                "yamlls",
+                "jsonls",
 			},
 		},
 	},
@@ -104,6 +106,8 @@ return {
 					"typescript",
 					"typescriptreact",
 				},
+				yamlls = { "yaml", "yml" },
+                jsonls = { "json", "jsonc" },
 			}
 
 			for server, ft in pairs(server_filetypes) do
