@@ -161,3 +161,5 @@ exercism() {
 
 # RVM
 export PATH="$PATH:$HOME/.rvm/bin"
+
+export TERM=xterm-256color
