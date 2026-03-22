@@ -1,7 +1,12 @@
 .ssh/config
+
 .ssh/github
 .ssh/sopesi
+.ssh/codeberg
+
 .ssh/nore
+
 .ssh/vps
 .ssh/silk
 .ssh/tenxun
+.ssh/hostdare

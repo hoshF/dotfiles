@@ -16,13 +16,13 @@ map("v", ">", ">gv", opts)
 -- Insert mode
 
 -- Console mode
-vim.keymap.set("n", "<space>t", function()
+map("n", "<space>t", function()
 	vim.cmd("split")
 	vim.cmd("term")
 	vim.cmd("startinsert")
 end, { desc = "Terminal" })
 
-vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
+map("t", "<Esc>", [[<C-\><C-n>]])
 
 -- LSP keymap
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -38,4 +38,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 		end, bufopts)
 	end,
+})
+
+-- Leap keymap
+map({ "n", "x", "o" }, "s", "<Plug>(leap)")
+map("n", "S", "<Plug>(leap-from-window)")
+
+map({ "x", "o" }, "x", "<Plug>(leap-forward-till)")
+map({ "x", "o" }, "X", "<Plug>(leap-backward-till)")
+
+require("leap.user").set_repeat_keys("<enter>", "<backspace>", {
+	relative_directions = false,
+	modes = { "n", "x", "o" },
 })
