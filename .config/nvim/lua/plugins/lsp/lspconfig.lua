@@ -13,21 +13,31 @@ return {
 		},
 	},
 	{
-		"mason-org/mason-lspconfig.nvim",
-		cmd = "Mason",
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		opts = {
 			ensure_installed = {
-				"rust_analyzer",
+				"lua-language-server",
+				"rust-analyzer",
 				"clangd",
-				"lua_ls",
 				"gopls",
 				"texlab",
-				"asm_lsp",
+				"asm-lsp",
 				"pyright",
-				"ts_ls",
-                "yamlls",
-                "jsonls",
+				"typescript-language-server",
+				"yaml-language-server",
+				"json-lsp",
+
+				"stylua",
+				"isort",
+				"black",
+				"clang-format",
+				"asmfmt",
+				"prettierd",
+				"eslint_d",
+				"shfmt",
+                "latexindent",
 			},
+            run_on_start = false,
 		},
 	},
 	{
@@ -107,7 +117,7 @@ return {
 					"typescriptreact",
 				},
 				yamlls = { "yaml", "yml" },
-                jsonls = { "json", "jsonc" },
+				jsonls = { "json", "jsonc" },
 			}
 
 			for server, ft in pairs(server_filetypes) do
