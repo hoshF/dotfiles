@@ -81,11 +81,7 @@ PACMAN_VIEWERS=(
 )
 
 PACMAN_LATEX=(
-    texlive-latexextra
-    texlive-fontsextra
-    texlive-lang
-    texlive-core
-    texlive-latex
+    texlive
 )
 
 PACMAN_FONTS=(

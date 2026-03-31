@@ -5,7 +5,8 @@
 # Read `man 5 sway` for a complete reference.
 
 # title
-font pango:Noto Sans CJK SC 7
+# font pango:Noto Sans CJK SC 7
+default_border none
 
 ### Variables
 #
@@ -21,6 +22,7 @@ set $term foot
 # Your preferred application launcher
 set $menu wmenu-run -i
 set $broswer firefox
+set $viewer zathura
 
 ### Output configuration
 #
@@ -93,6 +95,8 @@ exec swayidle -w \
     bindsym $mod+d exec $menu
     
     bindsym $mod+m exec $broswer
+
+    bindsym $mod+t exec $viewer
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
