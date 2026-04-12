@@ -8,5 +8,8 @@ return {
 		vim.g.vimtex_view_forward_search_on_start = 1
 		vim.g.vimtex_compiler_latexmk = { continuous = 1 }
 		vim.g.vimtex_compiler_latexmk_engines = { ["_"] = "-lualatex" }
+
+        vim.g.vimtex_quickfix_mode = 2
+        vim.g.vimtex_quickfix_open_on_warning = 0
 	end,
 }

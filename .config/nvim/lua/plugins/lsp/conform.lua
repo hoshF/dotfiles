@@ -21,7 +21,7 @@ return {
 			c = { "clang-format" },
 			cpp = { "clang-format" },
 			asm = { "asmfmt" },
-			tex = { "latexindent" },
+			tex = { "tex-fmt" },
 			html = { "prettierd" },
 			markdown = { "prettierd" },
 			htmldjango = { "prettierd" },

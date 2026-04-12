@@ -24,13 +24,35 @@ return {
 		local map = vim.keymap.set
 		local opts = { noremap = true, silent = true }
 		map({ "i", "s" }, "jk", function()
+			-- 【第一优先级】：只要有 Snippet 节点（比如 \frac{}{} 的括号），必须优先跳转！
+			-- 这解决了你之前被困在 Snippet 里的问题。
 			if luasnip.jumpable(1) then
 				luasnip.jump(1)
-			else
+				return
+			end
+
+			-- 【第二优先级】：如果不是 Snippet 节点，低头看看右边是不是闭合符号
+			local col = vim.fn.col(".")
+			local line = vim.fn.getline(".")
+			local char = string.sub(line, col, col)
+
+			-- 定义你需要跳过的符号边界（包含 LaTeX 最常用的 $）
+			local closing_chars = {
+				[")"] = true,
+				["]"] = true,
+				["}"] = true,
+				['"'] = true,
+				["'"] = true,
+				["$"] = true,
+			}
+
+			if closing_chars[char] then
+				-- 使用最底层 API 纯粹地发送一个 <Right>（向右箭头）按键，100% 稳定
 				local keys = vim.api.nvim_replace_termcodes("<Right>", true, false, true)
 				vim.api.nvim_feedkeys(keys, "n", true)
 			end
-		end, { desc = "LuaSnip: Jump forward" })
+			-- 如果既没节点，又不在括号边缘，jk 就什么也不做，防止日常打字误触
+		end, { desc = "Smart Jump: LuaSnip first, then step over bracket" })
 
 		map({ "i", "s" }, "kj", function()
 			if luasnip.jumpable(-1) then

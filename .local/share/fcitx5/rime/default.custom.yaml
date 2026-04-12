@@ -3,6 +3,6 @@ patch:
 
   menu/page_size: 8
 
-  punctuator:
-    full_shape: false
-    half_shape: true
+  # punctuator:
+  #   full_shape: false
+  #   half_shape: true

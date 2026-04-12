@@ -11,6 +11,8 @@
         "hyprland/window"
     ],
     "modules-right": [
+        "cpu",
+        "memory",
         "idle_inhibitor",
         "bluetooth",
         "network",
