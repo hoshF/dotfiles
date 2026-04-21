@@ -1,8 +1,0 @@
-patch:
-  __include: rime_ice_suggestion:/
-
-  menu/page_size: 8
-
-  # punctuator:
-  #   full_shape: false
-  #   half_shape: true
