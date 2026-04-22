@@ -10,7 +10,7 @@
 
 [main]
 initial-color-theme=dark
-font=BlexMono Nerd Font:size=13
+font=Monaco Nerd Font:size=14
 # font-bold=<bold variant of regular font>
 # font-italic=<italic variant of regular font>
 # font-bold-italic=<bold+italic variant of regular font>

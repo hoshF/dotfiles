@@ -1,8 +1,6 @@
-# .yadm/packages.yaml
-# Arch Linux packages for bootstrap installation
+# ~/.yadm/packages.yaml
 
 pacman:
-  # Core packages
   core:
     - base-devel
     - git
@@ -10,15 +8,33 @@ pacman:
     - wget
     - openssh
     - unzip
-    - libnotify
+    - cmake
+    - tree
+    - htop
+
+  cli_tools:
+    - neovim
+    - zsh
     - tmux
     - yazi
     - fzf
     - wl-clipboard
-    - cmake
-    - go
+    - libnotify
 
-  # Input method
+  sway_desktop:
+    - sway
+    - swaylock
+    - swayidle
+    - swaybg
+    - mako
+    - grim
+    - slurp
+    - wf-recorder
+    - xorg-xwayland
+    - polkit-gnome
+    - qt5-wayland
+    - qt6-wayland
+
   ime:
     - fcitx5
     - fcitx5-configtool
@@ -26,79 +42,61 @@ pacman:
     - fcitx5-qt
     - fcitx5-rime
 
-  # Document viewers
   viewers:
     - imv
-    - zathura
-    - zathura-pdf-poppler
+    - sioyek
 
-  # LaTeX
   latex:
-    - texlive-latexextra
-    - texlive-fontsextra
-    - texlive-lang
     - texlive-core
     - texlive-latex
+    - texlive-latexextra
+    - texlive-fontsextra
+    - texlive-langchinese
+    - texlive-langcjk
+    - texlive-langjapanese
 
-  # Fonts
   fonts:
-    - noto-fonts
     - noto-fonts-cjk
     - noto-fonts-emoji
-    - noto-fonts-extra
-    - adobe-source-han-serif-cn-fonts
     - wqy-zenhei
+    - ttf-jetbrains-mono-nerd
     - ttf-dejavu
-    - ttf-liberation
 
-  # Audio and Bluetooth
   audio:
     - pipewire
     - pipewire-alsa
     - pipewire-pulse
     - wireplumber
+    - sof-firmware
     - bluez
     - bluez-utils
     - blueman
-    - sof-firmware
 
-  # Code formatters
-  formatters:
-    - stylua
-    - python-black
-    - python-isort
-    - clang
-    - shfmt
+  services:
+    - postgresql
+    - greetd
 
-  # Common utilities
-  common:
-    - mako
-    - grim
-    - slurp
-    - wf-recorder
-    - firefox
-    - xorg-xwayland
-    - polkit-gnome
-    - qt5-wayland
-    - qt6-wayland
+  security:
+    - nmap
+    - metasploit
+    - sqlmap
+    - hydra
+    - aircrack-ng
+    - john
+    - tcpdump
+    - wireshark-cli
+    - wireshark-qt
+    - gitleaks
+    - hashcat
+    - bettercap
+    - lynis
+    - gobuster
 
-  # Desktop environments
-  desktop:
-    sway:
-      - sway
-      - swaylock
-      - swayidle
-      - swaybg
-
-    hyprland:
-      - kitty
-      - hyprland
-      - waybar
-      - wofi
-      - hyprpaper
-
-# AUR packages
 aur:
+  browser:
+    - zen-browser-bin
+    - google-chrome
+
   fonts:
     - otf-latin-modern
     - ttf-ibmplex-mono-nerd
@@ -112,6 +110,10 @@ aur:
     - xray
     - fnm
 
-# Go packages
-go:
-  - github.com/klauspost/asmfmt/cmd/asmfmt@latest
+  security:
+    - dirsearch
+    - rustscan
+    - seclists
+    - caido-desktop-bin
+    - sn0int
+    - gvm
