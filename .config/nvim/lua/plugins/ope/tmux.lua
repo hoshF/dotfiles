@@ -1,5 +1,6 @@
 return {
 	"christoomey/vim-tmux-navigator",
+	-- event = "BufReadPost",
 	config = function()
 		local modes = { "n", "i", "t" }
 

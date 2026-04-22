@@ -35,7 +35,6 @@ return {
 				"prettierd",
 				"eslint_d",
 				"shfmt",
-                "tex-fmt",
 			},
             run_on_start = false,
 		},

@@ -1,0 +1,17 @@
+font-family = "Monaco Nerd Font"
+font-size = 16
+font-feature = "calt"
+font-feature = "liga"
+
+theme = "nord"
+cursor-style-blink = false
+
+window-decoration = true
+macos-titlebar-style = tabs
+background-opacity = 0.95
+confirm-close-surface = false
+
+resize-overlay = never
+shell-integration = zsh
+
+window-save-state = always

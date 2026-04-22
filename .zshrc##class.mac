@@ -1,0 +1,114 @@
+export EDITOR='nvim'
+export TERM=xterm-256color
+
+# History & Navigation
+setopt HIST_IGNORE_ALL_DUPS
+bindkey -v
+WORDCHARS=${WORDCHARS//[\/]}
+
+typeset -U path PATH
+path=(
+    "$HOME/.cargo/bin"
+    "$HOME/.local/bin"
+    "$HOME/.local/bin/test/"
+    "$HOME/go/bin"
+    "$HOME/.opencode/bin"
+    "/opt/homebrew/bin"
+    "/usr/local/bin"
+    "/Library/TeX/texbin"
+    $path
+)
+export CARGO_HOME="$HOME/.cargo"
+export RUSTUP_HOME="$HOME/.rustup"
+
+ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+# Auto-install/update Zim
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
+[[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]] && source ${ZIM_HOME}/zimfw.zsh init
+source ${ZIM_HOME}/init.zsh
+
+zmodload -F zsh/terminfo +p:terminfo
+# History search with arrow keys and j/k in vi-mode
+for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
+    for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
+        bindkey -M vicmd 'k' history-substring-search-up
+        bindkey -M vicmd 'j' history-substring-search-down
+
+# Proxy toggle
+proxy_on() {
+    export all_proxy="socks5://127.0.0.1:10808"
+    export http_proxy="http://127.0.0.1:10808"
+    export https_proxy="http://127.0.0.1:10808"
+    export HTTP_PROXY="$http_proxy"
+    export HTTPS_PROXY="$https_proxy"
+}
+proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
+proxy_on # Enabled by default
+
+# Yazi file manager integration
+y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        builtin cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
+
+# Quick daily logging
+log() {
+    local logdir="$HOME/Notes/logs"
+    local today="$(date +%F).md"
+    mkdir -p "$logdir"
+    [[ ! -f "$logdir/$today" ]] && printf '# %s\n\n' "$today" > "$logdir/$today"
+    nvim "$logdir/$today" "+normal G"
+}
+
+# ZFM directory selector
+zfm_cd() {
+    local target=$(zfm select --dirs 2>/dev/null)
+    [[ -n "$target" ]] && cd "$target" 2>/dev/null
+    zle reset-prompt
+}
+if command -v zfm >/dev/null 2>&1; then
+    zle -N zfm_cd
+    bindkey '^O' zfm_cd
+fi
+
+# FNM (Fast Node Manager)
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
+
+# OCaml/OPAM
+[[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2>&1
+
+# Go Version Manager (GVM)
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+
+# System & General
+alias brewup='brew update && brew upgrade'
+alias tm='tmux'
+alias ll='ls -alF'
+alias vi='nvim'
+alias vim='nvim'
+alias zrc='nvim ~/.zshrc'
+
+# Rust
+alias vrs='nvim src/main.rs'
+alias cdd='cargo add'
+alias cun='cargo run'
+alias cbd='cargo build'
+
+# Git
+alias gs='git status'
+alias ga='git add'
+alias gp='git push'
+alias gl='git log --oneline --graph --decorate'
+alias gd='git diff'
+alias gds='git diff --staged'
+gc() { git commit -m "$*"; }
+gac() { ait add -A && git commit -m "$*"; }
