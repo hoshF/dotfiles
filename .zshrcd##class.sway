@@ -6,20 +6,17 @@ setopt HIST_IGNORE_ALL_DUPS
 bindkey -v
 WORDCHARS=${WORDCHARS//[\/]}
 
-# Environment Variables
-export CARGO_HOME="$HOME/.cargo"
-export RUSTUP_HOME="$HOME/.rustup"
-
-# Path Management
 typeset -U path PATH
 path=(
     "$HOME/.cargo/bin"
     "$HOME/.local/bin"
     "$HOME/.local/bin/test/"
     "$HOME/go/bin"
-    "$HOME/.opencode/bin"
+    "$HOME/.rvm/bin"
     $path
 )
+export CARGO_HOME="$HOME/.cargo"
+export RUSTUP_HOME="$HOME/.rustup"
 
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
@@ -27,20 +24,19 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 # Auto-install/update Zim
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
-  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
-      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
 [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]] && source ${ZIM_HOME}/zimfw.zsh init
 source ${ZIM_HOME}/init.zsh
 
-# History Search (Arrow Keys & Vim mode)
 zmodload -F zsh/terminfo +p:terminfo
+# History search with arrow keys and vi-mode keys
 for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
 for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
-for key ('k') bindkey -M vicmd ${key} history-substring-search-up
-for key ('j') bindkey -M vicmd ${key} history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
-# Proxy configuration
+# Proxy toggle
 proxy_on() {
     export http_proxy="http://127.0.0.1:10808"
     export https_proxy="http://127.0.0.1:10808"
@@ -48,14 +44,9 @@ proxy_on() {
     export HTTPS_PROXY="$https_proxy"
 }
 proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
-proxy_on
+proxy_on # Default enabled
 
-# Version Managers & Runtimes
-command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
-[[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2>&1
-export PATH="$PATH:$HOME/.rvm/bin"
-
-# Yazi file manager with cd support
+# Yazi integration
 y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
     yazi "$@" --cwd-file="$tmp"
@@ -64,17 +55,16 @@ y() {
     rm -f -- "$tmp"
 }
 
-# Daily Log tool
+# Daily logging
 log() {
     local logdir="$HOME/Notes/logs"
     local today="$(date +%F).md"
-    local logfile="$logdir/$today"
     mkdir -p "$logdir"
-    [[ ! -f "$logfile" ]] && printf '# %s\n\n' "$today" > "$logfile"
-    nvim "$logfile" "+normal G"
+    [[ ! -f "$logdir/$today" ]] && printf '# %s\n\n' "$today" > "$logdir/$today"
+    nvim "$logdir/$today" "+normal G"
 }
 
-# ZFM directory switcher
+# ZFM selector
 zfm_cd() {
     local target=$(zfm select --dirs 2>/dev/null)
     [[ -n "$target" ]] && cd "$target" 2>/dev/null
@@ -85,7 +75,13 @@ if command -v zfm >/dev/null 2>&1 && [[ -o interactive ]]; then
     bindkey '^O' zfm_cd
 fi
 
-# System
+# FNM (Node)
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
+
+# OCaml
+[[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2>&1
+
+# System & Apps
 alias pac='sudo pacman'
 alias pQt='pacman -Qtdq | sudo pacman -Rns -'
 alias tm='tmux'
@@ -93,16 +89,14 @@ alias ll='ls -alF'
 alias jl='journalctl'
 alias ctl='systemctl'
 alias vpn="sudo openvpn ~/Cyber/us.ovpn"
-
-# Editors & Apps
 alias vi='nvim'
 alias vim='nvim'
 alias za='zathura'
 alias mc='ncmpcpp'
-alias main='nvim main.tex'
 alias zrc='nvim ~/.zshrc'
+alias rec='wf-recorder'
 
-# Rust Development
+# Rust
 alias vrs='nvim src/main.rs'
 alias vtm='nvim Cargo.toml'
 alias cdd='cargo add'
@@ -121,6 +115,3 @@ alias gd='git diff'
 alias gds='git diff --staged'
 gc() { git commit -m "$*"; }
 gac() { git add -A && git commit -m "$*"; }
-
-# Utilities
-alias rec='wf-recorder'
