@@ -60,15 +60,6 @@ y() {
     rm -f -- "$tmp"
 }
 
-# Quick daily logging
-log() {
-    local logdir="$HOME/Notes/logs"
-    local today="$(date +%F).md"
-    mkdir -p "$logdir"
-    [[ ! -f "$logdir/$today" ]] && printf '# %s\n\n' "$today" > "$logdir/$today"
-    nvim "$logdir/$today" "+normal G"
-}
-
 # ZFM directory selector
 zfm_cd() {
     local target=$(zfm select --dirs 2>/dev/null)

@@ -14,8 +14,8 @@ wrap = "yes"
 imv = [
     { run = 'imv "$@"', block = true, desc = "Image Viewer" },
 ]
-zathura = [
-    { run = 'zathura "$@"', block = true, desc = "PDF Reader" },
+sioyek = [
+    { run = 'sioyek "$@"', block = true, desc = "PDF Reader" },
 ]
 epr = [
     { run = 'epr "$@"', block = true, desc = "EPUB Reader" },
@@ -37,7 +37,7 @@ prepend_rules = [
     { url = ".*{zsh*,env,config}", use = "edit" },
     { url = "*.{jpg,png,jpeg,gif,svg,bmp}", use = "imv" },
     { url = "*.{mp3,mp4,flac,mkv,avi,wav}", use = "play" },
-    { url = "*.{pdf}", use = "zathura" },
+    { url = "*.{pdf}", use = "sioyek" },
     { url = "*.{epub}", use = "epr" },
     { url = "*.{ods,xlsx,csv,docx}", use = "open" },
 ]

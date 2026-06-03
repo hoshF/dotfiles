@@ -219,4 +219,29 @@ return {
 		),
 		{ condition = line_begin }
 	),
+	-- DOCUMENT SKELETON
+	s(
+		{ trig = "doc", snippetType = "autosnippet" },
+		fmta(
+			[[
+            \input{../../../templates/temp.tex}
+
+            \begin{document}
+            \title{<>}
+            \author{hoshF}
+            \maketitle
+
+            \tableofcontents
+
+            \input{homework/index.tex}
+            <>
+            \end{document}
+            ]],
+			{
+				i(1, "title"),
+				i(0),
+			}
+		),
+		{ condition = line_begin }
+	),
 }
