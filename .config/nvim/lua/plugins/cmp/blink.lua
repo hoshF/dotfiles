@@ -2,7 +2,12 @@ return {
 	{
 		"saghen/blink.cmp",
 		lazy = false,
-		build = "cargo build --release",
+		dependencies = {
+			"saghen/blink.lib",
+		},
+		build = function()
+			require("blink.cmp").build():wait(60000)
+		end,
 		opts = {
 			appearance = {
 				nerd_font_variant = "mono",
@@ -13,34 +18,13 @@ return {
 				default = { "lsp", "path", "snippets", "buffer" },
 			},
 
-			cmdline = {
-				sources = function()
-					local cmd_type = vim.fn.getcmdtype()
-					if cmd_type == "/" then
-						return { "buffer" }
-					end
-					if cmd_type == ":" then
-						return { "cmdline" }
-					end
-					return {}
-				end,
-				completion = {
-					list = {
-						selection = { preselect = false, auto_insert = true },
-					},
-					menu = {
-						auto_show = true,
-					},
-				},
-			},
-
-			fuzzy = { implementation = "prefer_rust_with_warning" },
+			fuzzy = { implementation = "rust" },
 
 			completion = {
 				list = {
 					selection = { preselect = false, auto_insert = true },
 				},
-				keyword = { range = "prefix" },
+				keyword = { range = "full" },
 				menu = {
 					draw = {
 						treesitter = { "lsp" },
@@ -67,6 +51,5 @@ return {
 				["<C-f>"] = { "scroll_documentation_down", "fallback" },
 			},
 		},
-		opts_extend = { "sources.default" },
 	},
 }

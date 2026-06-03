@@ -60,7 +60,7 @@ workspace 10 output $monitor_secondary
 
 input "1133:16505:Logitech_G_Pro" {
     accel_profile flat
-    pointer_accel 0.5
+    pointer_accel 0.3
 }
 
 #

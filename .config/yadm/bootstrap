@@ -40,14 +40,14 @@ get_packages() {
     local repo="$1"
     local category="$2"
     # 读取 yaml 内容
-    yq ".$repo.$category[]" "$PACKAGE_FILE" 2>/dev/null || true
+    yq ".$repo.$category[]" "$PACKAGE_FILE" 2> /dev/null || true
 }
 
 # ========================
 #  1. Graphics Driver Auto-Detection
 # ========================
 install_drivers() {
-    echo -e "${GREEN}[1/6] Detecting and installing graphics drivers...${NC}"
+    echo -e "${GREEN}[1/7] Detecting and installing graphics drivers...${NC}"
     local GPU_INFO=$(lspci | grep -i 'vga\|3d\|display')
     local DRIVER_PKGS=()
     local IS_NVIDIA=false
@@ -56,12 +56,12 @@ install_drivers() {
         echo -e "${BLUE}Detected AMD GPU.${NC}"
         DRIVER_PKGS+=("mesa" "vulkan-radeon" "xf86-video-amdgpu")
     fi
-    
+
     if echo "$GPU_INFO" | grep -iq 'intel'; then
         echo -e "${BLUE}Detected Intel GPU.${NC}"
         DRIVER_PKGS+=("mesa" "vulkan-intel" "intel-media-driver")
     fi
-    
+
     if echo "$GPU_INFO" | grep -iq 'nvidia'; then
         echo -e "${BLUE}Detected NVIDIA GPU.${NC}"
         DRIVER_PKGS+=("nvidia-dkms" "nvidia-utils" "egl-wayland" "linux-headers")
@@ -91,20 +91,20 @@ install_drivers() {
 #  2. Pacman Packages
 # ========================
 install_pacman_packages() {
-    echo -e "${GREEN}[2/6] Installing Pacman packages${NC}"
-    
+    echo -e "${GREEN}[2/7] Installing Pacman packages${NC}"
+
     sudo pacman -Sy --noconfirm
-    
+
     local packages=()
     for category in "${PACMAN_CATEGORIES[@]}"; do
         while IFS= read -r pkg; do
-            pkg="${pkg//\"/}" 
+            pkg="${pkg//\"/}"
             pkg="${pkg//\'/}"
-            
+
             [ -n "$pkg" ] && [ "$pkg" != "null" ] && packages+=("$pkg")
         done < <(get_packages "pacman" "$category")
     done
-    
+
     if [ ${#packages[@]} -gt 0 ]; then
         echo -e "${BLUE}Installing ${#packages[@]} Pacman packages...${NC}"
         sudo pacman -S --noconfirm --needed "${packages[@]}"
@@ -118,24 +118,24 @@ install_pacman_packages() {
 #  3. AUR Packages
 # ========================
 install_aur_packages() {
-    echo -e "${GREEN}[3/6] Installing AUR packages${NC}"
+    echo -e "${GREEN}[3/7] Installing AUR packages${NC}"
     if ! command -v yay &> /dev/null; then
         local build_dir="/tmp/yay-build"
         mkdir -p "$build_dir" && cd "$build_dir"
         git clone https://aur.archlinux.org/yay.git && cd yay
         makepkg -si --noconfirm && cd "$HOME" && rm -rf "$build_dir"
     fi
-    
+
     local aur_packages=()
     for category in "${AUR_CATEGORIES[@]}"; do
         while IFS= read -r pkg; do
-            pkg="${pkg//\"/}" 
+            pkg="${pkg//\"/}"
             pkg="${pkg//\'/}"
-            
+
             [ -n "$pkg" ] && [ "$pkg" != "null" ] && aur_packages+=("$pkg")
         done < <(get_packages "aur" "$category")
     done
-    
+
     if [ ${#aur_packages[@]} -gt 0 ]; then
         echo -e "${BLUE}Installing ${#aur_packages[@]} AUR packages...${NC}"
         yay -S --noconfirm --needed "${aur_packages[@]}"
@@ -146,11 +146,33 @@ install_aur_packages() {
 }
 
 # ========================
-#  4. Metasploit & Postgres Setup
+#  4. Rime Ice Configuration
+# ========================
+setup_rime_ice() {
+    echo -e "${GREEN}[4/7] Configuring Rime Ice for Fcitx5...${NC}"
+
+    local rime_dir="$HOME/.local/share/fcitx5/rime"
+
+    echo -e "${BLUE}Creating Rime directory at $rime_dir...${NC}"
+    mkdir -p "$rime_dir"
+
+    echo -e "${BLUE}Writing default.custom.yaml...${NC}"
+    cat << 'EOF' > "$rime_dir/default.custom.yaml"
+patch:
+  __include: rime_ice_suggestion:/
+  __patch:
+    menu/page_size: 5
+EOF
+
+    echo -e "${GREEN}✓ Rime Ice configured${NC}"
+}
+
+# ========================
+#  5. Metasploit & Postgres Setup
 # ========================
 setup_security_tools() {
-    echo -e "${GREEN}[4/6] Configuring PostgreSQL & Metasploit...${NC}"
-    
+    echo -e "${GREEN}[5/7] Configuring PostgreSQL & Metasploit...${NC}"
+
     if [ ! -d "/var/lib/postgres/data/base" ]; then
         echo -e "${BLUE}Initializing PostgreSQL database...${NC}"
         sudo -u postgres initdb -D /var/lib/postgres/data
@@ -161,16 +183,16 @@ setup_security_tools() {
 
     echo -e "${BLUE}Initializing Metasploit database (msfdb)...${NC}"
     msfdb init || echo -e "${YELLOW}msfdb init returned non-zero (might already be initialized).${NC}"
-    
+
     echo -e "${GREEN}✓ Metasploit connected to PostgreSQL${NC}"
 }
 
 # ========================
-#  5. Enable System Services
+#  6. Enable System Services
 # ========================
 enable_services() {
-    echo -e "${GREEN}[5/6] Enabling System Services...${NC}"
-    
+    echo -e "${GREEN}[6/7] Enabling System Services...${NC}"
+
     sudo systemctl enable bluetooth.service
     sudo systemctl enable greetd.service
     sudo systemctl enable postgresql.service
@@ -178,15 +200,15 @@ enable_services() {
 
     systemctl --user enable wireplumber.service
     systemctl --user enable pipewire-pulse.service
-    
+
     echo -e "${GREEN}✓ Services enabled${NC}"
 }
 
 # ========================
-#  6. Rust
+#  7. Rust
 # ========================
 install_rust() {
-    echo -e "${GREEN}[6/6] Installing Rust (Nightly, Complete Profile)${NC}"
+    echo -e "${GREEN}[7/7] Installing Rust (Nightly, Complete Profile)${NC}"
     if [ -d "$HOME/.cargo/bin" ] && [ -f "$HOME/.cargo/bin/rustup" ]; then
         echo -e "${GREEN}✓ Rust already installed. Skipping...${NC}"
         return 0
@@ -202,15 +224,16 @@ main() {
     echo -e "${CYAN}================================================${NC}"
     echo -e "${CYAN}   Bootstrap Sway + InfoSec Environment         ${NC}"
     echo -e "${CYAN}================================================${NC}"
-    
+
     check_yq
     install_drivers
     install_pacman_packages
     install_aur_packages
+    setup_rime_ice
     setup_security_tools
     enable_services
     install_rust
-    
+
     echo -e "${GREEN}================================================${NC}"
     echo -e "${GREEN}✓ Bootstrap complete!${NC}"
     echo -e "${BLUE}Log saved to: $LOG_FILE${NC}"

@@ -11,6 +11,7 @@ pacman:
     - cmake
     - tree
     - htop
+    - poppler
 
   cli_tools:
     - neovim
@@ -109,6 +110,7 @@ aur:
     - epr
     - xray
     - fnm
+    - syncthing
 
   security:
     - dirsearch
