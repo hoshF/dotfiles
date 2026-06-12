@@ -1,16 +1,24 @@
 export EDITOR='nvim'
 export TERM=xterm-256color
 
-# History & Navigation
-setopt HIST_IGNORE_ALL_DUPS
-bindkey -v
-WORDCHARS=${WORDCHARS//[\/]}
+# Runtime locations
+export BUN_INSTALL="$HOME/.bun"
+export CARGO_HOME="$HOME/.cargo"
+export RUSTUP_HOME="$HOME/.rustup"
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
 
+# Executable search path (typeset -U removes duplicate entries)
 typeset -U path PATH
 path=(
-    "$HOME/.cargo/bin"
+    "$BUN_INSTALL/bin"
+    "$JAVA_HOME/bin"
+    "$ANDROID_HOME/platform-tools"
+    "$ANDROID_HOME/cmdline-tools/latest/bin"
+    "$CARGO_HOME/bin"
     "$HOME/.local/bin"
-    "$HOME/.local/bin/test/"
+    "$HOME/.local/bin/test"
     "$HOME/go/bin"
     "$HOME/.opencode/bin"
     "/opt/homebrew/bin"
@@ -18,8 +26,11 @@ path=(
     "/Library/TeX/texbin"
     $path
 )
-export CARGO_HOME="$HOME/.cargo"
-export RUSTUP_HOME="$HOME/.rustup"
+
+# History & Navigation
+setopt HIST_IGNORE_ALL_DUPS
+bindkey -v
+WORDCHARS=${WORDCHARS//[\/]}
 
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
@@ -35,20 +46,20 @@ source ${ZIM_HOME}/init.zsh
 zmodload -F zsh/terminfo +p:terminfo
 # History search with arrow keys and j/k in vi-mode
 for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
-    for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
-        bindkey -M vicmd 'k' history-substring-search-up
-        bindkey -M vicmd 'j' history-substring-search-down
+for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 # Proxy toggle
-proxy_on() {
-    export all_proxy="socks5://127.0.0.1:10808"
-    export http_proxy="http://127.0.0.1:10808"
-    export https_proxy="http://127.0.0.1:10808"
-    export HTTP_PROXY="$http_proxy"
-    export HTTPS_PROXY="$https_proxy"
-}
-proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
-proxy_on # Enabled by default
+#proxy_on() {
+#    export all_proxy="socks5://127.0.0.1:10808"
+#    export http_proxy="http://127.0.0.1:10808"
+#    export https_proxy="http://127.0.0.1:10808"
+#    export HTTP_PROXY="$http_proxy"
+#    export HTTPS_PROXY="$https_proxy"
+#}
+#proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
+#proxy_on # Enabled by default
 
 # Yazi file manager integration
 y() {
@@ -102,4 +113,8 @@ alias gl='git log --oneline --graph --decorate'
 alias gd='git diff'
 alias gds='git diff --staged'
 gc() { git commit -m "$*"; }
-gac() { ait add -A && git commit -m "$*"; }
+gac() { git add -A && git commit -m "$*"; }
+
+# Android development
+# Bun completions
+[[ -s "$BUN_INSTALL/_bun" ]] && source "$BUN_INSTALL/_bun"
