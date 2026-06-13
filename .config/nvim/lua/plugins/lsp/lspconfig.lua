@@ -14,6 +14,7 @@ return {
 	},
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		cmd = "MasonToolsInstall",
 		opts = {
 			ensure_installed = {
 				"lua-language-server",
@@ -41,6 +42,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
+		dependencies = { "saghen/blink.cmp" },
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()

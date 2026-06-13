@@ -1,2 +1,13 @@
-image=~/Pictures/looking.jpg
-no-unlock-indicator
+image=/home/nore/Pictures/looking.jpg
+show-failed-attempts
+indicator-radius=35
+indicator-thickness=4
+indicator-x-position=50
+indicator-y-position=50
+ring-color=4c566a66
+key-hl-color=81a1c1
+bs-hl-color=bf616a
+text-color=d8dee9
+inside-color=00000000
+ring-ver-color=88c0d0
+inside-ver-color=88c0d066

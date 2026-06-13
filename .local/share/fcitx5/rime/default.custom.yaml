@@ -1,0 +1,5 @@
+patch:
+  __include: rime_ice_suggestion:/
+  __patch:
+    menu/page_size: 5
+  ascii_composer/switch_key/Shift_L: noop

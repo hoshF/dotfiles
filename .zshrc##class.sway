@@ -12,7 +12,6 @@ path=(
     "$HOME/.local/bin"
     "$HOME/.local/bin/test/"
     "$HOME/go/bin"
-    "$HOME/.rvm/bin"
     $path
 )
 export CARGO_HOME="$HOME/.cargo"
@@ -115,6 +114,9 @@ alias gd='git diff'
 alias gds='git diff --staged'
 gc() { git commit -m "$*"; }
 gac() { git add -A && git commit -m "$*"; }
+
+# direnv — auto-load .envrc per directory
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
 # OpenClaw Completion
 source "/home/nore/.openclaw/completions/openclaw.zsh"

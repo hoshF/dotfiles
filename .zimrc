@@ -21,7 +21,6 @@ zmodule zsh-users/zsh-autosuggestions               # Gray text suggestions
 
 # Extra tools
 zmodule prompt-pwd
-zmodule minimal    # Theme/styling
 zmodule pabloariasal/zfm    # File manager helper
 zmodule Aloxaf/fzf-tab     # Better tab completion
 zmodule pacman             # Pacman shortcuts

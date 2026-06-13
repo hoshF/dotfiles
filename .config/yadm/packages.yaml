@@ -35,6 +35,9 @@ pacman:
     - polkit-gnome
     - qt5-wayland
     - qt6-wayland
+    - foot
+    - wmenu
+    - brightnessctl
 
   ime:
     - fcitx5
@@ -46,6 +49,9 @@ pacman:
   viewers:
     - imv
     - sioyek
+    - zathura
+    - zathura-pdf-mupdf
+    - mpv
 
   latex:
     - texlive-core
@@ -72,6 +78,8 @@ pacman:
     - bluez
     - bluez-utils
     - blueman
+    - mpd
+    - ncmpcpp
 
   services:
     - postgresql
