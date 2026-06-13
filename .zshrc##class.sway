@@ -1,11 +1,6 @@
 export EDITOR='nvim'
 export TERM=xterm-256color
 
-# History & Navigation
-setopt HIST_IGNORE_ALL_DUPS
-bindkey -v
-WORDCHARS=${WORDCHARS//[\/]}
-
 typeset -U path PATH
 path=(
     "$HOME/.cargo/bin"
@@ -29,7 +24,10 @@ fi
 source ${ZIM_HOME}/init.zsh
 
 zmodload -F zsh/terminfo +p:terminfo
-# History search with arrow keys and vi-mode keys
+# History & Navigation
+setopt HIST_IGNORE_ALL_DUPS
+bindkey -v
+WORDCHARS=${WORDCHARS//[\/]}
 for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
 for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
@@ -54,7 +52,7 @@ y() {
     rm -f -- "$tmp"
 }
 
-# History & Navigation
+# ZFM directory selector
 zfm_cd() {
     local target=$(zfm select --dirs 2>/dev/null)
     [[ -n "$target" ]] && cd "$target" 2>/dev/null
@@ -70,6 +68,9 @@ command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 
 # OCaml
 [[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2>&1
+
+# direnv
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
 # System & Apps
 alias pac='sudo pacman'
@@ -106,23 +107,13 @@ alias gds='git diff --staged'
 gc() { git commit -m "$*"; }
 gac() { git add -A && git commit -m "$*"; }
 
-# direnv — auto-load .envrc per directory
-command -v direnv >/dev/null && eval "$(direnv hook zsh)"
-
-# OpenClaw Completion
-source "/home/nore/.openclaw/completions/openclaw.zsh"
-export PATH="/home/nore/.local/share/fnm/node-versions/v25.3.0/installation/bin:$PATH"
-
-alias un='uv run'
-alias uy='uv run python'
-alias ul='uv pip install'
+# uv (Python)
+alias uvr='uv run'
+alias uvpy='uv run python'
+alias uvpi='uv pip install'
 alias uva='uv add'
-alias uvd='uv remove'
-alias uvv='uv venv'
-alias uvpy='uv python'
-alias uvt='uv tool'
-alias uvti='uv tool install'
-
+alias uvrm='uv remove'
+alias uvvenv='uv venv'
 uvinit() {
     if [ -z "$1" ]; then
         echo "Usage: uvinit <project-name> [python-version]" >&2
@@ -130,5 +121,5 @@ uvinit() {
     fi
     uv init "$1" && cd "$1" && uv python pin "${2:-3.13}"
 }
-export HF_ENDPOINT=https://hf-mirror.com
 
+export HF_ENDPOINT=https://hf-mirror.com

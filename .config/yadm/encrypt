@@ -1,19 +1,16 @@
 .ssh/config
 
+.ssh/gitlab
 .ssh/github
 .ssh/sopesi
 .ssh/codeberg
 
 .ssh/nore
+.ssh/hoshf
 
 .ssh/vps
-.ssh/gitlab
-.ssh/gitlab.pub
 .ssh/huana
-.ssh/huana.pub
 .ssh/silk
 .ssh/tenxun
 .ssh/hostdare
-.ssh/hoshf
-.ssh/hoshf.pub
 .zshenv
