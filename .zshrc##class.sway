@@ -54,16 +54,7 @@ y() {
     rm -f -- "$tmp"
 }
 
-# Daily logging
-log() {
-    local logdir="$HOME/Notes/logs"
-    local today="$(date +%F).md"
-    mkdir -p "$logdir"
-    [[ ! -f "$logdir/$today" ]] && printf '# %s\n\n' "$today" > "$logdir/$today"
-    nvim "$logdir/$today" "+normal G"
-}
-
-# ZFM selector
+# History & Navigation
 zfm_cd() {
     local target=$(zfm select --dirs 2>/dev/null)
     [[ -n "$target" ]] && cd "$target" 2>/dev/null
@@ -125,5 +116,19 @@ export PATH="/home/nore/.local/share/fnm/node-versions/v25.3.0/installation/bin:
 alias un='uv run'
 alias uy='uv run python'
 alias ul='uv pip install'
+alias uva='uv add'
+alias uvd='uv remove'
+alias uvv='uv venv'
+alias uvpy='uv python'
+alias uvt='uv tool'
+alias uvti='uv tool install'
+
+uvinit() {
+    if [ -z "$1" ]; then
+        echo "Usage: uvinit <project-name> [python-version]" >&2
+        return 1
+    fi
+    uv init "$1" && cd "$1" && uv python pin "${2:-3.13}"
+}
 export HF_ENDPOINT=https://hf-mirror.com
 
