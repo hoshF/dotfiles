@@ -27,6 +27,28 @@ path=(
     $path
 )
 
+# uv — Python package manager (Arch-style: no global pip)
+fpath=("$HOME/.local/share/zsh/completions" $fpath)
+
+alias uvr='uv run'
+alias uvs='uv sync'
+alias uva='uv add'
+alias uvd='uv remove'
+alias uvv='uv venv'
+alias uvpy='uv python'
+alias uvt='uv tool'
+alias uvti='uv tool install'
+alias uvp='uv pip'
+
+# Quick project init with uv
+uvinit() {
+    if [ -z "$1" ]; then
+        echo "Usage: uvinit <project-name> [python-version]" >&2
+        return 1
+    fi
+    uv init "$1" && cd "$1" && uv python pin "${2:-3.13}"
+}
+
 # History & Navigation
 setopt HIST_IGNORE_ALL_DUPS
 bindkey -v
