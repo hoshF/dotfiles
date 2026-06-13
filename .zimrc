@@ -8,7 +8,7 @@ zmodule utility       # Colored ls, grep, etc.
 # Prompt themes
 zmodule duration-info  # Show command time
 zmodule git-info      # Git status in prompt
-zmodule asciiship     # ASCII prompt theme
+zmodule minimal       # Minimal prompt theme
 
 # Tab completion
 zmodule zsh-users/zsh-completions --fpath src
