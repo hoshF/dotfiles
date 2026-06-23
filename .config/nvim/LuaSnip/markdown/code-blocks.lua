@@ -3,10 +3,8 @@ local get_visual = helpers.get_visual
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
--- Return snippet tables
 return
   {
-    -- Fenced block of code
     s({trig="cc", snippetType = "autosnippet"},
       fmta(
         [[
@@ -21,7 +19,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- HTML CODE BLOCK
     s({trig="html"},
       fmta(
         [[
@@ -35,7 +32,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- PHP CODE BLOCK
     s({trig="phpp", snippetType="autosnippet"},
       fmt(
         [[
@@ -50,7 +46,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- PYTHON CODE BLOCK
     s({trig="pyy", snippetType="autosnippet"},
       fmt(
         [[
@@ -64,7 +59,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- BEANCOUNT CODE BLOCK
     s({trig="bc"},
       fmt(
         [[
@@ -78,7 +72,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- BASH CODE BLOCK
     s({trig="shh", snippetType="autosnippet"},
       fmt(
         [[
@@ -92,7 +85,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- SQL CODE BLOCK
     s({trig="qq", snippetType="autosnippet"},
       fmt(
         [[
@@ -106,7 +98,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- JAVASCRIPT CODE BLOCK
     s({trig="jvs", snippetType="autosnippet"},
       fmt(
         [[
@@ -120,7 +111,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- JSON code block
     s({trig="jss", snippetType="autosnippet"},
       fmta(
         [[
@@ -136,7 +126,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- JSON code block with array
     s({trig="jsa", snippetType="autosnippet"},
       fmta(
         [[
@@ -152,7 +141,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- Vue code block
     s({trig="vuu", snippetType="autosnippet"},
       fmt(
         [[
@@ -166,7 +154,6 @@ return
       ),
       {condition = line_begin}
     ),
-    -- Text code block
     s({trig="xx", snippetType="autosnippet"},
       fmt(
         [[
@@ -181,4 +168,3 @@ return
       {condition = line_begin}
     ),
   }
-

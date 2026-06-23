@@ -3,7 +3,6 @@ local get_visual = helpers.get_visual
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
--- Math context detection
 local tex = {}
 tex.in_mathzone = function()
 	return vim.fn["vimtex#syntax#in_mathzone"]() == 1
@@ -12,9 +11,7 @@ tex.in_text = function()
 	return not tex.in_mathzone()
 end
 
--- Return snippet tables
 return {
-	-- ANNOTATE (custom command for annotating equation derivations)
 	s(
 		{ trig = "ann", snippetType = "autosnippet" },
 		fmta(
@@ -27,7 +24,6 @@ return {
 			}
 		)
 	),
-	-- REFERENCE
 	s(
 		{ trig = " RR", snippetType = "autosnippet", wordTrig = false },
 		fmta(
@@ -39,7 +35,6 @@ return {
 			}
 		)
 	),
-	-- DOCUMENTCLASS
 	s(
 		{ trig = "dcc", snippetType = "autosnippet" },
 		fmta(
@@ -53,7 +48,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- USE A LATEX PACKAGE
 	s(
 		{ trig = "pack", snippetType = "autosnippet" },
 		fmta(
@@ -66,7 +60,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- INPUT a LaTeX file
 	s(
 		{ trig = "inn", snippetType = "autosnippet" },
 		fmta(
@@ -80,7 +73,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- LABEL
 	s(
 		{ trig = "lbl", snippetType = "autosnippet" },
 		fmta(
@@ -92,7 +84,6 @@ return {
 			}
 		)
 	),
-	-- HPHANTOM
 	s(
 		{ trig = "hpp", snippetType = "autosnippet" },
 		fmta(
@@ -131,14 +122,12 @@ return {
 			i(2),
 		})
 	),
-	-- URL
 	s(
 		{ trig = "url" },
 		fmta([[\url{<>}]], {
 			d(1, get_visual),
 		})
 	),
-	-- href command with URL in visual selection
 	s(
 		{ trig = "LU", snippetType = "autosnippet" },
 		fmta([[\href{<>}{<>}]], {
@@ -146,7 +135,6 @@ return {
 			i(2),
 		})
 	),
-	-- href command with text in visual selection
 	s(
 		{ trig = "LL", snippetType = "autosnippet" },
 		fmta([[\href{<>}{<>}]], {
@@ -154,35 +142,30 @@ return {
 			d(2, get_visual),
 		})
 	),
-	-- HSPACE
 	s(
 		{ trig = "hss", snippetType = "autosnippet" },
 		fmta([[\hspace{<>}]], {
 			d(1, get_visual),
 		})
 	),
-	-- VSPACE
 	s(
 		{ trig = "vss", snippetType = "autosnippet" },
 		fmta([[\vspace{<>}]], {
 			d(1, get_visual),
 		})
 	),
-	-- SECTION
 	s(
 		{ trig = "h1", snippetType = "autosnippet" },
 		fmta([[\section{<>}]], {
 			d(1, get_visual),
 		})
 	),
-	-- SUBSECTION
 	s(
 		{ trig = "h2", snippetType = "autosnippet" },
 		fmta([[\subsection{<>}]], {
 			d(1, get_visual),
 		})
 	),
-	-- SUBSUBSECTION
 	s(
 		{ trig = "h3", snippetType = "autosnippet" },
 		fmta([[\subsubsection{<>}]], {

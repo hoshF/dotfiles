@@ -5,16 +5,13 @@ local get_visual = helpers.get_visual
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
--- Return snippet tables
 return
   {
-    -- TODO NOTE
     s({trig="TODOO", snippetType="autosnippet"},
       {
         t("**TODO:** "),
       }
     ),
-    -- LINK; CAPTURE TEXT IN VISUAL
     s({trig="LL", wordTrig=true, snippetType="autosnippet"},
       fmta(
         [[[<>](<>)]],
@@ -24,7 +21,6 @@ return
         }
       )
     ),
-    -- LINK; CAPTURE URL IN VISUAL
     s({trig="LU", wordTrig=true, snippetType="autosnippet"},
       fmta(
         [[[<>](<>)]],
@@ -34,7 +30,6 @@ return
         }
       )
     ),
-    -- BOLDFACE TEXT
     s({trig="tbb", snippetType="autosnippet"},
       fmta(
         [[**<>**]],
@@ -43,7 +38,6 @@ return
         }
       )
     ),
-    -- ITALIC TEXT
     s({trig="tii", snippetType="autosnippet"},
       fmta(
         [[*<>*]],
@@ -52,7 +46,6 @@ return
         }
       )
     ),
-    -- UNDERLINED TEXT
     s({trig="uu", snippetType="autosnippet"},
       fmt(
         [[<u>{}</u>]],
@@ -61,10 +54,8 @@ return
         }
       )
     ),
-    -- Hack to remove indentation in bulleted lists
     s({trig="  --", snippetType="autosnippet"},
       {t("- ")},
       {condition = line_begin}
     ),
   }
-

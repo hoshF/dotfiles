@@ -1,4 +1,3 @@
--- Return snippet tables
 return
 {
   s({trig=";a", snippetType="autosnippet"},

@@ -1,15 +1,12 @@
 local helpers = require('luasnip-helper-funcs')
 local get_visual = helpers.get_visual
 
--- Math context detection 
 local tex = {}
 tex.in_mathzone = function() return vim.fn['vimtex#syntax#in_mathzone']() == 1 end
 tex.in_text = function() return not tex.in_mathzone() end
 
--- Return snippet tables
 return
 {
-  -- LEFT/RIGHT PARENTHESES
   s({trig = "([^%a])l%(", regTrig = true, wordTrig = false, snippetType="autosnippet"},
     fmta(
       "<>\\left(<>\\right)",
@@ -19,7 +16,6 @@ return
       }
     )
   ),
-  -- LEFT/RIGHT SQUARE BRACES
   s({trig = "([^%a])l%[", regTrig = true, wordTrig = false, snippetType="autosnippet"},
     fmta(
       "<>\\left[<>\\right]",
@@ -29,7 +25,6 @@ return
       }
     )
   ),
-  -- LEFT/RIGHT CURLY BRACES
   s({trig = "([^%a])l%{", regTrig = true, wordTrig = false, snippetType="autosnippet"},
     fmta(
       "<>\\left\\{<>\\right\\}",
@@ -39,7 +34,6 @@ return
       }
     )
   ),
-  -- BIG PARENTHESES
   s({trig = "([^%a])b%(", regTrig = true, wordTrig = false, snippetType="autosnippet"},
     fmta(
       "<>\\big(<>\\big)",
@@ -49,7 +43,6 @@ return
       }
     )
   ),
-  -- BIG SQUARE BRACES
   s({trig = "([^%a])b%[", regTrig = true, wordTrig = false, snippetType="autosnippet"},
     fmta(
       "<>\\big[<>\\big]",
@@ -59,7 +52,6 @@ return
       }
     )
   ),
-  -- BIG CURLY BRACES
   s({trig = "([^%a])b%{", regTrig = true, wordTrig = false, snippetType="autosnippet"},
     fmta(
       "<>\\big\\{<>\\big\\}",
@@ -69,7 +61,6 @@ return
       }
     )
   ),
-  -- ESCAPED CURLY BRACES
   s({trig = "([^%a])\\%{", regTrig = true, wordTrig = false, snippetType="autosnippet", priority=2000},
     fmta(
       "<>\\{<>\\}",
@@ -79,7 +70,6 @@ return
       }
     )
   ),
-  -- LATEX QUOTATION MARK
   s({trig = "``", snippetType="autosnippet"},
     fmta(
       "``<>''",
@@ -89,4 +79,3 @@ return
     )
   ),
 }
-

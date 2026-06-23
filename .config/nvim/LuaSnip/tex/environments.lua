@@ -1,7 +1,6 @@
 local helpers = require("luasnip-helper-funcs")
 local get_visual = helpers.get_visual
 
--- Math context detection
 local tex = {}
 tex.in_mathzone = function()
 	return vim.fn["vimtex#syntax#in_mathzone"]() == 1
@@ -12,9 +11,7 @@ end
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
--- Return snippet tables
 return {
-	-- GENERIC ENVIRONMENT
 	s(
 		{ trig = "new", snippetType = "autosnippet" },
 		fmta(
@@ -31,7 +28,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- ENVIRONMENT WITH ONE EXTRA ARGUMENT
 	s(
 		{ trig = "n2", snippetType = "autosnippet" },
 		fmta(
@@ -49,7 +45,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- ENVIRONMENT WITH TWO EXTRA ARGUMENTS
 	s(
 		{ trig = "n3", snippetType = "autosnippet" },
 		fmta(
@@ -68,7 +63,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- TOPIC ENVIRONMENT (my custom tcbtheorem environment)
 	s(
 		{ trig = "nt", snippetType = "autosnippet" },
 		fmta(
@@ -85,7 +79,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- EQUATION
 	s(
 		{ trig = "nn", snippetType = "autosnippet" },
 		fmta(
@@ -100,7 +93,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- SPLIT EQUATION
 	s(
 		{ trig = "ss", snippetType = "autosnippet" },
 		fmta(
@@ -117,7 +109,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- ALIGN
 	s(
 		{ trig = "all", snippetType = "autosnippet" },
 		fmta(
@@ -132,7 +123,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- ITEMIZE
 	s(
 		{ trig = "itt", snippetType = "autosnippet" },
 		fmta(
@@ -149,7 +139,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- ENUMERATE
 	s(
 		{ trig = "enn", snippetType = "autosnippet" },
 		fmta(
@@ -165,7 +154,6 @@ return {
 			}
 		)
 	),
-	-- INLINE MATH
 	s(
 		{ trig = "([^%l])mm", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
 		fmta("<>$<>$", {
@@ -175,14 +163,12 @@ return {
 			d(1, get_visual),
 		})
 	),
-	-- INLINE MATH ON NEW LINE
 	s(
 		{ trig = "^mm", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
 		fmta("$<>$", {
 			i(1),
 		})
 	),
-	-- INLINE MATH ANOTHER
 	s(
 		{ trig = "([^%l])dm", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
 		fmta("<>\\[\n<>\n\\]", {
@@ -198,7 +184,6 @@ return {
 			i(1),
 		})
 	),
-	-- FIGURE
 	s(
 		{ trig = "fig" },
 		fmta(
@@ -219,7 +204,6 @@ return {
 		),
 		{ condition = line_begin }
 	),
-	-- DOCUMENT SKELETON
 	s(
 		{ trig = "doc", snippetType = "autosnippet" },
 		fmta(

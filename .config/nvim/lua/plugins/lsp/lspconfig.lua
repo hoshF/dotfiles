@@ -52,7 +52,6 @@ return {
 				client.server_capabilities.semanticTokensProvider = nil
 			end
 
-			-- lua
 			vim.lsp.config("lua_ls", {
 				capabilities = capabilities,
 				on_attach = on_attach,
@@ -78,7 +77,6 @@ return {
 			})
 			vim.lsp.enable("lua_ls")
 
-			-- Rust
 			vim.lsp.config("rust_analyzer", {
 				capabilities = capabilities,
 				on_attach = on_attach,

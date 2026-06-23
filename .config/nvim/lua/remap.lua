@@ -1,7 +1,6 @@
 local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 
--- Normal mode
 map("n", "<CR>", "o<Esc>k", opts)
 
 map("n", "<C-Up>", ":resize +2<CR>", opts)
@@ -9,13 +8,11 @@ map("n", "<C-Down>", ":resize -2<CR>", opts)
 map("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 map("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
--- Visual mode
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
--- Insert mode
 
--- Console mode
+
 map("n", "<space>t", function()
 	vim.cmd("split")
 	vim.cmd("term")
@@ -24,7 +21,6 @@ end, { desc = "Terminal" })
 
 map("t", "<Esc>", [[<C-\><C-n>]])
 
--- LSP keymap
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local lsp = vim.lsp
@@ -40,7 +36,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
--- Leap keymap
 map({ "n", "x", "o" }, "s", "<Plug>(leap)")
 map("n", "S", "<Plug>(leap-from-window)")
 

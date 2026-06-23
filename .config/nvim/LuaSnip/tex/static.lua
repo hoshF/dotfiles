@@ -3,7 +3,6 @@ local get_visual = helpers.get_visual
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
--- Environment/syntax context detection
 local tex = {}
 tex.in_mathzone = function()
 	return vim.fn["vimtex#syntax#in_mathzone"]() == 1
@@ -16,7 +15,6 @@ tex.in_tikz = function()
 	return (is_inside[1] > 0 and is_inside[2] > 0)
 end
 
--- Return snippet tables
 return {
 	s({ trig = "q" }, {
 		t("\\quad "),
@@ -62,6 +60,5 @@ return {
 		{ t("% --------------------------------------------- %") },
 		{ condition = line_begin }
 	),
-	-- HLINE WITH EXTRA VERTICAL SPACE
 	s({ trig = "hl" }, { t("\\hline {\\rule{0pt}{2.5ex}} \\hspace{-7pt}") }, { condition = line_begin }),
 }
