@@ -3,7 +3,7 @@ vim.opt.clipboard = "unnamedplus" -- use system clipboard
 vim.opt.mouse = "a" -- enable mouse support
 vim.opt.lazyredraw = true -- do not redraw while executing macros
 vim.opt.updatetime = 300 -- faster completion (ms)
-vim.opt.textwidth = 73
+vim.opt.textwidth = 0 -- disable automatic hard wrapping globally
 -- vim.opt.timeoutlen = 300                      -- keymap timeout (ms)
 vim.opt.swapfile = false -- disable swapfile
 vim.opt.backup = false -- disable backup
@@ -40,5 +40,13 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",
 	callback = function()
 		vim.opt.formatoptions = vim.opt.formatoptions - { "c", "r", "o" }
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "gitcommit", "markdown" },
+	callback = function()
+		vim.opt_local.textwidth = 72
+		vim.opt_local.colorcolumn = "51,73"
 	end,
 })
