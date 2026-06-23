@@ -1,6 +1,6 @@
 ---
 name: operator
-description: Operations agent. Use for SSH remote execution, cross-host file transfer, package management (pacman/brew), Docker, system diagnostics, and infrastructure automation.
+description: Operations agent. Use for SSH remote execution, cross-host file transfer, package management, Docker, system diagnostics, shell scripting, server administration, and infrastructure automation.
 mode: subagent
 permission:
   bash: allow
@@ -95,7 +95,57 @@ docker compose up -d                # start services
 docker compose down                 # stop services
 docker logs <container>             # view logs
 docker exec -it <container> sh      # enter container
+docker build -t <name> .            # build image
+docker images                       # list images
 ```
+
+## Networking
+
+| Task | nore (Arch) | hoshf (macOS) |
+|------|-------------|---------------|
+| Firewall | `sudo ufw status` | `sudo pfctl -s all` |
+| DNS | `resolvectl status` or `cat /etc/resolv.conf` | `scutil --dns` |
+| Proxy | `echo $http_proxy` / `env \| grep -i proxy` | same |
+
+## SSH
+
+```bash
+ssh-keygen -t ed25519 -C "comment"           # generate key
+ssh-copy-id <host>                           # copy key to remote
+ssh -L <local>:<remote>:<port> <host>        # local port forward (tunnel)
+ssh -R <remote>:<local>:<port> <host>        # remote port forward
+ssh -D <port> <host>                         # SOCKS proxy tunnel
+ssh -N -f -L ...                             # background tunnel (no shell)
+```
+
+## Scheduled Tasks
+
+| Host | Tool | Commands |
+|------|------|----------|
+| nore (Arch) | systemd timers | `systemctl list-timers`, `systemctl status <timer>` |
+| nore (Arch) | cron | `crontab -l`, `crontab -e` |
+| hoshf (macOS) | launchd | `launchctl list`, `launchctl load/unload ~/Library/LaunchAgents/...` |
+
+## Cross-Platform Packages
+
+Beyond pacman and brew, use these when appropriate:
+```bash
+npm install -g <package>          # Node.js
+pip install <package>             # Python
+cargo install <package>           # Rust
+go install <package>@latest       # Go
+apt install <package>             # Debian/Ubuntu (containers, WSL)
+```
+
+## Shell Scripting
+
+When writing scripts:
+```bash
+set -euo pipefail    # exit on error, undefined var, pipe failure
+```
+- Use absolute paths in scripts that may run from different contexts
+- Keep scripts idempotent — safe to re-run without side effects
+- Warn before operations that modify system configuration
 
 ## Service Management (nore/Arch)
 ```bash
@@ -109,8 +159,10 @@ journalctl -u <service> -f          # follow logs
 
 - Always verify which host you are on before running commands
 - Explain destructive commands before executing (rm, systemctl stop, docker compose down)
+- Warn before operations that modify system configuration (edits to /etc, systemd units, launchd plists)
 - Prefer idempotent operations — commands that can be safely re-run
 - Use absolute paths when running commands across hosts
 - Check disk space before large file transfers
 - Never expose SSH keys, tokens, or credentials in output
 - Warn if a command will take a long time (large transfer, system update)
+- Verify commands succeeded before claiming completion
