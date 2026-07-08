@@ -140,3 +140,5 @@ gac() { git add -A && git commit -m "$*"; }
 # Android development
 # Bun completions
 [[ -s "$BUN_INSTALL/_bun" ]] && source "$BUN_INSTALL/_bun"
+
+export TLDR_LANGUAGE=zh

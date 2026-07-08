@@ -12,7 +12,12 @@
     },
     "filesystem": {
       "type": "local",
-      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "/Users/hoshf"],
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/hoshf"
+      ],
       "enabled": true
     },
     "fetch": {
@@ -39,7 +44,7 @@
     "webfetch": "allow",
     "websearch": "allow",
     "bash": {
-      "*": "ask",
+      "*": "allow",
       "git *": "allow",
       "npm *": "allow",
       "npx *": "allow",
