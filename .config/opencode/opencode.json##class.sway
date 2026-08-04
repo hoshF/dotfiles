@@ -2,6 +2,9 @@
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "Build",
   "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
+  "skills": {
+    "paths": ["~/.config/opencode/skills"]
+  },
   "mcp": {
     "filesystem": {
       "type": "local",
@@ -46,22 +49,12 @@
       "node *": "allow",
       "gh *": "allow",
       "ssh *": "allow",
-      "ls *": "allow",
-      "cat *": "allow",
-      "head *": "allow",
-      "tail *": "allow",
       "which *": "allow",
       "yadm *": "allow",
-      "find *": "allow",
-      "grep *": "allow",
-      "rg *": "allow",
       "sort *": "allow",
       "jq *": "allow",
-      "sed *": "allow",
-      "awk *": "allow",
       "cut *": "allow",
       "tr *": "allow",
-      "tee *": "allow",
       "xargs *": "allow",
       "uniq *": "allow",
       "ln *": "allow",

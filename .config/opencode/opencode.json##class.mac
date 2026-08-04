@@ -2,7 +2,23 @@
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "Build",
   "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
-  "instructions": ["/Users/hoshf/.codex/AGENTS.md"],
+  "skills": {
+    "paths": ["~/.config/opencode/skills"]
+  },
+
+  "provider": {
+    "deepseek": {
+      "models": {
+        "deepseek-v4-flash": {
+          "variants": {
+            "no-thinking": {
+              "thinking": { "type": "disabled" }
+            }
+          }
+        }
+      }
+    }
+  },
 
   "mcp": {
     "playwright": {
@@ -44,54 +60,7 @@
     "webfetch": "allow",
     "websearch": "allow",
     "bash": {
-      "*": "allow",
-      "git *": "allow",
-      "npm *": "allow",
-      "npx *": "allow",
-      "pnpm *": "allow",
-      "yarn *": "allow",
-      "cargo *": "allow",
-      "go *": "allow",
-      "brew *": "allow",
-      "ssh *": "allow",
-      "ls *": "allow",
-      "cat *": "allow",
-      "head *": "allow",
-      "tail *": "allow",
-      "which *": "allow",
-      "echo *": "allow",
-      "pwd *": "allow",
-      "env *": "allow",
-      "date *": "allow",
-      "uname *": "allow",
-      "yadm *": "allow",
-      "uv *": "allow",
-      "uvx *": "allow",
-      "python3 *": "allow",
-      "python *": "allow",
-      "pip *": "allow",
-      "pip3 *": "allow",
-      "node *": "allow",
-      "gh *": "allow",
-      "mkdir *": "allow",
-      "cp *": "allow",
-      "mv *": "allow",
-      "curl *": "allow",
-      "wget *": "allow",
-      "make *": "allow",
-      "tar *": "allow",
-      "gzip *": "allow",
-      "unzip *": "allow",
-      "zip *": "allow",
-      "ps *": "allow",
-      "file *": "allow",
-      "diff *": "allow",
-      "wc *": "allow",
-      "du *": "allow",
-      "df *": "allow",
-      "chmod *": "allow",
-      "export *": "allow",
-      "source *": "allow"
+      "*": "allow"
     },
     "external_directory": {
       "*": "allow",
