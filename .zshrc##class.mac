@@ -120,6 +120,8 @@ alias ll='ls -alF'
 alias vi='nvim'
 alias vim='nvim'
 alias zrc='nvim ~/.zshrc'
+export TLDR_LANGUAGE=zh
+typora() { open -a Typora "$@"; }
 
 # Rust
 alias vrs='nvim src/main.rs'
@@ -140,5 +142,3 @@ gac() { git add -A && git commit -m "$*"; }
 # Android development
 # Bun completions
 [[ -s "$BUN_INSTALL/_bun" ]] && source "$BUN_INSTALL/_bun"
-
-export TLDR_LANGUAGE=zh
