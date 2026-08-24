@@ -123,3 +123,10 @@ uvinit() {
 }
 
 export HF_ENDPOINT=https://hf-mirror.com
+
+# bun completions
+[ -s "/home/nore/.bun/_bun" ] && source "/home/nore/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

@@ -92,9 +92,9 @@ exec swayidle -w \
 #       middle_emulation enabled
 #   }
 #
-  input type:keyboard {
-    xkb_options caps:swapescape
-  }
+#  input type:keyboard {
+#    xkb_options caps:swapescape
+#  }
   input "2:7:SynPS/2_Synaptics_TouchPad" {
     tap enabled
     natural_scroll enabled
