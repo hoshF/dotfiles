@@ -12,22 +12,22 @@ wrap = "yes"
 
 [opener]
 imv = [
-    { run = 'imv "$@"', block = true, desc = "Image Viewer" },
+    { run = 'imv %s', block = true, desc = "Image Viewer" },
 ]
 sioyek = [
-    { run = 'sioyek "$@"', block = true, desc = "PDF Reader" },
+    { run = 'sioyek %s', block = true, desc = "PDF Reader" },
 ]
 epr = [
-    { run = 'epr "$@"', block = true, desc = "EPUB Reader" },
+    { run = 'epr %s', block = true, desc = "EPUB Reader" },
 ]
 play = [
-    { run = 'mpv "$@"', orphan = true, for = "unix", desc = "Media Player" },
+    { run = 'mpv %s', orphan = true, for = "unix", desc = "Media Player" },
 ]
 edit = [
-    { run = 'nvim "$@"', block = true, for = "unix", desc = "Text Editor" },
+    { run = 'nvim %s', block = true, for = "unix", desc = "Text Editor" },
 ]
 open = [
-    { run = 'xdg-open "$@"', desc = "System Default" },
+    { run = 'open %s', for = "macos", desc = "System Default" },
 ]
 
 [open]
