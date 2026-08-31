@@ -7,10 +7,12 @@ path=(
     "$HOME/.local/bin"
     "$HOME/.local/bin/test/"
     "$HOME/go/bin"
+    "$BUN_INSTALL/bin"
     $path
 )
 export CARGO_HOME="$HOME/.cargo"
 export RUSTUP_HOME="$HOME/.rustup"
+export BUN_INSTALL="$HOME/.bun"
 
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
@@ -125,8 +127,4 @@ uvinit() {
 export HF_ENDPOINT=https://hf-mirror.com
 
 # bun completions
-[ -s "/home/nore/.bun/_bun" ] && source "/home/nore/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+[[ -s "$BUN_INSTALL/_bun" ]] && source "$BUN_INSTALL/_bun"
