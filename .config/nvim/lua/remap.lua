@@ -11,7 +11,7 @@ map("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
-
+map("n", "gs", [[:%s///g<Left><Left><Left>]], opts)
 
 map("n", "<space>t", function()
 	vim.cmd("split")
