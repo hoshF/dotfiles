@@ -10,11 +10,11 @@ set $browser zen
 set $viewer zathura
 
 # Colors
-client.focused          #88c0d0 #434c5e #eceff4 #88c0d0 #434c5e
-client.focused_inactive #4c566a #3b4252 #d8dee9 #4c566a #3b4252
-client.unfocused        #2e3440 #2e3440 #4c566a #2e3440 #2e3440
-client.urgent           #bf616a #bf616a #eceff4 #bf616a #bf616a
-client.placeholder      #2e3440 #2e3440 #d8dee9 #2e3440 #2e3440
+client.focused          #88c0d0cc #434c5e99 #eceff4 #88c0d0cc #434c5e99
+client.focused_inactive #4c566acc #3b425280 #d8dee9 #4c566acc #3b425280
+client.unfocused        #2e344055 #2e344055 #4c566a #2e344055 #2e344055
+client.urgent           #bf616acc #bf616acc #eceff4 #bf616acc #bf616acc
+client.placeholder      #2e344055 #2e344055 #d8dee9 #2e344055 #2e344055
 client.background       #2e3440
 
 # Output
