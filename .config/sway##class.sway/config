@@ -9,6 +9,14 @@ set $menu wmenu-run -i
 set $browser zen
 set $viewer zathura
 
+# Colors
+client.focused          #88c0d0 #434c5e #eceff4 #88c0d0 #434c5e
+client.focused_inactive #4c566a #3b4252 #d8dee9 #4c566a #3b4252
+client.unfocused        #2e3440 #2e3440 #4c566a #2e3440 #2e3440
+client.urgent           #bf616a #bf616a #eceff4 #bf616a #bf616a
+client.placeholder      #2e3440 #2e3440 #d8dee9 #2e3440 #2e3440
+client.background       #2e3440
+
 # Output
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
