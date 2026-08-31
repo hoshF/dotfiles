@@ -27,7 +27,7 @@ edit = [
     { run = 'nvim %s', block = true, for = "unix", desc = "Text Editor" },
 ]
 open = [
-    { run = 'open %s', for = "macos", desc = "System Default" },
+    { run = 'xdg-open %s', for = "unix", desc = "System Default" },
 ]
 
 [open]
