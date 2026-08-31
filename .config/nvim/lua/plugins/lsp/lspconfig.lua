@@ -24,7 +24,7 @@ return {
 				"texlab",
 				"asm-lsp",
 				"pyright",
-				"typescript-language-server",
+				"vtsls",
 				"yaml-language-server",
 				"json-lsp",
 
@@ -109,7 +109,7 @@ return {
 				texlab = "tex",
 				asm_lsp = { "asm" },
 				pyright = "python",
-				ts_ls = {
+				vtsls = {
 					"javascript",
 					"javascriptreact",
 					"typescript",
