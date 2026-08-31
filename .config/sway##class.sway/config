@@ -10,8 +10,8 @@ set $browser zen
 set $viewer zathura
 
 # Window
-default_border pixel 3
-default_floating_border pixel 3
+default_border pixel 2
+default_floating_border pixel 2
 
 # Colors
 client.focused          #88c0d0 #434c5e #eceff4 #eceff4 #88c0d0
