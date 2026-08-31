@@ -14,7 +14,7 @@ default_border pixel 3
 default_floating_border pixel 3
 
 # Colors
-client.focused          #eceff4 #434c5e #eceff4 #88c0d0 #eceff4
+client.focused          #88c0d0 #434c5e #eceff4 #eceff4 #88c0d0
 client.focused_inactive #4c566a #3b4252 #d8dee9 #4c566a #4c566a
 client.unfocused        #2e3440 #2e3440 #4c566a #2e3440 #2e3440
 client.urgent           #bf616a #bf616a #eceff4 #bf616a #bf616a
