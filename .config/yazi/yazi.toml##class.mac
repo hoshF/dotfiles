@@ -1,0 +1,45 @@
+# Manager
+[mgr]
+ratio          = [1, 3, 4]
+sort_by        = "natural"
+sort_sensitive = true
+sort_reverse   = true
+sort_dir_first = true
+linemode       = "mtime"
+show_hidden    = true
+
+# Preview
+[preview]
+wrap = "yes"
+
+# Openers
+[opener]
+preview = [
+    { run = 'open -a Preview %s', orphan = true, desc = "Preview PDF" },
+]
+play = [
+    { run = 'mpv %s', orphan = true, for = "unix", desc = "Media Player" },
+]
+edit = [
+    { run = 'nvim %s', block = true, for = "unix", desc = "Text Editor" },
+]
+open = [
+    { run = 'open %s', for = "macos", desc = "System Default" },
+]
+
+# Open rules
+[open]
+prepend_rules = [
+    { url = "*.{json,sh,toml,yml,yaml,cfg,ini,lua,xml}", use = "edit" },
+    { url = "*.{md,txt,log}", use = "edit" },
+    { url = ".*{zsh*,env,config}", use = "edit" },
+    { url = "*.{jpg,png,jpeg,gif,svg,bmp}", use = "open" },
+    { url = "*.{mp3,mp4,flac,mkv,avi,wav}", use = "play" },
+    { url = "*.{pdf}", use = "preview" },
+    { url = "*.{epub}", use = "open" },
+    { url = "*.{ods,xlsx,csv,docx}", use = "open" },
+]
+
+append_rules = [
+    { url = "*", use = "edit" },
+]
