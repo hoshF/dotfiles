@@ -1,29 +1,29 @@
-# Basic zsh improvements
-zmodule environment    # Better zsh defaults
-zmodule git           # Git shortcuts
-zmodule input         # Proper key bindings  
-zmodule termtitle     # Terminal title
-zmodule utility       # Colored ls, grep, etc.
+# Core
+zmodule environment
+zmodule git
+zmodule input
+zmodule termtitle
+zmodule utility
 
-# Prompt themes
-zmodule duration-info  # Show command time
-zmodule git-info      # Git status in prompt
-zmodule minimal       # Minimal prompt theme
+# Prompt
+zmodule duration-info
+zmodule git-info
+zmodule minimal
 
-# Tab completion
+# Completion
 zmodule zsh-users/zsh-completions --fpath src
 zmodule completion
 
-# Enhanced features (load these last)
-zmodule zdharma-continuum/fast-syntax-highlighting    # Colorize commands
-zmodule zsh-users/zsh-history-substring-search       # Arrow key history search
-zmodule zsh-users/zsh-autosuggestions               # Gray text suggestions
+# Enhanced
+zmodule zdharma-continuum/fast-syntax-highlighting
+zmodule zsh-users/zsh-history-substring-search
+zmodule zsh-users/zsh-autosuggestions
 
-# Extra tools
+# Extras
 zmodule prompt-pwd
-zmodule pabloariasal/zfm    # File manager helper
-zmodule Aloxaf/fzf-tab     # Better tab completion
-zmodule pacman             # Pacman shortcuts
+zmodule pabloariasal/zfm
+zmodule Aloxaf/fzf-tab
+zmodule pacman
 
-# FZF integration
+# FZF
 source fzf.zsh

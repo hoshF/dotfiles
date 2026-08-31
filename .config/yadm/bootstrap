@@ -3,9 +3,7 @@
 
 set -e
 
-# ========================
-#  Colors & Config
-# ========================
+# Colors & Config
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
@@ -24,9 +22,7 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 echo "Bootstrap log: $LOG_FILE"
 echo "YADM Directory: $YADM_DIR"
 
-# ========================
-#  Check/Install yq
-# ========================
+# yq
 check_yq() {
     if command -v yq &> /dev/null; then
         echo -e "${GREEN}✓ yq already installed${NC}"
@@ -39,13 +35,10 @@ check_yq() {
 get_packages() {
     local repo="$1"
     local category="$2"
-    # 读取 yaml 内容
     yq ".$repo.$category[]" "$PACKAGE_FILE" 2> /dev/null || true
 }
 
-# ========================
-#  1. Graphics Driver Auto-Detection
-# ========================
+# 1. Drivers
 install_drivers() {
     echo -e "${GREEN}[1/7] Detecting and installing graphics drivers...${NC}"
     local GPU_INFO=$(lspci | grep -i 'vga\|3d\|display')
@@ -87,9 +80,7 @@ install_drivers() {
     echo -e "${GREEN}✓ Graphics drivers installed${NC}"
 }
 
-# ========================
-#  2. Pacman Packages
-# ========================
+# 2. Pacman
 install_pacman_packages() {
     echo -e "${GREEN}[2/7] Installing Pacman packages${NC}"
 
@@ -114,9 +105,7 @@ install_pacman_packages() {
     fi
 }
 
-# ========================
-#  3. AUR Packages
-# ========================
+# 3. AUR
 install_aur_packages() {
     echo -e "${GREEN}[3/7] Installing AUR packages${NC}"
     if ! command -v yay &> /dev/null; then
@@ -145,9 +134,7 @@ install_aur_packages() {
     fi
 }
 
-# ========================
-#  4. Rime Grammar Model
-# ========================
+# 4. Rime
 setup_rime_grammar() {
     echo -e "${GREEN}[4/7] Installing Rime grammar model...${NC}"
 
@@ -162,9 +149,7 @@ setup_rime_grammar() {
     echo -e "${GREEN}✓ Rime grammar model installed${NC}"
 }
 
-# ========================
-#  5. Metasploit & Postgres Setup
-# ========================
+# 5. Metasploit
 setup_security_tools() {
     echo -e "${GREEN}[5/7] Configuring PostgreSQL & Metasploit...${NC}"
 
@@ -182,9 +167,7 @@ setup_security_tools() {
     echo -e "${GREEN}✓ Metasploit connected to PostgreSQL${NC}"
 }
 
-# ========================
-#  6. Enable System Services
-# ========================
+# 6. Services
 enable_services() {
     echo -e "${GREEN}[6/7] Enabling System Services...${NC}"
 
@@ -199,9 +182,7 @@ enable_services() {
     echo -e "${GREEN}✓ Services enabled${NC}"
 }
 
-# ========================
-#  7. Rust
-# ========================
+# 7. Rust
 install_rust() {
     echo -e "${GREEN}[7/7] Installing Rust (Nightly, Complete Profile)${NC}"
     if [ -d "$HOME/.cargo/bin" ] && [ -f "$HOME/.cargo/bin/rustup" ]; then
@@ -212,9 +193,7 @@ install_rust() {
         --no-modify-path --profile complete --default-toolchain nightly
 }
 
-# ========================
-#  Main
-# ========================
+# Main
 main() {
     echo -e "${CYAN}================================================${NC}"
     echo -e "${CYAN}   Bootstrap Sway + InfoSec Environment         ${NC}"

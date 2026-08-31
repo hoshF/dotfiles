@@ -9,7 +9,7 @@ export JAVA_HOME="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export ANDROID_SDK_ROOT="$ANDROID_HOME"
 
-# Executable search path (typeset -U removes duplicate entries)
+# PATH
 typeset -U path PATH
 path=(
     "$BUN_INSTALL/bin"
@@ -27,7 +27,7 @@ path=(
     $path
 )
 
-# uv — Python package manager (Arch-style: no global pip)
+# uv
 fpath=("$HOME/.local/share/zsh/completions" $fpath)
 
 alias uvr='uv run'
@@ -40,7 +40,7 @@ alias uvt='uv tool'
 alias uvti='uv tool install'
 alias uvp='uv pip'
 
-# Quick project init with uv
+# uvinit
 uvinit() {
     if [ -z "$1" ]; then
         echo "Usage: uvinit <project-name> [python-version]" >&2
@@ -49,7 +49,7 @@ uvinit() {
     uv init "$1" && cd "$1" && uv python pin "${2:-3.13}"
 }
 
-# History & Navigation
+# History
 setopt HIST_IGNORE_ALL_DUPS
 bindkey -v
 WORDCHARS=${WORDCHARS//[\/]}
@@ -58,7 +58,7 @@ ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
-# Auto-install/update Zim
+# Zim
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
     curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
@@ -66,13 +66,12 @@ fi
 source ${ZIM_HOME}/init.zsh
 
 zmodload -F zsh/terminfo +p:terminfo
-# History search with arrow keys and j/k in vi-mode
 for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
 for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-# Proxy toggle
+# Proxy
 #proxy_on() {
 #    export all_proxy="socks5://127.0.0.1:10808"
 #    export http_proxy="http://127.0.0.1:10808"
@@ -81,9 +80,9 @@ bindkey -M vicmd 'j' history-substring-search-down
 #    export HTTPS_PROXY="$https_proxy"
 #}
 #proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
-#proxy_on # Enabled by default
+#proxy_on
 
-# Yazi file manager integration
+# Yazi
 y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
     yazi "$@" --cwd-file="$tmp"
@@ -93,7 +92,7 @@ y() {
     rm -f -- "$tmp"
 }
 
-# ZFM directory selector
+# ZFM
 zfm_cd() {
     local target=$(zfm select --dirs 2>/dev/null)
     [[ -n "$target" ]] && cd "$target" 2>/dev/null
@@ -104,16 +103,16 @@ if command -v zfm >/dev/null 2>&1; then
     bindkey '^O' zfm_cd
 fi
 
-# FNM (Fast Node Manager)
+# FNM
 command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 
-# OCaml/OPAM
+# OCaml
 [[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2>&1
 
-# Go Version Manager (GVM)
+# GVM
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
-# System & General
+# System
 alias brewup='brew update && brew upgrade'
 alias tm='tmux'
 alias ll='ls -alF'
@@ -139,6 +138,5 @@ alias gds='git diff --staged'
 gc() { git commit -m "$*"; }
 gac() { git add -A && git commit -m "$*"; }
 
-# Android development
-# Bun completions
+# Bun
 [[ -s "$BUN_INSTALL/_bun" ]] && source "$BUN_INSTALL/_bun"

@@ -1,10 +1,10 @@
-# l: enter dir or open file (smart-enter)
+# smart-enter
 [[mgr.prepend_keymap]]
 on   = "l"
 run  = "plugin smart-enter"
 desc = "Enter the child directory, or open the file"
 
-# Enter: open md with Typora, otherwise default (md-open)
+# md-open
 [[mgr.prepend_keymap]]
 on   = "<Enter>"
 run  = "plugin md-open"

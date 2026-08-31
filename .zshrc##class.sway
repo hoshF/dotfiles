@@ -18,7 +18,7 @@ ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
-# Auto-install/update Zim
+# Zim
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
@@ -26,7 +26,7 @@ fi
 source ${ZIM_HOME}/init.zsh
 
 zmodload -F zsh/terminfo +p:terminfo
-# History & Navigation
+# History
 setopt HIST_IGNORE_ALL_DUPS
 bindkey -v
 WORDCHARS=${WORDCHARS//[\/]}
@@ -35,7 +35,7 @@ for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-# Proxy toggle
+# Proxy
 proxy_on() {
     export http_proxy="http://127.0.0.1:10808"
     export https_proxy="http://127.0.0.1:10808"
@@ -43,9 +43,9 @@ proxy_on() {
     export HTTPS_PROXY="$https_proxy"
 }
 proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
-proxy_on # Default enabled
+proxy_on
 
-# Yazi integration
+# Yazi
 y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
     yazi "$@" --cwd-file="$tmp"
@@ -54,7 +54,7 @@ y() {
     rm -f -- "$tmp"
 }
 
-# ZFM directory selector
+# ZFM
 zfm_cd() {
     local target=$(zfm select --dirs 2>/dev/null)
     [[ -n "$target" ]] && cd "$target" 2>/dev/null
@@ -65,7 +65,7 @@ if command -v zfm >/dev/null 2>&1 && [[ -o interactive ]]; then
     bindkey '^O' zfm_cd
 fi
 
-# FNM (Node)
+# FNM
 command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 
 # OCaml
@@ -74,7 +74,7 @@ command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 # direnv
 command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
-# System & Apps
+# System
 alias pac='sudo pacman'
 alias pQt='pacman -Qtdq | sudo pacman -Rns -'
 alias tm='tmux'
@@ -109,7 +109,7 @@ alias gds='git diff --staged'
 gc() { git commit -m "$*"; }
 gac() { git add -A && git commit -m "$*"; }
 
-# uv (Python)
+# uv
 alias uvr='uv run'
 alias uvpy='uv run python'
 alias uvpi='uv pip install'
@@ -126,5 +126,5 @@ uvinit() {
 
 export HF_ENDPOINT=https://hf-mirror.com
 
-# bun completions
+# Bun
 [[ -s "$BUN_INSTALL/_bun" ]] && source "$BUN_INSTALL/_bun"
