@@ -8,6 +8,7 @@ set $term foot
 set $menu wmenu-run -i -f 'JetBrains Mono Nerd Font 12' -l 12 -N '#2e3440' -n '#d8dee9' -M '#3b4252' -m '#88c0d0' -S '#434c5e' -s '#eceff4'
 set $browser zen
 set $viewer zathura
+font pango:JetBrains Mono 11
 
 # Window
 default_border pixel 2
