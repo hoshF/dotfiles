@@ -6,6 +6,8 @@ vim.opt.textwidth = 0
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
+-- inline cmdline completion (pum popup glitches with cmdheight=0)
+vim.opt.wildoptions = "tagfile"
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
