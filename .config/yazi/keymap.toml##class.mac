@@ -9,3 +9,9 @@ desc = "Enter the child directory, or open the file"
 on   = "<Enter>"
 run  = "plugin md-open"
 desc = "Open markdown with Typora, others normally"
+
+# <C-g>: open lazygit (switch branch / commit / log...)
+[[mgr.prepend_keymap]]
+on   = "<C-g>"
+run  = 'shell lazygit -p "$(pwd)" --block'
+desc = "Open lazygit"
