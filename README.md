@@ -1,99 +1,53 @@
-# Dotfiles
+# dotfiles
 
-Personal dotfiles managed with [yadm](https://yadm.io/), designed for two environments:
+Personal dotfiles managed with [yadm](https://yadm.io/).
 
-- **sway** — Arch Linux + Sway (Wayland) desktop, the primary machine
-- **mac** — macOS (ghostty, `open`-based tooling)
+Two environments:
 
-`##class.<env>` alternate templates auto-select the right file per machine.
+- **sway** — Arch Linux + Sway (primary)
+- **mac** — macOS + Ghostty
+
+## Stack
+
+zsh + zim · Neovim + lazy.nvim · Sway + foot + tmux · fcitx5 + Rime · Yazi · OpenCode
 
 ## Install
 
-```bash
-# Prerequisites: yadm, git, and your GPG key (for encrypted files)
+```sh
 yadm clone https://github.com/hoshF/dotfiles.git --bootstrap
 ```
 
-`--bootstrap` runs the full provisioning script (see [Bootstrap](#bootstrap)); it requires `sudo`. On an existing machine, just `yadm clone` and run `yadm alt` — no root needed for the config itself.
+`--bootstrap` installs packages from `.config/yadm/packages.yaml` and requires `sudo`.
+For config only, clone without `--bootstrap` and run `yadm alt`.
 
-Encrypted secrets (`.ssh/` private keys, `.zshenv`) are stored in `archive` and decrypt automatically on clone if your GPG key is present.
+Secrets (`.ssh/` private keys, `.zshenv`) are GPG-encrypted in `.local/share/yadm/archive`.
+Only `.ssh/hoshf.pub` is stored in plaintext.
 
-## What's Inside
+## Layout
 
-### Shell & Tools
-- **zsh** with [zim](https://github.com/zimfw/zimfw) (`.zshrc` alternate per class, `.zimrc`, `fzf.zsh`)
-- **tmux** (`.config/tmux/tmux.conf`)
-
-### Editor — Neovim
-Modular [lazy.nvim](https://github.com/folke/lazy.nvim) setup under `.config/nvim/`:
-
-| Area | Plugins |
-|---|---|
-| Completion | blink.cmp + LuaSnip |
-| LSP | mason + lspconfig + trouble (lua/rust/c/cpp/go/python/tex/asm/js/ts/json/yaml) |
-| Formatting | conform.nvim (stylua/black/rustfmt/clang-format/prettierd/shfmt & more) |
-| Syntax | treesitter |
-| File tree | neo-tree |
-| LaTeX | vimtex + extensive custom LuaSnip snippets (tex/markdown) |
-| Editing | leap, nvim-surround, Comment.nvim, nvim-autopairs |
-| Theme | nordic.nvim |
-
-### Desktop — sway
-- **sway** + swaylock + mako (notifications)
-- **fcitx5 + rime** IME (classic UI, custom schema under `.local/share/fcitx5`)
-- **foot** terminal
-- **mpd + ncmpcpp** music
-
-### Typography
-- Terminal / code: **Maple Mono NF CN** (foot, tmux, Neovim)
-- UI / notifications / browser body: **Noto Sans / Noto Sans CJK SC**
-- Input method: **Noto Sans CJK SC**
-- tmux status bar shares the `#303446` fill with OpenCode's background
-
-### File Manager — Yazi
-- Alternate configs per class (`yazi.toml`, `keymap.toml`)
-- [everforest-medium](https://github.com/Chromium-3-Oxide/everforest-medium) flavor
-- Plugins: [smart-enter](https://github.com/yazi-rs/plugins) (`l` = enter/open), `md-open` (mac: open Markdown in Typora; sway: nvim)
-- Openers: nvim / imv / sioyek / mpv / epr / xdg-open
-
-### AI — Opencode
-Custom agent configs (`.config/opencode/`): `executor`, `explorer`, `operator`, `reviewer`, plus a `yadm` skill for dotfile workflows. `opencode.json` alternates per class.
-
-### Secrets
-`.ssh/` private keys and `.zshenv` are tracked encrypted via `yadm encrypt` (see [`.config/yadm/encrypt`](.config/yadm/encrypt)). Only `.ssh/hoshf.pub` is tracked in plaintext.
-
-## Environment Alternates
-
-Files suffixed `##class.mac` / `##class.sway` are yadm alternates — `yadm alt` symlinks the matching variant based on `yadm.class`:
-
-```
-~/.config/yazi/yazi.toml##class.sway  →  ~/.config/yazi/yazi.toml   (on sway)
-~/.config/yazi/yazi.toml##class.mac   →  ~/.config/yazi/yazi.toml   (on mac)
+```text
+.config/            app configs (sway, foot, tmux, fcitx5, nvim, yazi, opencode)
+.config/yadm/       bootstrap, packages.yaml, encrypt list
+.zshrc##class.*     shell entry per environment
+.zimrc, fzf.zsh     zsh
 ```
 
-## Bootstrap
+Files ending in `##class.<env>` are yadm alternates. `yadm alt` links the active
+variant; configs use file-level links and keep runtime data in real directories.
 
-[`.config/yadm/bootstrap`](.config/yadm/bootstrap) is a provisioning script that:
+## Notes
 
-1. Installs GPU drivers
-2. Installs pacman packages by category (core / cli_tools / sway_desktop / ime / viewers / latex / fonts / audio / services / security)
-3. Installs AUR packages (browser / fonts / ime / tools / security) via yay/paru
-4. Sets up rime grammar & security tools, enables services, installs Rust
+- Terminal font: **Maple Mono NF CN**; UI, notifications and browser body: **Noto**.
+- Sway uses greetd auto-login, no greeter.
+- The remote uses the `github.com-personal` SSH alias. If unavailable:
+  `GIT_SSH_COMMAND="ssh -F ~/.ssh/config" yadm push`
+- After changing encrypted files: `yadm encrypt`.
 
-Package lists live in [`.config/yadm/packages.yaml`](.config/yadm/packages.yaml).
+## Common commands
 
-## Common Commands
-
-```bash
-yadm status               # Check status
-yadm add <file>           # Stage a file
-yadm commit -m "msg"      # Commit
-yadm push                 # Push
-yadm pull                 # Pull
-yadm encrypt              # Re-encrypt sensitive files
-yadm alt                  # Rebuild alternate symlinks
-yadm bootstrap            # Run provisioning script
+```sh
+yadm status       # changes
+yadm alt          # rebuild alternate links
+yadm bootstrap    # provision a new machine
+yadm encrypt      # re-encrypt secrets
 ```
-
-> ℹ️ **Note**: the remote uses an SSH host alias (`git@github.com-personal:...`); machines that can't read the system ssh config may need
-> `GIT_SSH_COMMAND="ssh -F ~/.ssh/config" yadm push`.
