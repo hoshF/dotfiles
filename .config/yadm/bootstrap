@@ -24,7 +24,7 @@ echo "YADM Directory: $YADM_DIR"
 
 # Sync
 sync_system() {
-    echo -e "${GREEN}[0/7] Syncing package databases...${NC}"
+    echo -e "${GREEN}[0/8] Syncing package databases...${NC}"
     sudo pacman -Syu --noconfirm
 }
 
@@ -46,7 +46,7 @@ get_packages() {
 
 # 1. Drivers
 install_drivers() {
-    echo -e "${GREEN}[1/7] Detecting and installing graphics drivers...${NC}"
+    echo -e "${GREEN}[1/8] Detecting and installing graphics drivers...${NC}"
     command -v lspci >/dev/null || sudo pacman -S --needed --noconfirm pciutils
     local GPU_INFO=$(lspci | grep -i 'vga\|3d\|display')
     local DRIVER_PKGS=()
@@ -89,7 +89,7 @@ install_drivers() {
 
 # 2. Pacman
 install_pacman_packages() {
-    echo -e "${GREEN}[2/7] Installing Pacman packages${NC}"
+    echo -e "${GREEN}[2/8] Installing Pacman packages${NC}"
 
     local packages=()
     for category in "${PACMAN_CATEGORIES[@]}"; do
@@ -112,7 +112,7 @@ install_pacman_packages() {
 
 # 3. AUR
 install_aur_packages() {
-    echo -e "${GREEN}[3/7] Installing AUR packages${NC}"
+    echo -e "${GREEN}[3/8] Installing AUR packages${NC}"
 
     local aur_helper
     if command -v paru &> /dev/null; then
@@ -146,7 +146,7 @@ install_aur_packages() {
 
 # 4. Rime
 setup_rime_grammar() {
-    echo -e "${GREEN}[4/7] Installing Rime grammar model...${NC}"
+    echo -e "${GREEN}[4/8] Installing Rime grammar model...${NC}"
 
     local rime_dir="$HOME/.local/share/fcitx5/rime"
     local plum_dir="$HOME/.cache/plum"
@@ -165,7 +165,7 @@ setup_rime_grammar() {
 
 # 5. Metasploit
 setup_security_tools() {
-    echo -e "${GREEN}[5/7] Configuring PostgreSQL & Metasploit...${NC}"
+    echo -e "${GREEN}[5/8] Configuring PostgreSQL & Metasploit...${NC}"
 
     if [ ! -d "/var/lib/postgres/data/base" ]; then
         echo -e "${BLUE}Initializing PostgreSQL database...${NC}"
@@ -201,7 +201,7 @@ enable_user_unit() {
 }
 
 enable_services() {
-    echo -e "${GREEN}[6/7] Enabling System Services...${NC}"
+    echo -e "${GREEN}[6/8] Enabling System Services...${NC}"
 
     enable_system_unit bluetooth.service
     enable_system_unit greetd.service
@@ -216,13 +216,28 @@ enable_services() {
 
 # 7. Rust
 install_rust() {
-    echo -e "${GREEN}[7/7] Installing Rust (Nightly, Complete Profile)${NC}"
+    echo -e "${GREEN}[7/8] Installing Rust (Nightly, Complete Profile)${NC}"
     if [ -d "$HOME/.cargo/bin" ] && [ -f "$HOME/.cargo/bin/rustup" ]; then
         echo -e "${GREEN}✓ Rust already installed. Skipping...${NC}"
         return 0
     fi
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
         --no-modify-path --profile complete --default-toolchain nightly
+}
+
+# 8. Neovim
+setup_neovim() {
+    echo -e "${GREEN}[8/8] Installing Neovim plugins and Mason tools...${NC}"
+
+    if ! command -v nvim &> /dev/null; then
+        echo -e "${YELLOW}nvim not found, skipping Neovim setup${NC}"
+        return 0
+    fi
+
+    nvim --headless "+Lazy! restore" +qa
+    nvim --headless "+Lazy! load mason-tool-installer.nvim" "+MasonToolsInstallSync" +qa
+
+    echo -e "${GREEN}✓ Neovim plugins and tools installed${NC}"
 }
 
 # Main
@@ -240,6 +255,7 @@ main() {
     setup_security_tools
     enable_services
     install_rust
+    setup_neovim
 
     echo -e "${GREEN}================================================${NC}"
     echo -e "${GREEN}✓ Bootstrap complete!${NC}"
