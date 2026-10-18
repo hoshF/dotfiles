@@ -4,22 +4,13 @@ export EDITOR='nvim'
 export BUN_INSTALL="$HOME/.bun"
 export CARGO_HOME="$HOME/.cargo"
 export RUSTUP_HOME="$HOME/.rustup"
-export JAVA_HOME="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export ANDROID_SDK_ROOT="$ANDROID_HOME"
 
 # PATH
 typeset -U path PATH
 path=(
     "$BUN_INSTALL/bin"
-    "$JAVA_HOME/bin"
-    "$ANDROID_HOME/platform-tools"
-    "$ANDROID_HOME/cmdline-tools/latest/bin"
     "$CARGO_HOME/bin"
     "$HOME/.local/bin"
-    "$HOME/.local/bin/test"
-    "$HOME/go/bin"
-    "$HOME/.opencode/bin"
     "/opt/homebrew/bin"
     "/usr/local/bin"
     "/Library/TeX/texbin"
@@ -111,7 +102,7 @@ command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 # GVM
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
-# System
+# System & General
 alias brewup='brew update && brew upgrade'
 alias tm='tmux'
 alias ll='ls -alF'
