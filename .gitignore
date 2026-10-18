@@ -1,0 +1,41 @@
+# Secrets: plaintext must never be tracked (yadm keeps them in archive)
+.ssh/*
+!.ssh/*.pub
+.zshenv
+
+# OpenCode local state
+.config/opencode/service.json
+.config/opencode/node_modules/
+.config/opencode/package.json
+.config/opencode/package-lock.json
+
+# Shell / tool caches and runtime files
+.bun/
+.cache/
+.zim/
+.zcompdump*
+.zhistory
+.zfm.txt
+.wget-hsts
+.bash_history
+.bash_profile
+.bashrc
+.bash-preexec.sh
+
+# Local backups
+.local/state/
+*.bak-*
+
+# App runtime data (kept in real directories, not templates)
+.config/mpd/database
+.config/mpd/pid
+.config/mpd/playlists
+.config/mpd/error.log
+.config/ncmpcpp/error.log
+.local/share/fcitx5/pinyin/
+.local/share/fcitx5/themes/
+.local/share/fcitx5/rime/build/
+.local/share/fcitx5/rime/rime_ice.userdb/
+.local/share/fcitx5/rime/sync/
+.local/share/fcitx5/rime/installation.yaml
+.local/share/fcitx5/rime/user.yaml

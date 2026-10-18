@@ -5,10 +5,10 @@ set $down j
 set $up k
 set $right l
 set $term foot
-set $menu wmenu-run -i -f 'JetBrains Mono Nerd Font 12' -l 12 -N '#303446' -n '#c6d0f5' -M '#414559' -m '#8da4e2' -S '#51576d' -s '#c6d0f5'
+set $menu wmenu-run -i -f 'Maple Mono NF CN 12' -l 12 -N '#303446' -n '#c6d0f5' -M '#414559' -m '#8da4e2' -S '#51576d' -s '#c6d0f5'
 set $browser firefox
-set $viewer zathura
-font pango:JetBrains Mono 11
+set $viewer sioyek
+font pango:Maple Mono NF CN 11
 
 # Window
 default_border pixel 2
@@ -23,7 +23,7 @@ client.placeholder      #303446 #303446d9 #b5bfe2 #303446d9 #303446
 client.background       #303446
 
 # Output
-output * bg /home/nore/Pictures/wall.jpg fill
+output * bg ~/Pictures/space.png fill
 
 output eDP-2 {
     mode 2560x1600@240Hz
@@ -31,26 +31,13 @@ output eDP-2 {
     scale 1.5
 }
 
-output DP-6 {
-    mode 1920x1080@200Hz
-    pos 0 0
-    scale 1
-}
-
 set $monitor_main eDP-2
-set $monitor_secondary eDP-2
 
 workspace 1 output $monitor_main
 workspace 2 output $monitor_main
 workspace 3 output $monitor_main
 workspace 4 output $monitor_main
 workspace 5 output $monitor_main
-
-workspace 6 output $monitor_secondary
-workspace 7 output $monitor_secondary
-workspace 8 output $monitor_secondary
-workspace 9 output $monitor_secondary
-workspace 10 output $monitor_secondary
 
 input "1133:16505:Logitech_G_Pro" {
     accel_profile flat
