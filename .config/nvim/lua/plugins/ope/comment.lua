@@ -4,7 +4,7 @@ return {
 	config = function()
 		local ft = require("Comment.ft")
 		ft.json = "//%s"
-		ft.yml = "#%s"
+		ft.yaml = "#%s"
 		ft.ini = ";%s"
 		ft.service = "#%s"
 		ft.timer = "#%s"

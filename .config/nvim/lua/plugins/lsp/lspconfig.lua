@@ -14,6 +14,7 @@ return {
 	},
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = { "mason-org/mason.nvim" },
 		cmd = "MasonToolsInstall",
 		opts = {
 			ensure_installed = {
@@ -33,6 +34,7 @@ return {
 				"black",
 				"clang-format",
 				"asmfmt",
+				"tex-fmt",
 				"prettierd",
 				"eslint_d",
 				"shfmt",
@@ -42,7 +44,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "saghen/blink.cmp" },
+		dependencies = { "mason-org/mason.nvim", "saghen/blink.cmp" },
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()

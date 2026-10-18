@@ -9,7 +9,7 @@ return {
 		vim.g.vimtex_compiler_latexmk = { continuous = 1 }
 		vim.g.vimtex_compiler_latexmk_engines = { ["_"] = "-xelatex" }
 
-		local os_name = vim.loop.os_uname().sysname
+		local os_name = vim.uv.os_uname().sysname
 		if os_name == "Linux" then
 			vim.g.vimtex_view_sioyek_exe = "/usr/bin/sioyek"
 		elseif os_name == "Darwin" then

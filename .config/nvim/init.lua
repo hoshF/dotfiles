@@ -1,3 +1,10 @@
+vim.g.mapleader = " "
+
+-- Remote-plugin providers are unused; keep checkhealth quiet.
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 vim.loader.enable()
 vim.opt.laststatus = 3
 vim.opt.cmdheight = 0
@@ -14,6 +21,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	})
 end
 vim.opt.rtp:prepend(lazypath)
+
+require("option")
 
 require("lazy").setup({
 	{ import = "plugins" },
@@ -58,5 +67,4 @@ require("lazy").setup({
 	checker = { enabled = false },
 	change_detection = { enabled = false },
 })
-require("option")
 require("remap")
