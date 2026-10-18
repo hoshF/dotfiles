@@ -10,8 +10,8 @@ on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
 
 font=JetBrains Mono Nerd Font 12
 
-# background-color=#2e3440cc  # Nord
-# text-color=#c0caf5           # Nord
+background-color=#303446cc
+text-color=#c6d0f5
 
 width=350
 height=150
@@ -21,9 +21,9 @@ margin=0
 padding=10
 
 border-size=2
-# border-color=#4c566a       # Nord
+# border-color=#414559
 border-radius=0
-# progress-color=over #88c0d0 # Nord
+progress-color=over #8da4e2
 
 icons=1
 max-icon-size=34

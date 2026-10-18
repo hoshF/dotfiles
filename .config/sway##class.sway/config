@@ -5,8 +5,8 @@ set $down j
 set $up k
 set $right l
 set $term foot
-set $menu wmenu-run -i -f 'JetBrains Mono Nerd Font 12' -l 12 -N '#2e3440' -n '#d8dee9' -M '#3b4252' -m '#88c0d0' -S '#434c5e' -s '#eceff4'
-set $browser zen
+set $menu wmenu-run -i -f 'JetBrains Mono Nerd Font 12' -l 12 -N '#303446' -n '#c6d0f5' -M '#414559' -m '#8da4e2' -S '#51576d' -s '#c6d0f5'
+set $browser firefox
 set $viewer zathura
 font pango:JetBrains Mono 11
 
@@ -15,12 +15,12 @@ default_border pixel 2
 default_floating_border pixel 2
 
 # Colors
-client.focused          #88c0d0 #2e3440d9 #eceff4 #eceff4 #88c0d0
-client.focused_inactive #4c566a #2e3440d9 #d8dee9 #4c566a #4c566a
-client.unfocused        #2e3440 #2e3440d9 #4c566a #2e3440d9 #2e3440
-client.urgent           #bf616a #2e3440d9 #eceff4 #bf616a #bf616a
-client.placeholder      #2e3440 #2e3440d9 #d8dee9 #2e3440d9 #2e3440
-client.background       #2e3440
+client.focused          #8da4e2 #303446d9 #c6d0f5 #8da4e2 #8da4e2
+client.focused_inactive #51576d #303446d9 #b5bfe2 #51576d #51576d
+client.unfocused        #303446 #303446d9 #737994 #303446d9 #303446
+client.urgent           #e78284 #303446d9 #c6d0f5 #e78284 #e78284
+client.placeholder      #303446 #303446d9 #b5bfe2 #303446d9 #303446
+client.background       #303446
 
 # Output
 output * bg /home/nore/Pictures/wall.jpg fill
@@ -28,7 +28,7 @@ output * bg /home/nore/Pictures/wall.jpg fill
 output eDP-2 {
     mode 2560x1600@240Hz
     pos -1280 0
-    scale 2
+    scale 1.5
 }
 
 output DP-6 {
@@ -61,9 +61,9 @@ input "1133:16505:Logitech_G_Pro" {
 exec fcitx5
 exec mako
 exec swayidle -w \
-         timeout 600 'swaylock -f -c 000000' \
+         timeout 600 'swaylock -f -c 303446' \
          timeout 900 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-         before-sleep 'swaylock -f -c 000000'
+         before-sleep 'swaylock -f -c 303446'
 
 # Input
 input "2:7:SynPS/2_Synaptics_TouchPad" {
@@ -73,7 +73,7 @@ input "2:7:SynPS/2_Synaptics_TouchPad" {
 }
 
 # Key bindings
-bindsym $mod+n exec swaylock -f -c 000000
+bindsym $mod+n exec swaylock -f -c 303446
 bindsym $mod+Shift+s exec grim -g "$(slurp)" ~/Pictures/shortcut/$(date '+%Y%m%d-%H%M%S').png
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill

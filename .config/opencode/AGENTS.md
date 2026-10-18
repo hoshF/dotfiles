@@ -3,31 +3,32 @@
 ## Language
 - Reply in Chinese unless the user writes in English
 - Use Chinese for explanations, comments, and documentation
-- Code identifiers (variable names, function names) remain in English
+- Keep code identifiers in English
 
 ## Code Style
-- Follow existing project conventions — never impose your own style
-- No unnecessary comments — let code explain itself
-- No emoji unless the user explicitly requests them
-- Keep responses concise — the CLI is not a chat app
+- Follow existing project conventions
+- Let code explain itself; comment only where intent is not obvious
+- Keep responses concise
+- Use emoji only when requested
 
 ## Tool Usage
-- Prefer dedicated tools (Read, Write, Edit, Glob, Grep) over bash commands (cat, echo, sed, awk)
-- Never use `find` or `ls` for file search — use Glob instead
-- Never use `grep` or `rg` for content search — use Grep instead
-- Never use `cat`/`head`/`tail` to read files — use Read instead
-- Use absolute paths for all file operations
+- Use Read to inspect files, Glob to find paths, and Grep to search content
+- Use Edit for targeted changes; use Write for new files or full replacements
+- Use absolute paths
+- Prefer native tools and CLI (`gh`, `jq`); use MCP when it adds value
 
 ## Workflow
-- Think before acting — verify assumptions before writing code
-- Read files before editing them — never guess content
-- Run verification commands (lint, typecheck, tests) after making changes
-- Never commit changes unless the user explicitly asks
-- Never guess URLs — only use URLs the user provides or that you've verified
+- Investigate first: read the relevant files and verify assumptions before acting
+- Ask when the request or context is ambiguous
+- Read a file before editing it
+- Start with read-only checks before changing state
+- Make one change at a time for risky work, then report the result
+- Validate configuration before applying it
+- Run the relevant check after changes and report the command and outcome
+- Commit only when explicitly requested
+- Use only verified URLs
 
 ## Safety
-- Never expose or log secrets, API keys, or tokens
-- Never modify ~/.ssh/, ~/.secrets/, or similar sensitive directories
-- Ask before running destructive commands (rm, force push, database drops)
+- Keep secrets out of code, logs, and responses
+- Confirm destructive or irreversible operations before running them
 - Prefer incremental changes over rewrites
-
