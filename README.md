@@ -44,11 +44,17 @@ Modular [lazy.nvim](https://github.com/folke/lazy.nvim) setup under `.config/nvi
 - **foot** terminal
 - **mpd + ncmpcpp** music
 
+### Typography
+- Terminal / code: **Maple Mono NF CN** (foot, tmux, Neovim)
+- UI / notifications / browser body: **Noto Sans / Noto Sans CJK SC**
+- Input method: **Noto Sans CJK SC**
+- tmux status bar shares the `#303446` fill with OpenCode's background
+
 ### File Manager — Yazi
 - Alternate configs per class (`yazi.toml`, `keymap.toml`)
 - [everforest-medium](https://github.com/Chromium-3-Oxide/everforest-medium) flavor
 - Plugins: [smart-enter](https://github.com/yazi-rs/plugins) (`l` = enter/open), `md-open` (mac: open Markdown in Typora; sway: nvim)
-- Openers: nvim / imv / sioyek / zathura / mpv / epr / xdg-open
+- Openers: nvim / imv / sioyek / mpv / epr / xdg-open
 
 ### AI — Opencode
 Custom agent configs (`.config/opencode/`): `executor`, `explorer`, `operator`, `reviewer`, plus a `yadm` skill for dotfile workflows. `opencode.json` alternates per class.
@@ -67,7 +73,7 @@ Files suffixed `##class.mac` / `##class.sway` are yadm alternates — `yadm alt`
 
 ## Bootstrap
 
-[`.config/yadm/bootstrap`](.config/yadm/bootstrap) is a 244-line provisioning script that:
+[`.config/yadm/bootstrap`](.config/yadm/bootstrap) is a provisioning script that:
 
 1. Installs GPU drivers
 2. Installs pacman packages by category (core / cli_tools / sway_desktop / ime / viewers / latex / fonts / audio / services / security)

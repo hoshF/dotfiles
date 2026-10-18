@@ -1,5 +1,4 @@
 export EDITOR='nvim'
-export TERM=xterm-256color
 
 typeset -U path PATH
 path=(
@@ -84,7 +83,7 @@ alias ctl='systemctl'
 alias vpn="sudo openvpn ~/Cyber/us.ovpn"
 alias vi='nvim'
 alias vim='nvim'
-alias za='zathura'
+alias za='sioyek'
 alias mc='ncmpcpp'
 alias zrc='nvim ~/.zshrc'
 alias rec='wf-recorder'

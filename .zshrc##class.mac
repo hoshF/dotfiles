@@ -1,5 +1,4 @@
 export EDITOR='nvim'
-export TERM=xterm-256color
 
 # Runtime locations
 export BUN_INSTALL="$HOME/.bun"

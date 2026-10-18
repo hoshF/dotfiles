@@ -11,6 +11,7 @@ pacman:
     - tree
     - htop
     - poppler
+    - pciutils
 
   cli_tools:
     - neovim
@@ -20,6 +21,10 @@ pacman:
     - fzf
     - wl-clipboard
     - libnotify
+    - opencode
+    - paru
+    - fnm
+    - syncthing
 
   sway_desktop:
     - sway
@@ -37,6 +42,10 @@ pacman:
     - foot
     - wmenu
     - brightnessctl
+    - firefox
+    - xdg-desktop-portal
+    - xdg-desktop-portal-wlr
+    - xdg-desktop-portal-gtk
 
   ime:
     - fcitx5
@@ -44,16 +53,15 @@ pacman:
     - fcitx5-gtk
     - fcitx5-qt
     - fcitx5-rime
+    - fcitx5-chinese-addons
 
   viewers:
     - imv
     - sioyek
-    - zathura
-    - zathura-pdf-mupdf
     - mpv
 
   latex:
-    - texlive-core
+    - texlive-basic
     - texlive-latex
     - texlive-latexextra
     - texlive-fontsextra
@@ -62,16 +70,23 @@ pacman:
     - texlive-langjapanese
 
   fonts:
+    - noto-fonts
     - noto-fonts-cjk
     - noto-fonts-emoji
+    - noto-fonts-extra
     - wqy-zenhei
     - ttf-jetbrains-mono-nerd
     - ttf-dejavu
+    - ttf-lxgw-wenkai
+    - otf-font-awesome
+    - otf-latin-modern
+    - ttf-ibmplex-mono-nerd
 
   audio:
     - pipewire
     - pipewire-alsa
     - pipewire-pulse
+    - pipewire-jack
     - wireplumber
     - sof-firmware
     - bluez
@@ -99,30 +114,27 @@ pacman:
     - bettercap
     - lynis
     - gobuster
+    - rustscan
+    - sn0int
 
 aur:
   browser:
-    - zen-browser-bin
     - google-chrome
+    # Optional: zen-browser-bin
 
   fonts:
-    - otf-latin-modern
-    - ttf-ibmplex-mono-nerd
+    - maplemono-nf-cn
+    - ttf-ms-fonts
 
   ime:
-    - rime-ice
+    - rime-ice-git
     - fcitx5-skin-fluentlight-git
 
   tools:
-    - epr
+    - epr-git
     - xray
-    - fnm
-    - syncthing
 
   security:
     - dirsearch
-    - rustscan
     - seclists
-    - caido-desktop-bin
-    - sn0int
-    - gvm
+    # Optional: caido-desktop-bin, gvm

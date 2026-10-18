@@ -22,6 +22,12 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 echo "Bootstrap log: $LOG_FILE"
 echo "YADM Directory: $YADM_DIR"
 
+# Sync
+sync_system() {
+    echo -e "${GREEN}[0/7] Syncing package databases...${NC}"
+    sudo pacman -Syu --noconfirm
+}
+
 # yq
 check_yq() {
     if command -v yq &> /dev/null; then
@@ -29,7 +35,7 @@ check_yq() {
         return 0
     fi
     echo -e "${YELLOW}yq not found, installing via pacman...${NC}"
-    sudo pacman -Sy --noconfirm yq
+    sudo pacman -S --needed --noconfirm yq
 }
 
 get_packages() {
@@ -41,6 +47,7 @@ get_packages() {
 # 1. Drivers
 install_drivers() {
     echo -e "${GREEN}[1/7] Detecting and installing graphics drivers...${NC}"
+    command -v lspci >/dev/null || sudo pacman -S --needed --noconfirm pciutils
     local GPU_INFO=$(lspci | grep -i 'vga\|3d\|display')
     local DRIVER_PKGS=()
     local IS_NVIDIA=false
@@ -67,7 +74,7 @@ install_drivers() {
     fi
 
     echo -e "${BLUE}Installing drivers: ${DRIVER_PKGS[*]}${NC}"
-    sudo pacman -Sy --noconfirm --needed "${DRIVER_PKGS[@]}"
+    sudo pacman -S --noconfirm --needed "${DRIVER_PKGS[@]}"
 
     if [ "$IS_NVIDIA" = true ]; then
         echo -e "${RED}================================================================${NC}"
@@ -83,8 +90,6 @@ install_drivers() {
 # 2. Pacman
 install_pacman_packages() {
     echo -e "${GREEN}[2/7] Installing Pacman packages${NC}"
-
-    sudo pacman -Sy --noconfirm
 
     local packages=()
     for category in "${PACMAN_CATEGORIES[@]}"; do
@@ -108,11 +113,16 @@ install_pacman_packages() {
 # 3. AUR
 install_aur_packages() {
     echo -e "${GREEN}[3/7] Installing AUR packages${NC}"
-    if ! command -v yay &> /dev/null; then
-        local build_dir="/tmp/yay-build"
-        mkdir -p "$build_dir" && cd "$build_dir"
-        git clone https://aur.archlinux.org/yay.git && cd yay
-        makepkg -si --noconfirm && cd "$HOME" && rm -rf "$build_dir"
+
+    local aur_helper
+    if command -v paru &> /dev/null; then
+        aur_helper="paru"
+    elif command -v yay &> /dev/null; then
+        aur_helper="yay"
+    else
+        echo -e "${YELLOW}No AUR helper found, installing paru...${NC}"
+        sudo pacman -S --needed --noconfirm paru
+        aur_helper="paru"
     fi
 
     local aur_packages=()
@@ -127,7 +137,7 @@ install_aur_packages() {
 
     if [ ${#aur_packages[@]} -gt 0 ]; then
         echo -e "${BLUE}Installing ${#aur_packages[@]} AUR packages...${NC}"
-        yay -S --noconfirm --needed "${aur_packages[@]}"
+        "$aur_helper" -S --noconfirm --needed "${aur_packages[@]}"
         echo -e "${GREEN}✓ AUR packages installed${NC}"
     else
         echo -e "${YELLOW}No AUR packages found. Check your packages.yaml${NC}"
@@ -139,12 +149,16 @@ setup_rime_grammar() {
     echo -e "${GREEN}[4/7] Installing Rime grammar model...${NC}"
 
     local rime_dir="$HOME/.local/share/fcitx5/rime"
+    local plum_dir="$HOME/.cache/plum"
 
-    if [ ! -d "$HOME/plum" ]; then
-        git clone https://github.com/rime/plum.git "$HOME/plum"
+    mkdir -p "$HOME/.cache"
+    if [ ! -d "$plum_dir/.git" ]; then
+        git clone https://github.com/rime/plum.git "$plum_dir"
+    else
+        git -C "$plum_dir" pull --ff-only
     fi
 
-    rime_dir="$rime_dir" bash "$HOME/plum/rime-install" iDvel/rime-ice:others/recipes/grammar:schema=rime_ice
+    rime_dir="$rime_dir" bash "$plum_dir/rime-install" iDvel/rime-ice:others/recipes/grammar:schema=rime_ice
 
     echo -e "${GREEN}✓ Rime grammar model installed${NC}"
 }
@@ -168,16 +182,34 @@ setup_security_tools() {
 }
 
 # 6. Services
+enable_system_unit() {
+    local unit="$1"
+    if systemctl cat "$unit" &> /dev/null; then
+        sudo systemctl enable "$unit"
+    else
+        echo -e "${YELLOW}Skip missing unit: $unit${NC}"
+    fi
+}
+
+enable_user_unit() {
+    local unit="$1"
+    if systemctl --user cat "$unit" &> /dev/null; then
+        systemctl --user enable "$unit"
+    else
+        echo -e "${YELLOW}Skip missing user unit: $unit${NC}"
+    fi
+}
+
 enable_services() {
     echo -e "${GREEN}[6/7] Enabling System Services...${NC}"
 
-    sudo systemctl enable bluetooth.service
-    sudo systemctl enable greetd.service
-    sudo systemctl enable postgresql.service
-    sudo systemctl enable xray.service
+    enable_system_unit bluetooth.service
+    enable_system_unit greetd.service
+    enable_system_unit postgresql.service
+    enable_system_unit xray.service
 
-    systemctl --user enable wireplumber.service
-    systemctl --user enable pipewire-pulse.service
+    enable_user_unit wireplumber.service
+    enable_user_unit pipewire-pulse.service
 
     echo -e "${GREEN}✓ Services enabled${NC}"
 }
@@ -199,6 +231,7 @@ main() {
     echo -e "${CYAN}   Bootstrap Sway + InfoSec Environment         ${NC}"
     echo -e "${CYAN}================================================${NC}"
 
+    sync_system
     check_yq
     install_drivers
     install_pacman_packages
@@ -213,9 +246,9 @@ main() {
     echo -e "${BLUE}Log saved to: $LOG_FILE${NC}"
     echo -e "${YELLOW}================================================${NC}"
     echo -e "${YELLOW}⚠️  MANUAL ACTIONS REQUIRED BEFORE REBOOT:       ${NC}"
-    echo -e "${YELLOW}1. Edit ${NC}/etc/greetd/config.toml${YELLOW} and change the${NC}"
-    echo -e "${YELLOW}   'command' under [default_session] to run Sway:${NC}"
-    echo -e "${YELLOW}   e.g., command = \"tuigreet --cmd sway\"       ${NC}"
+    echo -e "${YELLOW}1. Verify ${NC}/etc/greetd/config.toml${YELLOW} uses autologin:${NC}"
+    echo -e "${YELLOW}   command = \"sway --unsupported-gpu\"           ${NC}"
+    echo -e "${YELLOW}   user = \"nore\"                                 ${NC}"
     echo -e "${YELLOW}2. If you have NVIDIA, check systemd-boot flags! ${NC}"
     echo -e "${YELLOW}================================================${NC}"
 }
