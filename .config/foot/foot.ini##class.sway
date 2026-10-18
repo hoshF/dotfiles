@@ -1,6 +1,6 @@
 [main]
 initial-color-theme=dark
-font=JetBrainsMonoNerdFont-Regular:size=14
+font=Maple Mono NF CN:size=14,Noto Sans Mono CJK SC:size=14
 
 [scrollback]
 lines=10000
