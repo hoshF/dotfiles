@@ -1,31 +1,33 @@
+# Editor & runtime
 export EDITOR='nvim'
-
-typeset -U path PATH
-path=(
-    "$HOME/.cargo/bin"
-    "$HOME/.local/bin"
-    "$HOME/.local/bin/test/"
-    "$HOME/go/bin"
-    "$BUN_INSTALL/bin"
-    $path
-)
 export CARGO_HOME="$HOME/.cargo"
 export RUSTUP_HOME="$HOME/.rustup"
 export BUN_INSTALL="$HOME/.bun"
 
+# PATH
+typeset -U path PATH
+path=(
+    "$HOME/.cargo/bin"
+    "$HOME/.local/bin"
+    "$HOME/.local/bin/test"
+    "$HOME/go/bin"
+    "$BUN_INSTALL/bin"
+    $path
+)
+
+# Zim
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
-# Zim
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
-  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
 [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]] && source ${ZIM_HOME}/zimfw.zsh init
 source ${ZIM_HOME}/init.zsh
 
+# History & keybindings
 zmodload -F zsh/terminfo +p:terminfo
-# History
 setopt HIST_IGNORE_ALL_DUPS
 bindkey -v
 WORDCHARS=${WORDCHARS//[\/]}
@@ -34,7 +36,7 @@ for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-# Proxy
+# Network
 proxy_on() {
     export http_proxy="http://127.0.0.1:10808"
     export https_proxy="http://127.0.0.1:10808"
@@ -44,6 +46,9 @@ proxy_on() {
 proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
 proxy_on
 
+export HF_ENDPOINT=https://hf-mirror.com
+
+# Tools
 # Yazi
 y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -73,6 +78,7 @@ command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 # direnv
 command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
+# Aliases
 # System
 alias pac='sudo pacman'
 alias pQt='pacman -Qtdq | sudo pacman -Rns -'
@@ -122,8 +128,6 @@ uvinit() {
     fi
     uv init "$1" && cd "$1" && uv python pin "${2:-3.13}"
 }
-
-export HF_ENDPOINT=https://hf-mirror.com
 
 # Bun
 [[ -s "$BUN_INSTALL/_bun" ]] && source "$BUN_INSTALL/_bun"
