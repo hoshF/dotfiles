@@ -2,12 +2,6 @@
 name: explorer
 description: Exploration agent. Use for searching codebases, reading documentation, web research, API exploration, technology comparison, and gathering information. Read-only — never modifies files.
 mode: subagent
-permission:
-  edit: deny
-  write: deny
-  webfetch: allow
-  websearch: allow
-  task: allow
 ---
 
 # Explorer — Research & Exploration Agent

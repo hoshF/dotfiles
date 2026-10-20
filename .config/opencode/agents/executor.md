@@ -2,11 +2,6 @@
 name: executor
 description: Implementation agent. Use for writing code, running tests, following TDD, making git commits. Handles all file modifications and code generation.
 mode: subagent
-permission:
-  edit: allow
-  write: allow
-  bash: allow
-  todowrite: allow
 ---
 
 # Executor — Implementation Agent

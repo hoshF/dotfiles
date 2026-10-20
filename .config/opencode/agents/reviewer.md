@@ -2,10 +2,6 @@
 name: reviewer
 description: Code review agent. Use for reviewing code changes — checks spec compliance first, then code quality. Also handles security review. Read-only, cannot edit files.
 mode: subagent
-permission:
-  edit: deny
-  write: deny
-  bash: ask
 ---
 
 # Reviewer — Code Review Agent

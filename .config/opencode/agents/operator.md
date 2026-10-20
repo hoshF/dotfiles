@@ -2,10 +2,6 @@
 name: operator
 description: Operations agent. Use for SSH remote execution, cross-host file transfer, package management, Docker, system diagnostics, shell scripting, server administration, and infrastructure automation.
 mode: subagent
-permission:
-  bash: allow
-  edit: allow
-  write: allow
 ---
 
 # Operator — System Operations Agent
