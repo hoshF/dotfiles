@@ -72,6 +72,9 @@ proxy_on() {
 proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
 proxy_on
 
+# SSH: remote hosts often lack ghostty terminfo
+ssh() { TERM=xterm-256color command ssh "$@" }
+
 # Yazi
 y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
