@@ -24,13 +24,23 @@
     { "action": "external_directory", "resource": "*", "effect": "allow" },
     { "action": "external_directory", "resource": "~/secrets/**", "effect": "deny" },
     { "action": "external_directory", "resource": "~/.ssh/**", "effect": "deny" },
-    { "action": "read", "resource": "~/.ssh", "effect": "deny" },
-    { "action": "read", "resource": "~/.ssh/*", "effect": "deny" },
-    { "action": "edit", "resource": "~/.ssh", "effect": "deny" },
-    { "action": "edit", "resource": "~/.ssh/*", "effect": "deny" },
-    { "action": "read", "resource": "~/secrets", "effect": "deny" },
-    { "action": "read", "resource": "~/secrets/*", "effect": "deny" },
-    { "action": "edit", "resource": "~/secrets", "effect": "deny" },
-    { "action": "edit", "resource": "~/secrets/*", "effect": "deny" }
+
+    { "action": "read", "resource": ".ssh", "effect": "deny" },
+    { "action": "read", "resource": ".ssh/*", "effect": "deny" },
+    { "action": "read", "resource": "*/.ssh", "effect": "deny" },
+    { "action": "read", "resource": "*/.ssh/*", "effect": "deny" },
+    { "action": "edit", "resource": ".ssh", "effect": "deny" },
+    { "action": "edit", "resource": ".ssh/*", "effect": "deny" },
+    { "action": "edit", "resource": "*/.ssh", "effect": "deny" },
+    { "action": "edit", "resource": "*/.ssh/*", "effect": "deny" },
+
+    { "action": "read", "resource": "secrets", "effect": "deny" },
+    { "action": "read", "resource": "secrets/*", "effect": "deny" },
+    { "action": "read", "resource": "*/secrets", "effect": "deny" },
+    { "action": "read", "resource": "*/secrets/*", "effect": "deny" },
+    { "action": "edit", "resource": "secrets", "effect": "deny" },
+    { "action": "edit", "resource": "secrets/*", "effect": "deny" },
+    { "action": "edit", "resource": "*/secrets", "effect": "deny" },
+    { "action": "edit", "resource": "*/secrets/*", "effect": "deny" }
   ]
 }
