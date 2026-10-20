@@ -3,7 +3,7 @@ font-size = 16
 font-feature = "calt"
 font-feature = "liga"
 
-theme = "nord"
+theme = "Catppuccin Frappe"
 cursor-style-blink = false
 
 window-decoration = true

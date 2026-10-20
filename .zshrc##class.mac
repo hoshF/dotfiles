@@ -62,15 +62,15 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
 # Proxy
-#proxy_on() {
-#    export all_proxy="socks5://127.0.0.1:10808"
-#    export http_proxy="http://127.0.0.1:10808"
-#    export https_proxy="http://127.0.0.1:10808"
-#    export HTTP_PROXY="$http_proxy"
-#    export HTTPS_PROXY="$https_proxy"
-#}
-#proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
-#proxy_on
+proxy_on() {
+    export all_proxy="socks5://127.0.0.1:10808"
+    export http_proxy="http://127.0.0.1:10808"
+    export https_proxy="http://127.0.0.1:10808"
+    export HTTP_PROXY="$http_proxy"
+    export HTTPS_PROXY="$https_proxy"
+}
+proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
+proxy_on
 
 # Yazi
 y() {
