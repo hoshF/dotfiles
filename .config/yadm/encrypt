@@ -13,4 +13,6 @@
 .ssh/silk
 .ssh/tenxun
 .ssh/hostdare
+.ssh/bwh
+.ssh/bwh.pub
 .zshenv
