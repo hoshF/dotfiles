@@ -1,0 +1,36 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "Build",
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
+  "skills": {
+    "paths": ["~/.config/opencode/skills"]
+  },
+
+  "mcp": {
+    "servers": {
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp"
+      },
+      "playwright": {
+        "type": "local",
+        "command": ["npx", "-y", "@playwright/mcp"]
+      }
+    }
+  },
+
+  "permissions": [
+    { "action": "shell", "resource": "*", "effect": "allow" },
+    { "action": "external_directory", "resource": "*", "effect": "allow" },
+    { "action": "external_directory", "resource": "~/secrets/**", "effect": "deny" },
+    { "action": "external_directory", "resource": "~/.ssh/**", "effect": "deny" },
+    { "action": "read", "resource": "~/.ssh", "effect": "deny" },
+    { "action": "read", "resource": "~/.ssh/*", "effect": "deny" },
+    { "action": "edit", "resource": "~/.ssh", "effect": "deny" },
+    { "action": "edit", "resource": "~/.ssh/*", "effect": "deny" },
+    { "action": "read", "resource": "~/secrets", "effect": "deny" },
+    { "action": "read", "resource": "~/secrets/*", "effect": "deny" },
+    { "action": "edit", "resource": "~/secrets", "effect": "deny" },
+    { "action": "edit", "resource": "~/secrets/*", "effect": "deny" }
+  ]
+}
