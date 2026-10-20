@@ -46,9 +46,6 @@ proxy_on() {
 proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
 proxy_on
 
-# SSH: remote hosts often lack foot terminfo
-ssh() { TERM=xterm-256color command ssh "$@" }
-
 export HF_ENDPOINT=https://hf-mirror.com
 
 # Tools

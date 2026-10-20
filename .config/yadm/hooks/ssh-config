@@ -1,0 +1,26 @@
+#!/bin/sh
+# Keep the public SSH defaults connected to the encrypted host configuration.
+set -eu
+[ "${YADM_HOOK_EXIT:-0}" = 0 ] || exit 0
+root=${YADM_HOOK_WORK:-$HOME}
+config="$root/.ssh/config"
+include='Include ~/.config/ssh/terminal.conf'
+[ -f "$root/.config/ssh/terminal.conf" ] || exit 0
+if [ -f "$config" ] && grep -Fqx "$include" "$config"; then
+    exit 0
+fi
+mkdir -p "$root/.ssh"
+chmod 700 "$root/.ssh"
+tmp=$(mktemp "$root/.ssh/config.XXXXXX")
+trap 'rm -f "$tmp"' EXIT HUP INT TERM
+{
+    printf '%s\n\n' "$include"
+    [ ! -f "$config" ] || cat "$config"
+} > "$tmp"
+# Preserve an existing config's permissions and symlink target.
+if [ -e "$config" ]; then
+    cat "$tmp" > "$config"
+else
+    mv "$tmp" "$config"
+fi
+chmod 600 "$config"
