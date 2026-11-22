@@ -25,6 +25,7 @@ if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
 fi
 [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]] && source ${ZIM_HOME}/zimfw.zsh init
 source ${ZIM_HOME}/init.zsh
+source "$HOME/fzf.zsh"
 
 # History & keybindings
 zmodload -F zsh/terminfo +p:terminfo
@@ -41,7 +42,7 @@ proxy_on() {
     export HTTP_PROXY="$http_proxy"
     export HTTPS_PROXY="$https_proxy"
 }
-proxy_off() { unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
+proxy_off() { unset all_proxy ALL_PROXY http_proxy https_proxy HTTP_PROXY HTTPS_PROXY; }
 proxy_on
 
 export HF_ENDPOINT=https://hf-mirror.com

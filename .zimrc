@@ -24,6 +24,3 @@ zmodule prompt-pwd
 zmodule pabloariasal/zfm
 zmodule Aloxaf/fzf-tab
 zmodule pacman
-
-# FZF
-source fzf.zsh
