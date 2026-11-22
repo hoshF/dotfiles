@@ -22,41 +22,69 @@
   "agents": {
     "explorer": {
       "permissions": [
-        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "*", "resource": "*", "effect": "deny" },
+        { "action": "read", "resource": "*", "effect": "allow" },
+        { "action": "glob", "resource": "*", "effect": "allow" },
+        { "action": "grep", "resource": "*", "effect": "allow" },
         { "action": "webfetch", "resource": "*", "effect": "allow" },
-        { "action": "websearch", "resource": "*", "effect": "allow" }
+        { "action": "websearch", "resource": "*", "effect": "allow" },
+        { "action": "external_directory", "resource": "*", "effect": "allow" },
+        { "action": "read", "resource": "*.env", "effect": "ask" },
+        { "action": "read", "resource": "*.env.*", "effect": "ask" },
+        { "action": "read", "resource": "*.env.example", "effect": "allow" }
       ]
     },
     "reviewer": {
       "permissions": [
-        { "action": "edit", "resource": "*", "effect": "deny" },
-        { "action": "shell", "resource": "*", "effect": "ask" }
+        { "action": "*", "resource": "*", "effect": "deny" },
+        { "action": "read", "resource": "*", "effect": "allow" },
+        { "action": "glob", "resource": "*", "effect": "allow" },
+        { "action": "grep", "resource": "*", "effect": "allow" },
+        { "action": "webfetch", "resource": "*", "effect": "allow" },
+        { "action": "websearch", "resource": "*", "effect": "allow" },
+        { "action": "external_directory", "resource": "*", "effect": "allow" },
+        { "action": "read", "resource": "*.env", "effect": "ask" },
+        { "action": "read", "resource": "*.env.*", "effect": "ask" },
+        { "action": "read", "resource": "*.env.example", "effect": "allow" }
       ]
     }
   },
 
   "permissions": [
     { "action": "shell", "resource": "*", "effect": "allow" },
-    { "action": "external_directory", "resource": "*", "effect": "allow" },
-    { "action": "external_directory", "resource": "~/secrets/**", "effect": "deny" },
-    { "action": "external_directory", "resource": "~/.ssh/**", "effect": "deny" },
+    { "action": "external_directory", "resource": "*", "effect": "allow" }
+  ],
 
-    { "action": "read", "resource": ".ssh", "effect": "deny" },
-    { "action": "read", "resource": ".ssh/*", "effect": "deny" },
-    { "action": "read", "resource": "*/.ssh", "effect": "deny" },
-    { "action": "read", "resource": "*/.ssh/*", "effect": "deny" },
-    { "action": "edit", "resource": ".ssh", "effect": "deny" },
-    { "action": "edit", "resource": ".ssh/*", "effect": "deny" },
-    { "action": "edit", "resource": "*/.ssh", "effect": "deny" },
-    { "action": "edit", "resource": "*/.ssh/*", "effect": "deny" },
+  "policies": [
+    { "action": "tool.use", "resource": "read:.ssh", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:.ssh/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*/.ssh", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*/.ssh/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:.ssh", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:.ssh/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*/.ssh", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*/.ssh/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "external_directory:.ssh", "effect": "deny" },
+    { "action": "tool.use", "resource": "external_directory:.ssh/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "external_directory:*/.ssh", "effect": "deny" },
+    { "action": "tool.use", "resource": "external_directory:*/.ssh/*", "effect": "deny" },
 
-    { "action": "read", "resource": "secrets", "effect": "deny" },
-    { "action": "read", "resource": "secrets/*", "effect": "deny" },
-    { "action": "read", "resource": "*/secrets", "effect": "deny" },
-    { "action": "read", "resource": "*/secrets/*", "effect": "deny" },
-    { "action": "edit", "resource": "secrets", "effect": "deny" },
-    { "action": "edit", "resource": "secrets/*", "effect": "deny" },
-    { "action": "edit", "resource": "*/secrets", "effect": "deny" },
-    { "action": "edit", "resource": "*/secrets/*", "effect": "deny" }
+    { "action": "tool.use", "resource": "read:secrets", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:secrets/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*/secrets", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*/secrets/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:secrets", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:secrets/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*/secrets", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*/secrets/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "external_directory:secrets", "effect": "deny" },
+    { "action": "tool.use", "resource": "external_directory:secrets/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "external_directory:*/secrets", "effect": "deny" },
+    { "action": "tool.use", "resource": "external_directory:*/secrets/*", "effect": "deny" },
+
+    { "action": "tool.use", "resource": "read:.zshenv", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*/.zshenv", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:.zshenv", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*/.zshenv", "effect": "deny" }
   ]
 }

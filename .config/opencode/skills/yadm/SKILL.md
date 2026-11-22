@@ -5,7 +5,8 @@ description: Use when using yadm commands, managing dotfiles with yadm, or worki
 
 # Yadm — Dotfiles Management
 
-All configs managed by [yadm](https://yadm.io/) (remote: `hoshF/dotfiles`). yadm wraps git: work-tree = `$HOME`. Use `yadm` prefix for any git command.
+All configs managed by [yadm](https://yadm.io/) (remote: `hoshF/dotfiles`). yadm wraps git: work-tree = `$HOME`.
+本用户的 dotfiles 仓库使用 `yadm`；普通 Git 项目仍使用项目自己的 `git`，不要把项目命令切换到 dotfiles 仓库。
 
 ## Alternate Templates (`yadm alt`)
 
@@ -19,10 +20,10 @@ How alternates work:
 
 Critical rules:
 - Templates use `##class.<class>` suffix
-- Edit via the symlink path — yadm resolves to the template automatically
-- `yadm add`/`yadm rm` use the symlink path; yadm tracks the actual template file
-- **Never delete** any `##class.*` directory or file (template files)
-- `yadm alt` is usually automatic; run manually only if `yadm.auto-alt` is disabled
+- 编辑已有软链路径时，通常由编辑器或操作系统跟随软链写入源文件；这不是 yadm 的路径自动映射。编辑后确认软链仍存在，实际改动位于预期源文件。
+- `yadm add` / `yadm rm` 不会把软链路径自动映射到 alternate 源文件。使用 `yadm ls-files` 确认真实追踪路径，再显式操作，例如 `yadm add -- '.zshrc##class.mac'`；生成的 `.zshrc` 软链通常被排除，不应暂存。
+- 不随意删除 `##class.*` 源文件或目录；仅在用户明确授权的删除或迁移任务中移除相应追踪路径。
+- `yadm alt` 通常自动运行；需要恢复软链、切换 class 后重建或应用相关 hook 时，也可按任务需要手工运行。
 - Active templates depend on the current class; check with `yadm ls-files | grep '##class'`
 
 ## Common Commands
@@ -36,7 +37,6 @@ Critical rules:
 | Show recent commits | `yadm log --oneline -10` |
 | Stage modified/deleted files | `yadm add -u <path>` |
 | Stage new untracked files | `yadm add <path>` |
-| Stage everything | `yadm add -A .` |
 | Commit | `yadm commit -m "msg"` |
 | Push/pull | `yadm push` / `yadm pull` |
 | Encrypt/decrypt secrets | `yadm encrypt` / `yadm decrypt [-l]` |
@@ -45,5 +45,6 @@ Critical rules:
 
 ## Key Conventions
 
+- 暂存按任务范围使用显式路径；只有用户明确授权时才提交或推送。
 - Prefer `yadm add -u` over `yadm add -A` — only stages modified/deleted files, not untracked. Use explicit `yadm add <path>` for new files.
 - `yadm status` only shows changed/untracked files. Use `yadm list`/`yadm ls-files` to confirm a file IS tracked.
