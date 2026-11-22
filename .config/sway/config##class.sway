@@ -31,13 +31,19 @@ output eDP-2 {
     scale 1.5
 }
 
-set $monitor_main eDP-2
+set $monitor_main DP-6
+set $monitor_secondary eDP-2
 
 workspace 1 output $monitor_main
 workspace 2 output $monitor_main
 workspace 3 output $monitor_main
 workspace 4 output $monitor_main
 workspace 5 output $monitor_main
+workspace 6 output $monitor_main
+workspace 7 output $monitor_main
+workspace 8 output $monitor_main
+workspace 9 output $monitor_main
+workspace 10 output $monitor_secondary
 
 input "1133:16505:Logitech_G_Pro" {
     accel_profile flat
