@@ -16,6 +16,9 @@ vim.opt.expandtab = true
 
 vim.opt.number = true
 vim.opt.relativenumber = true
+-- No sign column at all: diagnostics are shown inline at end of line, so error
+-- hints never shift the text and the gutter stays as narrow as possible.
+vim.opt.signcolumn = "no"
 vim.opt.cursorline = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true

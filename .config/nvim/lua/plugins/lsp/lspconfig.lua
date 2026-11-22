@@ -15,7 +15,7 @@ return {
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		dependencies = { "mason-org/mason.nvim" },
-		cmd = "MasonToolsInstall",
+		cmd = { "MasonToolsInstall", "MasonToolsVerify" },
 		opts = {
 			ensure_installed = {
 				"lua-language-server",
@@ -39,8 +39,39 @@ return {
 				"eslint_d",
 				"shfmt",
 			},
-            run_on_start = false,
+			run_on_start = false,
 		},
+		config = function(_, opts)
+			require("mason-tool-installer").setup(opts)
+			vim.api.nvim_create_user_command("MasonToolsVerify", function()
+				local registry = require("mason-registry")
+				local failed = {}
+				for _, name in ipairs(opts.ensure_installed) do
+					local ok, valid = pcall(function()
+						local package = registry.get_package(name)
+						if not package:is_installed() then
+							return false
+						end
+						local receipt = package:get_receipt()
+						return receipt:is_present() and receipt:get():get_name() == name
+					end)
+					if not ok or not valid then
+						table.insert(failed, name)
+					end
+				end
+				if #failed > 0 then
+					vim.notify(
+						"Mason verification failed (missing package or invalid receipt): " .. table.concat(failed, ", "),
+						vim.log.levels.ERROR
+					)
+					if #vim.api.nvim_list_uis() == 0 then
+						vim.cmd("cquit 1")
+					end
+					return
+				end
+				vim.notify("Mason tools verified: " .. #opts.ensure_installed .. " packages installed.")
+			end, { desc = "Verify configured Mason packages without installing" })
+		end,
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -49,8 +80,6 @@ return {
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			local on_attach = function(client, _)
-				client.server_capabilities.documentFormattingProvider = false
-				client.server_capabilities.documentRangeFormattingProvider = false
 				client.server_capabilities.semanticTokensProvider = nil
 			end
 
@@ -73,7 +102,7 @@ return {
 							enable = false,
 						},
 						hint = { enable = false },
-						format = { enable = false },
+						format = { enable = true },
 					},
 				},
 			})
@@ -131,7 +160,11 @@ return {
 			end
 
 			vim.diagnostic.config({
-				virtual_text = false,
+				virtual_text = {
+					spacing = 2,
+					prefix = "●",
+					source = false,
+				},
 				signs = false,
 				underline = true,
 				update_in_insert = false,

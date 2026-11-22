@@ -10,8 +10,10 @@ return {
 			changedelete = { text = "~" },
 			untracked = { text = "┆" },
 		},
-		signcolumn = true,
-		numhl = false,
+		-- No sign column; git status is shown by highlighting the line numbers,
+		-- which costs no extra horizontal space.
+		signcolumn = false,
+		numhl = true,
 		linehl = false,
 		update_debounce = 200,
 		watch_gitdir = { interval = 1000 },
