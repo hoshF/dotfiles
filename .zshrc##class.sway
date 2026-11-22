@@ -29,12 +29,10 @@ source ${ZIM_HOME}/init.zsh
 # History & keybindings
 zmodload -F zsh/terminfo +p:terminfo
 setopt HIST_IGNORE_ALL_DUPS
-bindkey -v
+bindkey -e
 WORDCHARS=${WORDCHARS//[\/]}
 for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
 for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
 
 # Network
 proxy_on() {
