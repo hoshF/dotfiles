@@ -1,7 +1,39 @@
 #!/bin/bash
 # bootstrap
 
-set -e
+set -e -o pipefail
+
+# This installer provisions Arch; macOS restores configuration through README.md.
+if [ "$(uname -s)" != Linux ] || [ ! -r /etc/os-release ]; then
+    echo "Bootstrap supports Arch Linux only. See README.md for macOS configuration recovery." >&2
+    exit 1
+fi
+. /etc/os-release
+if [ "${ID:-}" != arch ]; then
+    echo "Bootstrap supports Arch Linux only. See README.md for configuration recovery." >&2
+    exit 1
+fi
+if [ "$(id -u)" -eq 0 ]; then
+    echo "Run bootstrap as your normal user; privileged operations use sudo." >&2
+    exit 1
+fi
+
+# Reading local.class through yadm config can trigger automatic alternate updates.
+YADM_REPO=$(yadm introspect repo) || exit 1
+YADM_CLASSES=$(git --git-dir="$YADM_REPO" config --local --get-all local.class) || YADM_CLASSES=
+has_sway=false
+has_mac=false
+while IFS= read -r class; do
+    case "$class" in
+        [Ss][Ww][Aa][Yy]) has_sway=true ;;
+        [Mm][Aa][Cc]) has_mac=true ;;
+    esac
+done <<< "$YADM_CLASSES"
+if [ "$has_sway" != true ] || [ "$has_mac" = true ]; then
+    echo "Bootstrap requires the sway class without a mac class." >&2
+    echo "Run: yadm config --replace-all local.class sway && yadm alt" >&2
+    exit 1
+fi
 
 # Colors & Config
 RED='\033[0;31m'
@@ -30,18 +62,22 @@ sync_system() {
 
 # yq
 check_yq() {
-    if command -v yq &> /dev/null; then
-        echo -e "${GREEN}✓ yq already installed${NC}"
-        return 0
-    fi
-    echo -e "${YELLOW}yq not found, installing via pacman...${NC}"
+    # Arch's yq is kislyuk/yq (the jq wrapper), not the incompatible Go yq.
     sudo pacman -S --needed --noconfirm yq
+    YQ=/usr/bin/yq
+    [ -x "$YQ" ] || { echo "Arch's /usr/bin/yq is unavailable." >&2; return 1; }
 }
 
 get_packages() {
     local repo="$1"
     local category="$2"
-    yq ".$repo.$category[]" "$PACKAGE_FILE" 2> /dev/null || true
+    "$YQ" -r --arg repo "$repo" --arg category "$category" '
+        .[$repo][$category]
+        | if type == "array" then .[]
+          else error("Expected a package array for " + $repo + "." + $category) end
+        | if type == "string" and length > 0 then .
+          else error("Expected non-empty package strings in " + $repo + "." + $category) end
+    ' "$PACKAGE_FILE"
 }
 
 # 1. Drivers
@@ -91,14 +127,12 @@ install_drivers() {
 install_pacman_packages() {
     echo -e "${GREEN}[2/8] Installing Pacman packages${NC}"
 
-    local packages=()
+    local packages=() package_lines category pkg
     for category in "${PACMAN_CATEGORIES[@]}"; do
+        package_lines=$(get_packages "pacman" "$category") || return 1
         while IFS= read -r pkg; do
-            pkg="${pkg//\"/}"
-            pkg="${pkg//\'/}"
-
-            [ -n "$pkg" ] && [ "$pkg" != "null" ] && packages+=("$pkg")
-        done < <(get_packages "pacman" "$category")
+            [ -z "$pkg" ] || packages+=("$pkg")
+        done <<< "$package_lines"
     done
 
     if [ ${#packages[@]} -gt 0 ]; then
@@ -114,6 +148,18 @@ install_pacman_packages() {
 install_aur_packages() {
     echo -e "${GREEN}[3/8] Installing AUR packages${NC}"
 
+    local aur_packages=() package_lines category pkg
+    for category in "${AUR_CATEGORIES[@]}"; do
+        package_lines=$(get_packages "aur" "$category") || return 1
+        while IFS= read -r pkg; do
+            [ -z "$pkg" ] || aur_packages+=("$pkg")
+        done <<< "$package_lines"
+    done
+    if [ ${#aur_packages[@]} -eq 0 ]; then
+        echo -e "${YELLOW}No AUR packages configured.${NC}"
+        return 0
+    fi
+
     local aur_helper
     if command -v paru &> /dev/null; then
         aur_helper="paru"
@@ -121,27 +167,34 @@ install_aur_packages() {
         aur_helper="yay"
     else
         echo -e "${YELLOW}No AUR helper found, installing paru...${NC}"
-        sudo pacman -S --needed --noconfirm paru
+        local build_dependencies=(base-devel git) cargo_status=0
+        pacman -T cargo >/dev/null || cargo_status=$?
+        case "$cargo_status" in
+            0) ;;
+            127) build_dependencies+=(rust) ;;
+            *) echo "Cannot determine whether a cargo provider is installed." >&2; return "$cargo_status" ;;
+        esac
+        sudo pacman -S --needed --noconfirm "${build_dependencies[@]}"
+        (
+            build_dir=$(mktemp -d "${TMPDIR:-/tmp}/yadm-paru.XXXXXX")
+            trap 'rm -rf -- "$build_dir"' EXIT
+            trap 'exit 130' HUP INT TERM
+            git clone --depth 1 https://aur.archlinux.org/paru.git "$build_dir/paru"
+            cd "$build_dir/paru"
+            makepkg -si --noconfirm
+        )
         aur_helper="paru"
     fi
 
-    local aur_packages=()
-    for category in "${AUR_CATEGORIES[@]}"; do
-        while IFS= read -r pkg; do
-            pkg="${pkg//\"/}"
-            pkg="${pkg//\'/}"
+    echo -e "${BLUE}Installing ${#aur_packages[@]} AUR packages...${NC}"
+    "$aur_helper" -S --noconfirm --needed "${aur_packages[@]}"
+    echo -e "${GREEN}✓ AUR packages installed${NC}"
+}
 
-            [ -n "$pkg" ] && [ "$pkg" != "null" ] && aur_packages+=("$pkg")
-        done < <(get_packages "aur" "$category")
-    done
-
-    if [ ${#aur_packages[@]} -gt 0 ]; then
-        echo -e "${BLUE}Installing ${#aur_packages[@]} AUR packages...${NC}"
-        "$aur_helper" -S --noconfirm --needed "${aur_packages[@]}"
-        echo -e "${GREEN}✓ AUR packages installed${NC}"
-    else
-        echo -e "${YELLOW}No AUR packages found. Check your packages.yaml${NC}"
-    fi
+restore_yazi() {
+    echo -e "${BLUE}Restoring locked Yazi plugins and flavors...${NC}"
+    command -v ya >/dev/null || { echo "ya is required to restore Yazi packages." >&2; return 1; }
+    ya pkg install
 }
 
 # 4. Rime
@@ -176,9 +229,9 @@ setup_security_tools() {
     sudo systemctl start postgresql.service
 
     echo -e "${BLUE}Initializing Metasploit database (msfdb)...${NC}"
-    msfdb init || echo -e "${YELLOW}msfdb init returned non-zero (might already be initialized).${NC}"
+    msfdb init
 
-    echo -e "${GREEN}✓ Metasploit connected to PostgreSQL${NC}"
+    echo -e "${GREEN}✓ Metasploit database initialization completed${NC}"
 }
 
 # 6. Services
@@ -216,13 +269,37 @@ enable_services() {
 
 # 7. Rust
 install_rust() {
-    echo -e "${GREEN}[7/8] Installing Rust (Nightly, Complete Profile)${NC}"
-    if [ -d "$HOME/.cargo/bin" ] && [ -f "$HOME/.cargo/bin/rustup" ]; then
-        echo -e "${GREEN}✓ Rust already installed. Skipping...${NC}"
+    echo -e "${GREEN}[7/8] Preparing Rust (new installs: Stable, Default Profile)${NC}"
+    local cargo_bin="${CARGO_HOME:-$HOME/.cargo}/bin" rustup_bin default_toolchain component
+    rustup_bin=$(command -v rustup) || rustup_bin=
+    if [ -z "$rustup_bin" ] && [ -x "$cargo_bin/rustup" ]; then
+        rustup_bin="$cargo_bin/rustup"
+        export PATH="$cargo_bin:$PATH"
+    fi
+    if [ -n "$rustup_bin" ]; then
+        echo -e "${GREEN}✓ Existing Rust installation retained; default toolchain is unchanged.${NC}"
+        default_toolchain=$(RUSTUP_AUTO_INSTALL=0 "$rustup_bin" default 2>/dev/null) || default_toolchain=
+        default_toolchain=${default_toolchain%% *}
+        if [ -z "$default_toolchain" ]; then
+            echo -e "${YELLOW}No default Rust toolchain is configured; configure it manually when needed.${NC}"
+        else
+            for component in rustfmt cargo-clippy; do
+                if ! RUSTUP_AUTO_INSTALL=0 "$rustup_bin" which --toolchain "$default_toolchain" "$component" >/dev/null 2>&1; then
+                    echo -e "${YELLOW}Missing $component for $default_toolchain; existing components were not changed.${NC}"
+                fi
+            done
+        fi
         return 0
     fi
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
-        --no-modify-path --profile complete --default-toolchain nightly
+    (
+        installer=$(mktemp "${TMPDIR:-/tmp}/yadm-rustup.XXXXXX")
+        trap 'rm -f -- "$installer"' EXIT
+        trap 'exit 130' HUP INT TERM
+        curl --proto '=https' --tlsv1.2 -sSf -o "$installer" https://sh.rustup.rs
+        [ -s "$installer" ] || { echo "Downloaded Rust installer is empty." >&2; exit 1; }
+        sh "$installer" -y --no-modify-path --profile default --default-toolchain stable
+    )
+    export PATH="$cargo_bin:$PATH"
 }
 
 # 8. Neovim
@@ -234,8 +311,18 @@ setup_neovim() {
         return 0
     fi
 
+    local runtime missing=()
+    for runtime in node npm go; do
+        command -v "$runtime" >/dev/null || missing+=("$runtime")
+    done
+    if [ ${#missing[@]} -gt 0 ]; then
+        echo "Neovim setup requires these commands in the current PATH: ${missing[*]}" >&2
+        echo "Prepare them with your existing runtime manager or system packages, then retry bootstrap." >&2
+        return 1
+    fi
+
     nvim --headless "+Lazy! restore" +qa
-    nvim --headless "+Lazy! load mason-tool-installer.nvim" "+MasonToolsInstallSync" +qa
+    nvim --headless "+Lazy! load mason-tool-installer.nvim" "+MasonToolsInstallSync" "+MasonToolsVerify" +qa
 
     echo -e "${GREEN}✓ Neovim plugins and tools installed${NC}"
 }
@@ -251,6 +338,7 @@ main() {
     install_drivers
     install_pacman_packages
     install_aur_packages
+    restore_yazi
     setup_rime_grammar
     setup_security_tools
     enable_services

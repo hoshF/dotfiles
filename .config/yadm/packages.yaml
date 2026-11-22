@@ -19,10 +19,10 @@ pacman:
     - tmux
     - yazi
     - fzf
+    - lazygit
     - wl-clipboard
     - libnotify
     - opencode
-    - paru
     - fnm
     - syncthing
 
