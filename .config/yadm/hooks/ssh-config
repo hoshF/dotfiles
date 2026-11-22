@@ -12,9 +12,9 @@ tmp=$(mktemp "$root/.ssh/config.XXXXXX")
 trap 'rm -f "$tmp"' EXIT HUP INT TERM
 source=/dev/null
 [ ! -f "$config" ] || source=$config
-awk -v include="$include" '
-    BEGIN { print include; print ""; leading = 1 }
-    $0 == include { next }
+awk -v inc="$include" '
+    BEGIN { print inc; print ""; leading = 1 }
+    $0 == inc { next }
     leading && /^[[:space:]]*$/ { next }
     { leading = 0; print }
 ' "$source" > "$tmp"
