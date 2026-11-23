@@ -29,6 +29,22 @@
 # Editor state (per-machine plugin versions)
 .config/nvim/lazy-lock.json
 
+# Toolchains and package caches
+.npm/
+.rustup/
+.cargo/
+go/pkg/
+.bundle/
+.dsh/
+.texlive/
+opt/gw-root/
+
+# Editor/LSP runtime data
+.local/share/nvim/
+
+# macOS AppleDouble metadata
+._*
+
 # App runtime data (kept in real directories, not templates)
 .config/mpd/database
 .config/mpd/pid
@@ -42,3 +58,17 @@
 .local/share/fcitx5/rime/sync/
 .local/share/fcitx5/rime/installation.yaml
 .local/share/fcitx5/rime/user.yaml
+.local/share/WeChat_Data/
+.local/share/EWeChat_Data/
+.local/share/caido/
+.local/share/opencode/
+.local/share/radare2/
+.local/share/TelegramDesktop/
+.local/share/yadm/*
+!.local/share/yadm/archive
+.config/mozilla/
+.config/google-chrome/
+.config/Bitwarden/
+.config/Caido/
+.config/ffuf/
+.config/go/
