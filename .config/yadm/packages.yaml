@@ -27,6 +27,7 @@ pacman:
     - fnm
     - syncthing
     - ruff
+    - stylua
 
   sway_desktop:
     - sway

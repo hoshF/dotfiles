@@ -1,7 +1,16 @@
 local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 
-map("n", "<CR>", "o<Esc>k", opts)
+-- Open a line below, but only in editable file buffers. Global <CR> would
+-- break quickfix/help/terminal, where Enter has its own meaning.
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(args)
+		if vim.bo[args.buf].buftype ~= "" then
+			return
+		end
+		map("n", "<CR>", "o<Esc>k", { buffer = args.buf, noremap = true, silent = true, desc = "Open line below" })
+	end,
+})
 
 map("n", "<C-Up>", ":resize +2<CR>", opts)
 map("n", "<C-Down>", ":resize -2<CR>", opts)
@@ -42,7 +51,7 @@ map("n", "S", "<Plug>(leap-from-window)")
 map({ "x", "o" }, "x", "<Plug>(leap-forward-till)")
 map({ "x", "o" }, "X", "<Plug>(leap-backward-till)")
 
-require("leap.user").set_repeat_keys("<enter>", "<backspace>", {
+require("leap.user").add_repeat_mappings("<space>j", "<space>k", {
 	relative_directions = false,
 	modes = { "n", "x", "o" },
 })

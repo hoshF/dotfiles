@@ -29,7 +29,6 @@ return {
 				"yaml-language-server",
 				"json-lsp",
 
-				"stylua",
 				"clang-format",
 				"asmfmt",
 				"tex-fmt",
@@ -116,16 +115,12 @@ return {
 						},
 						cargo = {
 							allFeatures = true,
-							loadOutDirsFromCheck = true,
 						},
 						procMacro = {
 							enable = true,
 						},
 						check = {
 							command = "clippy",
-						},
-						rustc = {
-							source = "discover",
 						},
 					},
 				},
