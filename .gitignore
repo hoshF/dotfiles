@@ -26,6 +26,9 @@
 .local/state/
 *.bak-*
 
+# Editor state (per-machine plugin versions)
+.config/nvim/lazy-lock.json
+
 # App runtime data (kept in real directories, not templates)
 .config/mpd/database
 .config/mpd/pid
