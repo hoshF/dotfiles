@@ -30,8 +30,6 @@ return {
 				"json-lsp",
 
 				"stylua",
-				"isort",
-				"black",
 				"clang-format",
 				"asmfmt",
 				"tex-fmt",
