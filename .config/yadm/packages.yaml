@@ -10,6 +10,7 @@ pacman:
     - cmake
     - tree
     - htop
+    - btop
     - poppler
     - pciutils
 
@@ -35,13 +36,13 @@ pacman:
     - mako
     - grim
     - slurp
-    - wf-recorder
+    - gpu-screen-recorder
     - xorg-xwayland
     - polkit-gnome
     - qt5-wayland
     - qt6-wayland
     - foot
-    - wmenu
+    - fuzzel
     - brightnessctl
     - firefox
     - xdg-desktop-portal
@@ -134,6 +135,7 @@ aur:
   tools:
     - epr-git
     - xray
+    - vesktop-bin
 
   security:
     - seclists

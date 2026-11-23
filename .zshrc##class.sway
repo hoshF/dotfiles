@@ -91,7 +91,7 @@ alias vim='nvim'
 alias za='sioyek'
 alias mc='ncmpcpp'
 alias zrc='nvim ~/.zshrc'
-alias rec='wf-recorder'
+alias rec='gpu-screen-recorder -w screen -f 60 -a default_output -o "$HOME/Videos/rec-$(date +%Y%m%d-%H%M%S).mp4"'
 
 # Rust
 alias vrs='nvim src/main.rs'

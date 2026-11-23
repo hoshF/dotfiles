@@ -2,6 +2,7 @@ music_directory    "~/Music"
 playlist_directory "~/.config/mpd/playlists"
 db_file            "~/.config/mpd/database"
 pid_file           "~/.config/mpd/pid"
+bind_to_address    "127.0.0.1"
 
 audio_output {
     type          "pipewire"
