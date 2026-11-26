@@ -1,13 +1,31 @@
-image=/home/nore/Pictures/looking.jpg
+image=/home/nore/Pictures/lock.jpg
+scaling=fill
 show-failed-attempts
 indicator-radius=35
 indicator-thickness=4
 indicator-x-position=50
 indicator-y-position=50
-ring-color=4c566a66
-key-hl-color=81a1c1
-bs-hl-color=bf616a
-text-color=d8dee9
+# 环形指示器
+ring-color=8da4e2
+ring-ver-color=81c8be
+ring-wrong-color=e78284
+ring-clear-color=f2d5cf
+ring-caps-lock-color=ef9f76
+
+# 内部填充
 inside-color=00000000
-ring-ver-color=88c0d0
-inside-ver-color=88c0d066
+inside-ver-color=81c8be66
+inside-wrong-color=e7828466
+inside-clear-color=f2d5cf66
+inside-caps-lock-color=ef9f7666
+
+# 文字
+text-color=c6d0f5
+text-ver-color=c6d0f5
+text-wrong-color=c6d0f5
+text-clear-color=c6d0f5
+text-caps-lock-color=c6d0f5
+
+# 按键高亮
+key-hl-color=a6d189
+bs-hl-color=e78284
