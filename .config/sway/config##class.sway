@@ -23,7 +23,7 @@ client.placeholder      #303446 #303446d9 #b5bfe2 #303446d9 #303446
 client.background       #303446
 
 # Output
-output * bg ~/Pictures/space.png fill
+output * bg ~/Pictures/peace.jpg fill
 
 output eDP-2 {
     mode 2560x1600@240Hz
